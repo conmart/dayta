@@ -1,11 +1,15 @@
 import React from 'react';
 
-function App() {
-  return (
+import { StateProvider } from "./state";
+import { initialState } from "./state/initialState";
+import { reducer } from "./state/reducer";
+
+const App = () => (
+  <StateProvider initialState={initialState} reducer={reducer}>
     <div className="App">
-      hello world
+      Hello World
     </div>
-  );
-}
+  </StateProvider>
+);
 
 export default App;
