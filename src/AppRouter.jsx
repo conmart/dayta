@@ -11,14 +11,14 @@ const AppRouter = () => {
     <Router>
         <Menu />
         <Switch>
-          <Route path='/'>
-            <Day />
-          </Route>
           <Route path='/calendar'>
             <Calendar />
           </Route>
           <Route path='/categories'>
             <CategoryList />
+          </Route>
+          <Route path='/'>
+            <Day />
           </Route>
         </Switch>
     </Router>
