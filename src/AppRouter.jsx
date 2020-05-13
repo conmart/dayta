@@ -13,11 +13,8 @@ const AppRouter = () => {
           <Route path="/calendar">
             <Calendar />
           </Route>
-          <Route path="/today">
-            <Day />
-          </Route>
           <Route path="/">
-            <h1>test</h1>
+            <Day />
           </Route>
         </Switch>
     </Router>
