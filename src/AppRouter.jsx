@@ -1,20 +1,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Menu from './components/menu';
-import Day from './components/day';
 import Calendar from './components/calendar';
+import CategoryList from './components/categoryList'
+import Day from './components/day';
+import Menu from './components/menu';
 
 const AppRouter = () => {
   return (
     <Router>
         <Menu />
         <Switch>
-          <Route path="/calendar">
+          <Route path='/'>
+            <Day />
+          </Route>
+          <Route path='/calendar'>
             <Calendar />
           </Route>
-          <Route path="/">
-            <Day />
+          <Route path='/categories'>
+            <CategoryList />
           </Route>
         </Switch>
     </Router>
