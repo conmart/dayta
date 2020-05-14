@@ -1,12 +1,16 @@
 import React from 'react';
-import moment from 'moment';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-const DayHeader = () => {
-  const currentDate = moment();
-  const formattedDate = currentDate.format('MMMM do, YYYY');
+import styles from './day.module.css';
+
+const DayHeader = ({ nextDay, previousDay, selectedDate }) => {
+  const formattedDate = selectedDate.format('MMMM Do, YYYY');
+
   return (
-    <div className="pageTitleConatiner">
-      <div className="pageTitle">{formattedDate}</div>
+    <div className={styles.dateSelectContainer}>
+      <LeftOutlined onClick={previousDay} />
+      <div className={styles.dateDisplay}>{formattedDate}</div>
+      <RightOutlined onClick={nextDay} />
     </div>
   );
 };

@@ -4,7 +4,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         menuOpen: action.menuOpen,
-      }
+      };
+    case 'NEW_DATE':
+      return {
+        ...state,
+        selectedDate: action.selectedDate,
+      };
     default:
       return state;
   }
