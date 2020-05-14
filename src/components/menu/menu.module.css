@@ -7,11 +7,14 @@
 .container {
   position: absolute;
   right: 0;
+  top: 0;
   background-color: beige;
   width: 200px;
-  height: 100vh;
+  height: 100%;
   border-left: 2px solid black;
   padding: 15px 5px;
+  box-sizing: border-box;
+  z-index: 1;
 }
 
 .iconContainer {

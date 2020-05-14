@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.pageTitleConatiner {
+  position: relative;
+  height: 50px;
+  margin: 0 10px 20px;
+}
+
+.pageTitle {
+  position: absolute;
+  font-size: 22px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

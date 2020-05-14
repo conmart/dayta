@@ -6,9 +6,11 @@ import { reducer } from "./state/reducer";
 
 import AppRouter from './AppRouter';
 
+import styles from './app.module.css';
+
 const App = () => (
   <StateProvider initialState={initialState} reducer={reducer}>
-    <div className="App">
+    <div className={styles.mobileAppContainer}>
       <AppRouter />
     </div>
   </StateProvider>

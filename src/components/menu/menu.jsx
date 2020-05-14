@@ -13,7 +13,9 @@ const Menu = ({ closeMenu }) => {
 
   const menuLinks = menuItems.map((item) => (
     <li>
-      <NavLink to={item.link}>{item.label}</NavLink>
+      <NavLink to={item.link} key={item.label}>
+        {item.label}
+      </NavLink>
     </li>
   ));
 
@@ -22,9 +24,7 @@ const Menu = ({ closeMenu }) => {
       <div className={styles.iconContainer} onClick={closeMenu}>
         <CloseOutlined style={{ fontSize: '24px' }} />
       </div>
-      <ul className={styles.list}>
-        {menuLinks}
-      </ul>
+      <ul className={styles.list}>{menuLinks}</ul>
     </div>
   );
 };

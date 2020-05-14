@@ -1,0 +1,9 @@
+.mobileAppContainer {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  height: 100%;
+  max-width: 1050px;
+  max-height: 700px;
+}
