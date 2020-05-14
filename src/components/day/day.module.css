@@ -10,3 +10,25 @@
   padding: 0 15px;
   font-size: 24px;
 }
+
+.eventList {
+  border: 1px solid black;
+  width: 80%;
+  margin: 0 auto;
+  height: 80%;
+}
+
+.eventContainer {
+  background-color: bisque;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  margin: 2px;
+  padding: 10px;
+}
+
+.eventIcons {
+  display: flex;
+  width: 23%;
+  justify-content: space-around;
+}

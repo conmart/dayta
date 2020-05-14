@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { useGlobalState } from '../../state';
 
@@ -23,14 +23,14 @@ const Day = () => {
   ));
 
   return (
-    <div>
+    <Fragment>
       <DayHeader
         nextDay={() => updateSelectedDate(true)}
         previousDay={() => updateSelectedDate(false)}
         selectedDate={selectedDate}
       />
-      <div>{eventList}</div>
-    </div>
+      <div className={styles.eventList}>{eventList}</div>
+    </Fragment>
   );
 };
 

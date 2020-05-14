@@ -11,9 +11,9 @@ const Menu = ({ closeMenu }) => {
     { link: '/categories', label: 'Categories' },
   ];
 
-  const menuLinks = menuItems.map((item) => (
-    <li>
-      <NavLink to={item.link} key={item.label}>
+  const menuLinks = menuItems.map((item, index) => (
+    <li key={index}>
+      <NavLink to={item.link} key={index}>
         {item.label}
       </NavLink>
     </li>
