@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
 import { MenuOutlined } from '@ant-design/icons';
 
 import { useGlobalState } from '../../state';
+import Menu from './menu';
 
 import styles from './menu.module.css';
 
-const Menu = () => {
+const MenuContainer = () => {
   const [{ menuOpen }, dispatch] = useGlobalState();
 
   const toggleMenu = (menuState) => {
@@ -21,22 +21,15 @@ const Menu = () => {
             className={styles.background}
             onClick={() => toggleMenu(false)}
           />
-          <div className={styles.container}>
-            <NavLink to="/">Today</NavLink>
-            <NavLink to="/calendar">Calendar</NavLink>
-            <NavLink to="/categories">Categories</NavLink>
-          </div>
+          <Menu closeMenu={() => toggleMenu(false)} />
         </Fragment>
       ) : (
-        <div
-          className={styles.hamburgerContainer}
-          onClick={() => toggleMenu(true)}
-        >
-          <MenuOutlined />
+        <div className={styles.iconContainer} onClick={() => toggleMenu(true)}>
+          <MenuOutlined style={{ fontSize: '24px' }} />
         </div>
       )}
     </Fragment>
   );
 };
 
-export default Menu;
+export default MenuContainer;
