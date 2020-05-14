@@ -5,7 +5,10 @@ const Day = () => {
   const currentDate = moment();
   const formattedDate = currentDate.format('MMMM do, YYYY');
   return (
-    <div>{formattedDate}</div>
+    <div>
+      <div>{formattedDate}</div>
+      <div>list of this date's events</div>
+    </div>
   );
 }
 
