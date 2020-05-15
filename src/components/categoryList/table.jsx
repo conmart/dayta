@@ -2,10 +2,12 @@ import React from 'react';
 
 import { Table } from 'antd';
 
+import 'antd/dist/antd.css';
+
 const dataSource = [
   {
     key: '1',
-    name: 'Cat1',
+    name: 'TestCategory1',
     age: 32,
     address: 'test1',
   },
@@ -14,6 +16,18 @@ const dataSource = [
     name: 'Cat2',
     age: 42,
     address: 'test2',
+  },
+  {
+    key: '3',
+    name: 'Ca3',
+    age: 43,
+    address: 'test3',
+  },
+  {
+    key: '4',
+    name: 'Cat4',
+    age: 44,
+    address: 'test4',
   },
 ];
 
@@ -40,7 +54,7 @@ const columns = [
 const CategoryTable = () => {
   return (
     <div>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table dataSource={dataSource} columns={columns} pagination={false} />
     </div>
   );
 };
