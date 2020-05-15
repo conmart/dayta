@@ -13,7 +13,7 @@ const Menu = ({ closeMenu }) => {
 
   const menuLinks = menuItems.map((item, index) => (
     <li key={index}>
-      <NavLink to={item.link} key={index}>
+      <NavLink to={item.link} key={index} onClick={closeMenu}>
         {item.label}
       </NavLink>
     </li>

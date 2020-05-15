@@ -5,8 +5,6 @@ import { useGlobalState } from '../../state';
 import DayHeader from './dayHeader';
 import DayEvent from './dayEvent';
 
-import styles from './day.module.css';
-
 const Day = () => {
   const [{ selectedDate }, dispatch] = useGlobalState();
 
@@ -29,7 +27,7 @@ const Day = () => {
         previousDay={() => updateSelectedDate(false)}
         selectedDate={selectedDate}
       />
-      <div className={styles.eventList}>{eventList}</div>
+      <div className="pageContentContainer">{eventList}</div>
     </Fragment>
   );
 };

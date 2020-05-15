@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+
+import CategoryTable from './table';
 
 const CategoryList = () => {
   return (
-    <div>Categories</div>
-  )
+    <Fragment>
+      <div className="pageTitleContainer">
+        <div className="pageTitle">Categories</div>
+      </div>
+      <div className="pageContentContainer">
+        <CategoryTable />
+      </div>
+    </Fragment>
+  );
 }
 
 export default CategoryList;

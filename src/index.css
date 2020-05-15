@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.pageTitleContainer {
+  display: flex;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0 30px;
+  height: 115px;
+  box-sizing: border-box;
+}
+
+.pageTitle {
+  padding: 0 15px;
+  font-size: 24px;
+}
+
+.pageContentContainer {
+  border: 1px solid black;
+  width: 80%;
+  margin: 0 auto;
+  height: 75%;
+}

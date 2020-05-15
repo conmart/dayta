@@ -1,15 +1,15 @@
 import React from 'react';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-import styles from './day.module.css';
+// import styles from './day.module.css';
 
 const DayHeader = ({ nextDay, previousDay, selectedDate }) => {
   const formattedDate = selectedDate.format('MMMM Do, YYYY');
 
   return (
-    <div className={styles.dateSelectContainer}>
+    <div className="pageTitleContainer">
       <LeftOutlined onClick={previousDay} />
-      <div className={styles.dateDisplay}>{formattedDate}</div>
+      <div className="pageTitle">{formattedDate}</div>
       <RightOutlined onClick={nextDay} />
     </div>
   );
