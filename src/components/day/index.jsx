@@ -14,7 +14,7 @@ const Day = () => {
     dispatch({ type: 'NEW_DATE', selectedDate: updatedDate });
   };
 
-  const events = ['Event1', 'Event2'];
+  const events = ['Category 1', 'Category 2'];
 
   const eventList = events.map((event) => (
     <DayEvent category={event} key={event} />

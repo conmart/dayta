@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Calendar from './components/calendar';
+import Category from './components/singleCategory';
 import CategoryList from './components/categoryList'
 import Day from './components/day';
 import Event from './components/event';
@@ -19,6 +20,9 @@ const AppRouter = () => {
           </Route>
           <Route path='/categories'>
             <CategoryList />
+          </Route>
+          <Route path='/category'>
+            <Category />
           </Route>
           <Route path='/event'>
             <Event />
