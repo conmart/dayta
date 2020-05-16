@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 
 import CategoryHeader from './categoryHeader';
+import EventList from './eventList';
+import ShowCategory from './showCategory';
 
 const Category = () => {
+  const [eventList, toggleEventList] = useState(false);
+
   return (
-    <div className="pageTitleContainer">
-      <CategoryHeader />
-    </div>
+    <Fragment>
+      <div className="pageTitleContainer">
+        <CategoryHeader />
+      </div>
+      {eventList ? (
+        <EventList backToShow={() => toggleEventList(false)} />
+      ) : (
+        <ShowCategory showEventList={() => toggleEventList(true)} />
+      )}
+    </Fragment>
   );
 };
 

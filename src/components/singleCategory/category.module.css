@@ -1,0 +1,21 @@
+.backToShow {
+  position: absolute;
+  font-size: 40px;
+  bottom: 10%;
+  left: 7%;
+  cursor: pointer;
+}
+
+.showIconsContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 125px;
+}
+
+.showIcon {
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  cursor: pointer;
+  padding: 5px;
+}
