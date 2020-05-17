@@ -5,9 +5,9 @@ export const initialState = {
   menuOpen: false,
   selectedDate: moment(),
   showNewEventButton: true,
+  selectedCategory: null,
   event: {
-    currentEvent: null,
-    defaultCategory: null,
+    selectedEvent: null,
     defaultDate: moment(),
   },
 };
