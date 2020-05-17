@@ -6,7 +6,16 @@
   cursor: pointer;
 }
 
+.showContainer {
+  border: 1px solid black;
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 45px;
+}
+
 .showIconsContainer {
+  padding-top: 65px;
+  position: absolute;
   display: flex;
   justify-content: space-between;
   width: 125px;
