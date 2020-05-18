@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { useGlobalState } from '../../state';
 
 import CalendarHeader from './calendarHeader';
-import Days from './days';
+import CalendarBody from './calendarBody';
 
 const Calendar = () => {
   const [{ selectedDate }, dispatch] = useGlobalState();
@@ -27,7 +27,7 @@ const Calendar = () => {
         setMonth={setMonth}
         setYear={setYear}
       />
-      <Days />
+      <CalendarBody selectedDate={selectedDate} />
     </Fragment>
   );
 };
