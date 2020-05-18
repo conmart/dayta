@@ -22,3 +22,13 @@
   width: 15%;
   border-left: none;
 }
+
+.optionsContainer {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.optionsContainer div:first-child {
+  width: 135px;
+}
