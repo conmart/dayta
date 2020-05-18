@@ -1,8 +1,6 @@
 import React from 'react';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-// import styles from './day.module.css';
-
 const DayHeader = ({ nextDay, previousDay, selectedDate }) => {
   const formattedDate = selectedDate.format('MMMM Do, YYYY');
 

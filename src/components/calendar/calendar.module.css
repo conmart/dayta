@@ -1,0 +1,24 @@
+.titleContainer {
+  padding: 20px 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+}
+
+.daysContainer {
+  width: 96%;
+  margin: 0 auto;
+}
+
+.daysOfWeekHeader {
+  width: 100%;
+  display: flex;
+  border-left: 1px solid black;
+}
+
+.dayHeader {
+  border: 1px solid black;
+  width: 15%;
+  border-left: none;
+}

@@ -8,7 +8,7 @@ import 'antd/dist/antd.css';
 import { showSource, showColumns } from './dummyData';
 
 const ShowCategory = ({ showEventList }) => {
-  // TODO: add top display of most recent category occurance
+  // TODO: style display of most recent category occurance
 
   return (
     <div className={styles.showContainer}>
@@ -17,6 +17,8 @@ const ShowCategory = ({ showEventList }) => {
         columns={showColumns}
         pagination={false}
       />
+      <div>Most Recent Event</div>
+      September 19th, 2019
       <div className={styles.showIconsContainer}>
         <div className={styles.showIcon}>
           <DeleteOutlined />
