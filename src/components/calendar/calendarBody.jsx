@@ -1,16 +1,20 @@
 import React from 'react';
 
 import { daysToDisplay } from './utils';
+import CalendarDay from './calendarDay';
 
 import styles from './calendar.module.css';
 
 const CalendarBody = ({ selectedDate }) => {
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const days = daysToDisplay(selectedDate);
-  console.log(days);
+  const daysOfMonth = daysToDisplay(selectedDate);
+
+  const days = daysOfMonth.map((day, index) => (
+    <CalendarDay key={index} dateObject={day} />
+  ))
 
   return (
-    <div className={styles.daysContainer}>
+    <div className={styles.container}>
       <div className={styles.daysOfWeekHeader}>
         {daysOfWeek.map((day) => (
           <div key={day} className={styles.dayHeader}>
@@ -18,7 +22,7 @@ const CalendarBody = ({ selectedDate }) => {
           </div>
         ))}
       </div>
-      <div>days of the month</div>
+      <div className={styles.daysContainer}>{days}</div>
     </div>
   );
 };

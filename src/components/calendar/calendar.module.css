@@ -6,21 +6,37 @@
   font-size: 26px;
 }
 
-.daysContainer {
+.container {
   width: 96%;
+  height: 85%;
   margin: 0 auto;
 }
 
-.daysOfWeekHeader {
-  width: 100%;
+.daysContainer {
   display: flex;
+  flex-wrap: wrap;
+  height: 90%;
+}
+
+.day {
+  height: 17%;
   border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  flex: 1 0 14%;
+}
+
+.day:nth-child(7n) {
+  border-right: 1px solid black;
+}
+
+.daysOfWeekHeader {
+  display: flex;
+  height: 25px;
 }
 
 .dayHeader {
-  border: 1px solid black;
-  width: 15%;
-  border-left: none;
+  border-bottom: 1px solid black;
+  flex: 1 0 14%;
 }
 
 .optionsContainer {
