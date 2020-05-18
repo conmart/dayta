@@ -12,3 +12,5 @@ export const months = [
   'November',
   'December',
 ];
+
+export const years = [...Array(200).keys()].map((year) => year + 1900);

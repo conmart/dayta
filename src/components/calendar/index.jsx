@@ -14,9 +14,19 @@ const Calendar = () => {
     dispatch({ type: 'NEW_DATE', selectedDate: updatedDate });
   };
 
+  const setYear = (e) => {
+    const updatedDate = selectedDate.clone();
+    updatedDate.year(e);
+    dispatch({ type: 'NEW_DATE', selectedDate: updatedDate });
+  };
+
   return (
     <Fragment>
-      <CalendarHeader selectedDate={selectedDate} setMonth={setMonth} />
+      <CalendarHeader
+        selectedDate={selectedDate}
+        setMonth={setMonth}
+        setYear={setYear}
+      />
       <Days />
     </Fragment>
   );
