@@ -8,10 +8,18 @@ import styles from './calendar.module.css';
 const CalendarBody = ({ selectedDate, setNewDate }) => {
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const daysOfMonth = daysToDisplay(selectedDate);
+  const numRows = daysOfMonth.length / 7;
+  const currentMonth = selectedDate.month();
 
   const days = daysOfMonth.map((day, index) => (
-    <CalendarDay key={index} dateObject={day} setNewDate={setNewDate} />
-  ))
+    <CalendarDay
+      key={index}
+      currentMonth={currentMonth}
+      dateObject={day}
+      rows={numRows}
+      setNewDate={setNewDate}
+    />
+  ));
 
   return (
     <div className={styles.container}>

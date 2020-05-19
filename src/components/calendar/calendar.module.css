@@ -19,10 +19,25 @@
 }
 
 .day {
-  height: 17%;
+  height: 16.67%;
   border-left: 1px solid black;
   border-bottom: 1px solid black;
   flex: 1 0 14%;
+  cursor: pointer;
+  text-align: left;
+  padding: 1px 6px;
+}
+
+.outsideCurrentMonth {
+  background-color: #e0e0e0;
+}
+
+.tallDay {
+  height: 20%;
+}
+
+.extraTallDay {
+  height: 25%;
 }
 
 .day:nth-child(7n) {
