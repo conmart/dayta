@@ -8,16 +8,20 @@ import CalendarBody from './calendarBody';
 const Calendar = () => {
   const [{ selectedDate }, dispatch] = useGlobalState();
 
+  const setNewDate = (updatedDate) => {
+    dispatch({ type: 'NEW_DATE', selectedDate: updatedDate });
+  };
+
   const setMonth = (e) => {
     const updatedDate = selectedDate.clone();
     updatedDate.month(e);
-    dispatch({ type: 'NEW_DATE', selectedDate: updatedDate });
+    setNewDate(updatedDate);
   };
 
   const setYear = (e) => {
     const updatedDate = selectedDate.clone();
     updatedDate.year(e);
-    dispatch({ type: 'NEW_DATE', selectedDate: updatedDate });
+    setNewDate(updatedDate);
   };
 
   return (
@@ -27,7 +31,7 @@ const Calendar = () => {
         setMonth={setMonth}
         setYear={setYear}
       />
-      <CalendarBody selectedDate={selectedDate} />
+      <CalendarBody selectedDate={selectedDate} setNewDate={setNewDate} />
     </Fragment>
   );
 };

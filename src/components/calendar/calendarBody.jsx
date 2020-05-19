@@ -5,12 +5,12 @@ import CalendarDay from './calendarDay';
 
 import styles from './calendar.module.css';
 
-const CalendarBody = ({ selectedDate }) => {
+const CalendarBody = ({ selectedDate, setNewDate }) => {
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   const daysOfMonth = daysToDisplay(selectedDate);
 
   const days = daysOfMonth.map((day, index) => (
-    <CalendarDay key={index} dateObject={day} />
+    <CalendarDay key={index} dateObject={day} setNewDate={setNewDate} />
   ))
 
   return (
