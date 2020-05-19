@@ -34,6 +34,8 @@
 .list li {
   padding: 5px 0;
   font-size: 20px;
+  color: black;
+  cursor: pointer;
 }
 
 .list li a {

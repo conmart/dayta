@@ -1,21 +1,32 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import moment from 'moment';
+import { Link, useHistory } from 'react-router-dom';
 import { CloseOutlined } from '@ant-design/icons';
+
+import { useGlobalState } from '../../state';
 
 import styles from './menu.module.css';
 
 const Menu = ({ closeMenu }) => {
+  const dispatch = useGlobalState()[1];
+  const history = useHistory();
+
+  const goToToday = () => {
+    closeMenu();
+    dispatch({ type: 'NEW_DATE', selectedDate: moment() });
+    history.push('/');
+  };
+
   const menuItems = [
-    { link: '/', label: 'Today' },
     { link: '/calendar', label: 'Calendar' },
     { link: '/categories', label: 'Categories' },
   ];
 
   const menuLinks = menuItems.map((item, index) => (
     <li key={index}>
-      <NavLink to={item.link} key={index} onClick={closeMenu}>
+      <Link to={item.link} key={index} onClick={closeMenu}>
         {item.label}
-      </NavLink>
+      </Link>
     </li>
   ));
 
@@ -24,7 +35,10 @@ const Menu = ({ closeMenu }) => {
       <div className={styles.iconContainer} onClick={closeMenu}>
         <CloseOutlined style={{ fontSize: '24px' }} />
       </div>
-      <ul className={styles.list}>{menuLinks}</ul>
+      <ul className={styles.list}>
+        <li onClick={goToToday}>Today</li>
+        {menuLinks}
+      </ul>
     </div>
   );
 };
