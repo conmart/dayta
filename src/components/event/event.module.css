@@ -10,13 +10,19 @@
   padding-bottom: 15px;
 }
 
-.formRow span {
+.label {
   font-size: 18px;
   display: block;
   padding-bottom: 5px;
 }
 
-.doubleInputRow {
+.startEndRow {
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 15px;
+}
+
+.durationRow {
   display: flex;
   justify-content: center;
   align-items: center;

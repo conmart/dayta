@@ -42,7 +42,7 @@ const Event = () => {
       </div>
       <div className={styles.formContainer}>
         <div className={styles.formRow}>
-          <span>Category</span>
+          <span className={styles.label}>Category</span>
           <AutoComplete
             filterOption={(inputValue, option) =>
               option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
@@ -55,7 +55,7 @@ const Event = () => {
           />
         </div>
         <div className={styles.formRow}>
-          <span>Date</span>
+          <span className={styles.label}>Date</span>
           <DatePicker
             format="MMMM Do, YYYY"
             onChange={onDateChange}
@@ -63,21 +63,27 @@ const Event = () => {
             value={eventDate}
           />
         </div>
-        <div>Start</div>
-        <TimePicker
-          format={timeFormat}
-          onChange={onStartChange}
-          value={eventStart}
-        />
-        <div>End</div>
-        <TimePicker
-          format={timeFormat}
-          onChange={onEndChange}
-          value={eventEnd}
-        />
+        <div className={styles.startEndRow}>
+          <div>
+            <span className={styles.label}>Start</span>
+            <TimePicker
+              format={timeFormat}
+              onChange={onStartChange}
+              value={eventStart}
+            />
+          </div>
+          <div>
+            <span className={styles.label}>End</span>
+            <TimePicker
+              format={timeFormat}
+              onChange={onEndChange}
+              value={eventEnd}
+            />
+          </div>
+        </div>
         <div className={styles.formRow}>
-          <span>Duration</span>
-          <div className={styles.doubleInputRow}>
+          <span className={styles.label}>Duration</span>
+          <div className={styles.durationRow}>
             <InputNumber
               min={0}
               onChange={onDurationChange}
