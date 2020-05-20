@@ -1,0 +1,23 @@
+.formContainer {
+  width: 70%;
+  min-width: 300px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.formRow {
+  text-align: left;
+  padding-bottom: 15px;
+}
+
+.formRow span {
+  font-size: 18px;
+  display: block;
+  padding-bottom: 5px;
+}
+
+.doubleInputRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
