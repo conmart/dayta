@@ -7,7 +7,7 @@
 
 .formRow {
   text-align: left;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
 }
 
 .label {
@@ -18,8 +18,13 @@
 
 .startEndRow {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   padding-bottom: 15px;
+}
+
+.timePick {
+  width: 45%;
+  text-align: left;
 }
 
 .durationRow {

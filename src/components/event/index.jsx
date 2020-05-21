@@ -64,19 +64,21 @@ const Event = () => {
           />
         </div>
         <div className={styles.startEndRow}>
-          <div>
+          <div className={styles.timePick}>
             <span className={styles.label}>Start</span>
             <TimePicker
               format={timeFormat}
               onChange={onStartChange}
+              style={{ width: '100%' }}
               value={eventStart}
             />
           </div>
-          <div>
+          <div className={styles.timePick}>
             <span className={styles.label}>End</span>
             <TimePicker
               format={timeFormat}
               onChange={onEndChange}
+              style={{ width: '100%' }}
               value={eventEnd}
             />
           </div>
