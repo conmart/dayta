@@ -6,6 +6,7 @@ import {
   Select,
   TimePicker,
 } from 'antd';
+import { CheckCircleFilled } from '@ant-design/icons';
 
 import { useGlobalState } from '../../state';
 
@@ -101,6 +102,9 @@ const Event = () => {
               <Option value={2}>{'hour(s)'}</Option>
             </Select>
           </div>
+        </div>
+        <div className={styles.saveIcon}>
+          <CheckCircleFilled />
         </div>
       </div>
     </Fragment>
