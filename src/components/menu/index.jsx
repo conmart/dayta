@@ -20,7 +20,7 @@ const MenuContainer = () => {
         </Fragment>
       ) : (
         <div className={styles.iconContainer} onClick={() => setMenuOpen(true)}>
-          <MenuOutlined style={{ fontSize: '24px' }} />
+          <MenuOutlined />
         </div>
       )}
     </Fragment>

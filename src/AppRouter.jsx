@@ -12,25 +12,28 @@ import NewEventButton from './components/newEventButton';
 const AppRouter = () => {
   return (
     <Router>
-        <MenuContainer />
-        <NewEventButton />
-        <Switch>
-          <Route path='/calendar'>
-            <Calendar />
-          </Route>
-          <Route path='/categories'>
-            <CategoryList />
-          </Route>
-          <Route path='/category'>
-            <Category />
-          </Route>
-          <Route path='/event'>
-            <Event />
-          </Route>
-          <Route path='/'>
-            <Day />
-          </Route>
-        </Switch>
+      <MenuContainer />
+      <Switch>
+        <Route path="/calendar">
+          <Calendar />
+          <NewEventButton />
+        </Route>
+        <Route path="/categories">
+          <CategoryList />
+          <NewEventButton />
+        </Route>
+        <Route path="/category">
+          <Category />
+          <NewEventButton />
+        </Route>
+        <Route path="/event">
+          <Event />
+        </Route>
+        <Route path="/">
+          <Day />
+          <NewEventButton />
+        </Route>
+      </Switch>
     </Router>
   );
 }

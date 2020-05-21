@@ -34,7 +34,7 @@ const Menu = ({ closeMenu }) => {
   return (
     <div className={styles.container}>
       <div className={styles.iconContainer} onClick={closeMenu}>
-        <CloseOutlined style={{ fontSize: '24px' }} />
+        <CloseOutlined />
       </div>
       <ul className={styles.list}>
         <li onClick={goToToday}>Today</li>
