@@ -20,6 +20,7 @@ const Menu = ({ closeMenu }) => {
   const menuItems = [
     { link: '/calendar', label: 'Calendar' },
     { link: '/categories', label: 'Categories' },
+    { link: '/event', label: 'New Event' }
   ];
 
   const menuLinks = menuItems.map((item, index) => (

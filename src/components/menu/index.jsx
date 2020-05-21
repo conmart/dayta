@@ -1,17 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 
-import { useGlobalState } from '../../state';
 import Menu from './menu';
 
 import styles from './menu.module.css';
 
 const MenuContainer = () => {
-  const [{ menuOpen }, dispatch] = useGlobalState();
-
-  const toggleMenu = (menuState) => {
-    dispatch({ type: 'TOGGLE_MENU', menuOpen: menuState });
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <Fragment>
@@ -19,12 +14,12 @@ const MenuContainer = () => {
         <Fragment>
           <div
             className={styles.background}
-            onClick={() => toggleMenu(false)}
+            onClick={() => setMenuOpen(false)}
           />
-          <Menu closeMenu={() => toggleMenu(false)} />
+          <Menu closeMenu={() => setMenuOpen(false)} />
         </Fragment>
       ) : (
-        <div className={styles.iconContainer} onClick={() => toggleMenu(true)}>
+        <div className={styles.iconContainer} onClick={() => setMenuOpen(true)}>
           <MenuOutlined style={{ fontSize: '24px' }} />
         </div>
       )}
