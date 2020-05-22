@@ -18,8 +18,10 @@ import 'antd/dist/antd.css';
 const { Option } = Select;
 
 const Event = () => {
-  const { selectedDate } = useGlobalState()[0];
-  const [categoryName, setCategory] = useState('');
+  const { selectedCategory, selectedDate } = useGlobalState()[0];
+  // console.log(selectedCategory)
+  // TODO: re-render component if global state is updated
+  const [categoryName, setCategory] = useState(selectedCategory);
   const [eventDate, setDate] = useState(selectedDate);
   const [eventStart, setStart] = useState(null);
   const [eventEnd, setEnd] = useState(null);
@@ -35,6 +37,7 @@ const Event = () => {
   const onUnitChange = (unit) => setDurationUnit(unit);
 
   const timeFormat = 'h:mm a';
+  const hideDuration = eventStart && eventEnd;
 
   return (
     <Fragment>
@@ -86,21 +89,29 @@ const Event = () => {
         </div>
         <div className={styles.formRow}>
           <span className={styles.label}>Duration</span>
-          <div className={styles.durationRow}>
-            <InputNumber
-              min={0}
-              onChange={onDurationChange}
-              style={{ width: '50%' }}
-              value={duration}
-            />
-            <Select
-              onChange={onUnitChange}
-              style={{ width: '50%' }}
-              value={durationUnit}
-            >
-              <Option value={1}>{'minute(s)'}</Option>
-              <Option value={2}>{'hour(s)'}</Option>
-            </Select>
+          <div className={styles.durationInputs}>
+            {hideDuration ? (
+              <div>
+                Duration is automatically calculated from start and end times.
+              </div>
+            ) : (
+              <Fragment>
+                <InputNumber
+                  min={0}
+                  onChange={onDurationChange}
+                  style={{ width: '50%' }}
+                  value={duration}
+                />
+                <Select
+                  onChange={onUnitChange}
+                  style={{ width: '50%' }}
+                  value={durationUnit}
+                >
+                  <Option value={1}>{'minute(s)'}</Option>
+                  <Option value={2}>{'hour(s)'}</Option>
+                </Select>
+              </Fragment>
+            )}
           </div>
         </div>
         <div className={styles.saveIcon}>

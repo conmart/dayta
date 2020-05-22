@@ -27,10 +27,11 @@
   text-align: left;
 }
 
-.durationRow {
+.durationInputs {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 32px;
 }
 
 .saveIcon {
