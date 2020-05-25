@@ -1,5 +1,5 @@
 import React from 'react';
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import { FirebaseAuthProvider } from '@react-firebase/auth';
 
@@ -10,6 +10,8 @@ import AppRouter from './AppRouter';
 import { firebaseConfig } from './firebaseConfig';
 
 import styles from './app.module.css';
+
+console.log(firebaseConfig)
 
 const App = () => (
   <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>

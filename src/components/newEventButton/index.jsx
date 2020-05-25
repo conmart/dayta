@@ -1,16 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { PlusCircleFilled } from '@ant-design/icons';
 
 import styles from './newEvent.module.css';
 
 const NewEventButton = () => {
+  const { pathname } = useLocation();
+  const onEventPage = pathname === '/event';
+
   return (
-    <Link to="/event">
-      <div className={styles.container}>
-        <PlusCircleFilled />
-      </div>
-    </Link>
+    <Fragment>
+      {!onEventPage && (
+        <Link to="/event">
+          <div className={styles.container}>
+            <PlusCircleFilled />
+          </div>
+        </Link>
+      )}
+    </Fragment>
   );
 };
 

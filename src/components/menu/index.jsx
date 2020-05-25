@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 import { useGlobalState } from '../../state';
 
@@ -45,7 +47,16 @@ const MenuContainer = () => {
             >
               <CloseOutlined />
             </div>
-            <ul className={styles.list}>{menuLinks}</ul>
+            <ul className={styles.list}>
+              {menuLinks}
+              <li
+                onClick={() => {
+                  firebase.app().auth().signOut();
+                }}
+              >
+                Sign Out
+              </li>
+            </ul>
           </div>
         </Fragment>
       ) : (
