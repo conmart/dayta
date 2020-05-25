@@ -19,39 +19,36 @@ import NewEventButton from './components/newEventButton';
 const AppRouter = () => {
   return (
     <FirebaseAuthConsumer>
-      {({ isSignedIn }) => {
-        console.log(isSignedIn);
-        return (
-          <Router>
-            {isSignedIn && (
-              <Fragment>
-                <MenuContainer />
-                <NewEventButton />
-              </Fragment>
-            )}
-            <Switch>
-              <Route path="/calendar">
-                {isSignedIn ? <Calendar /> : <Redirect to="/login" />}
-              </Route>
-              <Route path="/categories">
-                {isSignedIn ? <CategoryList /> : <Redirect to="/login" />}
-              </Route>
-              <Route path="/category">
-                {isSignedIn ? <Category /> : <Redirect to="/login" />}
-              </Route>
-              <Route path="/event">
-                {isSignedIn ? <Event /> : <Redirect to="/login" />}
-              </Route>
-              <Route path="/login">
-                {!isSignedIn ? <Login /> : <Redirect to="/" />}
-              </Route>
-              <Route path="/">
-                {isSignedIn ? <Day /> : <Redirect to="/login" />}
-              </Route>
-            </Switch>
-          </Router>
-        );
-      }}
+      {({ isSignedIn }) => (
+        <Router>
+          {isSignedIn && (
+            <Fragment>
+              <MenuContainer />
+              <NewEventButton />
+            </Fragment>
+          )}
+          <Switch>
+            <Route path="/calendar">
+              {isSignedIn ? <Calendar /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/categories">
+              {isSignedIn ? <CategoryList /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/category">
+              {isSignedIn ? <Category /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/event">
+              {isSignedIn ? <Event /> : <Redirect to="/login" />}
+            </Route>
+            <Route path="/login">
+              {!isSignedIn ? <Login /> : <Redirect to="/" />}
+            </Route>
+            <Route path="/">
+              {isSignedIn ? <Day /> : <Redirect to="/login" />}
+            </Route>
+          </Switch>
+        </Router>
+      )}
     </FirebaseAuthConsumer>
   );
 };

@@ -19,8 +19,6 @@ const { Option } = Select;
 
 const Event = () => {
   const { selectedCategory, selectedDate } = useGlobalState()[0];
-  // console.log(selectedCategory)
-  // TODO: re-render component if global state is updated
   const [categoryName, setCategory] = useState(selectedCategory);
   const [eventDate, setDate] = useState(selectedDate);
   const [eventStart, setStart] = useState(null);

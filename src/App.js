@@ -11,8 +11,6 @@ import { firebaseConfig } from './firebaseConfig';
 
 import styles from './app.module.css';
 
-console.log(firebaseConfig)
-
 const App = () => (
   <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
     <StateProvider initialState={initialState} reducer={reducer}>

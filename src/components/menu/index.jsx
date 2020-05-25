@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import firebase from 'firebase/app';
-import 'firebase/auth';
 
 import { useGlobalState } from '../../state';
 
