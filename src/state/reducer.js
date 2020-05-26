@@ -7,6 +7,11 @@ export const reducer = (state, action) => {
         ...state,
         selectedDate: action.selectedDate,
       };
+      case 'EVENT_SELECTED':
+        return {
+          ...state,
+          selectedEvent: action.eventId,
+        }
     case 'CLEAR_USER_SELECTIONS':
       return {
         ...state,
