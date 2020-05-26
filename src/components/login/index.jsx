@@ -1,26 +1,29 @@
 import React from 'react';
 import firebase from 'firebase/app';
+import { Button } from 'antd';
+import { GoogleOutlined } from '@ant-design/icons';
 
-import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
+import styles from './login.module.css';
 
 const Login = () => {
+  const signInWithGoogle = () => {
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(googleAuthProvider);
+  };
+
   return (
-    <div>
-      <div>Login</div>
-      <IfFirebaseAuthed>
-        <div>logged in</div>
-      </IfFirebaseAuthed>
-      <IfFirebaseUnAuthed>
-        <div>not logged in</div>
-        <button
-          onClick={() => {
-            const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(googleAuthProvider);
-          }}
-        >
-          sign in with google
-        </button>
-      </IfFirebaseUnAuthed>
+    <div className={styles.container}>
+      <div className={styles.welcome}>
+        Welcome to<div className={styles.title}>Dayta</div>
+      </div>
+      <Button
+        type="primary"
+        size="large"
+        icon={<GoogleOutlined />}
+        onClick={signInWithGoogle}
+      >
+        Sign in with google
+      </Button>
     </div>
   );
 };
