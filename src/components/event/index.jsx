@@ -7,6 +7,7 @@ import {
   TimePicker,
 } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
+import { FirestoreMutation } from '@react-firebase/firestore';
 
 import { useGlobalState } from '../../state';
 
@@ -26,7 +27,10 @@ const Event = () => {
   const [duration, setDuration] = useState(null);
   const [durationUnit, setDurationUnit] = useState(1);
 
-  const onCategoryChange = (category) => setCategory(category);
+  const onCategoryChange = (category) => {
+    console.log('hitthistoo', category);
+    setCategory(category);
+  };
   const onDateChange = (date) => setDate(date);
   const onStartChange = (time) => setStart(time);
   // TODO: validate that end time is after start time
@@ -36,6 +40,14 @@ const Event = () => {
 
   const timeFormat = 'h:mm a';
   const hideDuration = eventStart && eventEnd;
+
+  const buildEvent = () => {
+    console.log('hitme', categoryName);
+    return {
+      category_name: categoryName,
+      uid: '11VOsEy13qhDyQQfNKVU0JbIwPb2',
+    };
+  };
 
   return (
     <Fragment>
@@ -112,9 +124,22 @@ const Event = () => {
             )}
           </div>
         </div>
-        <div className={styles.saveIcon}>
-          <CheckCircleFilled />
-        </div>
+        <div>{categoryName}</div>
+        <FirestoreMutation type="add" path="/events">
+          {({ runMutation }) => (
+            <div
+              className={styles.saveIcon}
+              onClick={() => {
+                console.log('clicked', categoryName);
+                const newEventData = buildEvent();
+                console.log(newEventData);
+                // runMutation(newEventData).then((res) => console.log(res));
+              }}
+            >
+              <CheckCircleFilled />
+            </div>
+          )}
+        </FirestoreMutation>
       </div>
     </Fragment>
   );
