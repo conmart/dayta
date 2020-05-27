@@ -19,9 +19,11 @@ import NewEventButton from './components/newEventButton';
 const AppRouter = () => {
   return (
     <FirebaseAuthConsumer>
-      {({ isSignedIn }) => (
+      {({ isSignedIn }) => {
+        const devSignIn = true;
+        return (
         <Router>
-          {isSignedIn && (
+          {devSignIn && (
             <Fragment>
               <MenuContainer />
               <NewEventButton />
@@ -29,26 +31,26 @@ const AppRouter = () => {
           )}
           <Switch>
             <Route path="/calendar">
-              {isSignedIn ? <Calendar /> : <Redirect to="/login" />}
+              {devSignIn ? <Calendar /> : <Redirect to="/login" />}
             </Route>
             <Route path="/categories">
-              {isSignedIn ? <CategoryList /> : <Redirect to="/login" />}
+              {devSignIn ? <CategoryList /> : <Redirect to="/login" />}
             </Route>
             <Route path="/category">
-              {isSignedIn ? <Category /> : <Redirect to="/login" />}
+              {devSignIn ? <Category /> : <Redirect to="/login" />}
             </Route>
             <Route path="/event">
-              {isSignedIn ? <Event /> : <Redirect to="/login" />}
+              {devSignIn ? <Event /> : <Redirect to="/login" />}
             </Route>
             <Route path="/login">
-              {!isSignedIn ? <Login /> : <Redirect to="/" />}
+              {!devSignIn ? <Login /> : <Redirect to="/" />}
             </Route>
             <Route path="/">
-              {isSignedIn ? <Day /> : <Redirect to="/login" />}
+              {devSignIn ? <Day /> : <Redirect to="/login" />}
             </Route>
           </Switch>
         </Router>
-      )}
+        )}}
     </FirebaseAuthConsumer>
   );
 };

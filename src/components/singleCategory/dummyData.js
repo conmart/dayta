@@ -44,25 +44,25 @@ export const columns = [
 ];
 
 export const showSource = [
-         {
-           key: '1',
-           label: 'Month Total',
-           events: 10,
-           duration: '5 hours',
-         },
-         {
-           key: '2',
-           label: 'Year Total',
-           events: 40,
-           duration: '25 hours',
-         },
-         {
-           key: '3',
-           label: 'All Time',
-           events: 43,
-           duration: '30 hours',
-         },
-       ];
+  {
+    key: '1',
+    label: 'Month Total',
+    events: 10,
+    duration: '5 hours',
+  },
+  {
+    key: '2',
+    label: 'Year Total',
+    events: 40,
+    duration: '25 hours',
+  },
+  {
+    key: '3',
+    label: 'All Time',
+    events: 43,
+    duration: '30 hours',
+  },
+];
 
 export const showColumns = [
   {

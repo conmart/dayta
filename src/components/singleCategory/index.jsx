@@ -1,22 +1,47 @@
 import React, { Fragment, useState } from 'react';
+import { FirestoreCollection } from '@react-firebase/firestore';
+import { LoadingOutlined } from '@ant-design/icons';
 
-import CategoryHeader from './categoryHeader';
+import { useGlobalState } from '../../state';
+
 import EventList from './eventList';
 import ShowCategory from './showCategory';
 
 const Category = () => {
+  const { selectedCategory } = useGlobalState()[0];
   const [eventList, toggleEventList] = useState(false);
+
+  const onlySelectedCategory = {
+    field: 'category_name',
+    operator: '==',
+    value: selectedCategory,
+  };
 
   return (
     <Fragment>
       <div className="pageTitleContainer">
-        <CategoryHeader />
+        <div className="pageTitle">{selectedCategory}</div>
       </div>
-      {eventList ? (
-        <EventList backToShow={() => toggleEventList(false)} />
-      ) : (
-        <ShowCategory showEventList={() => toggleEventList(true)} />
-      )}
+      <FirestoreCollection path="/events" where={onlySelectedCategory}>
+        {(res) => {
+          console.log(res)
+          debugger
+          if (res.isLoading) {
+            return <LoadingOutlined />;
+          }
+          return eventList ? (
+            <EventList
+              backToShow={() => toggleEventList(false)}
+              events={res.value}
+            />
+          ) : (
+            <ShowCategory
+              showEventList={() => toggleEventList(true)}
+              events={res.value}
+            />
+          );
+        }}
+      </FirestoreCollection>
     </Fragment>
   );
 };

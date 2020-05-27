@@ -7,7 +7,8 @@ import 'antd/dist/antd.css';
 
 import { dataSource, columns } from './dummyData';
 
-const EventList = ({ backToShow }) => {
+const EventList = ({ backToShow, events }) => {
+  // console.log(events)
   return (
     <div className="pageContentContainer">
       <Table

@@ -1,7 +1,7 @@
 export const dataSource = [
   {
     key: '1',
-    name: 'TestCategory1',
+    name: 'test7',
     instances: 32,
     latest: 'May 4th',
   },
@@ -13,7 +13,7 @@ export const dataSource = [
   },
   {
     key: '3',
-    name: 'Ca3',
+    name: 'test5',
     instances: 43,
     latest: 'March 3rd',
   },

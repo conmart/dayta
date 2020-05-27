@@ -59,7 +59,7 @@ const Day = () => {
         selectedDate={selectedDate}
       />
       <div className="pageContentContainer">
-        <FirestoreCollection path="/events" where={startToday}>
+        <FirestoreCollection path="/events">
           {(events) => {
             if (events.isLoading) {
               return <LoadingOutlined />;
