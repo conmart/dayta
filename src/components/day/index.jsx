@@ -23,6 +23,26 @@ const Day = () => {
     history.push('/event');
   };
 
+  const onlyUserEvents = {
+    field: 'uid',
+    operator: '==',
+    value: '11VOsEy13qhDyQQfNKVU0JbIwPb2',
+  };
+  const startToday = {
+    field: "start_date.seconds",
+    operator: '==',
+    value: selectedDate.clone().startOf('day').unix(),
+  };
+  // const endToday = {
+  //   field: 'start_date',
+  //   operator: '',
+  // }
+
+  const start = selectedDate.clone().startOf('day').unix();
+  // const end = selectedDate.clone().endOf('day').unix();
+
+  console.log(start)
+
   return (
     <Fragment>
       <DayHeader
@@ -38,7 +58,7 @@ const Day = () => {
             } else if (!events.value.length) {
               return 'no events found';
             } else {
-              // console.log(events);
+              console.log(events);
               return events.value.map((event, index) => (
                 <DayEvent
                   category={event['category_name']}
