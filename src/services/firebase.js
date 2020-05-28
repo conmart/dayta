@@ -9,21 +9,17 @@ const myUid = '11VOsEy13qhDyQQfNKVU0JbIwPb2';
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-export const getCategories = () =>
-  db
-    .collection('categories')
-    .get().then(res => {
-      console.log(res)
-    });
+export const getCategories = () => db.collection('categories').get();
 
-export const getEventsByCategory = (categoryId) => {
-  console.log(categoryId);
+export const getSingleCategory = (categoryId) => {
   return db.collection('categories').doc(categoryId).get();
 };
+
+export const getEventsForCategory = (categoryId) => {};
 
 export const createNewCategory = () => {
   db.collection('categories').add({
     name: 'NewCat08',
     uid: myUid,
-  })
-}
+  });
+};

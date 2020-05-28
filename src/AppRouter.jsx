@@ -32,7 +32,7 @@ const AppRouter = ({ user, signOut }) => {
           <CategoryList />
         </Route>
         <Route path="/category">
-          {selectedCategory ? <Category /> : <Redirect to="/" />}
+          {selectedCategory ? <Category /> : <Redirect to="/categories" />}
         </Route>
         <Route path="/event">
           <Event />

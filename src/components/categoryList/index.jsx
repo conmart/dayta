@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Table } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
-import { getCategories } from '../../services/firebase'
+import { getCategories } from '../../services/firebase';
 
 import styles from './categories.module.css';
 import 'antd/dist/antd.css';
@@ -16,18 +17,39 @@ import { dataSource, columns } from './dummyData';
 
 const CategoryList = () => {
   const history = useHistory();
-  const [{ userId }, dispatch] = useGlobalState();
-  const [categories, setCategories] = useState(null);
+  const dispatch = useGlobalState()[1];
+  const [categoryIdMap, setCategoryIdMap] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [receivedData, setReceivedData] = useState([]);
 
   useEffect(() => {
-    getCategories()
-  })
+    if (loading) {
+      getCategories()
+        .then((categories) => {
+          setLoading(false);
+          if (!categories.empty) {
+            const categoryData = [];
+            const idMap = {};
+            categories.forEach((doc) => {
+              const data = doc.data();
+              idMap[data.name] = doc.id;
+              categoryData.push({
+                key: doc.id,
+                name: data.name,
+                instances: 'count',
+                latest: 'date goes here',
+              });
+            });
+            setCategoryIdMap(idMap);
+            setReceivedData(categoryData);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  });
 
   const goToCategory = (categoryName) => {
-    const selectedCategory = {
-      name: categoryName,
-      id: 'need Id',
-    };
+    const selectedCategory = categoryIdMap[categoryName];
     dispatch({ type: 'CATEGORY_SELECTED', selectedCategory });
     history.push('/category');
   };
@@ -47,17 +69,23 @@ const CategoryList = () => {
     );
   };
 
+  console.log(receivedData, categoryIdMap, loading, 'local state');
+
   return (
     <Fragment>
       <div className="pageTitleContainer">
         <div className="pageTitle">Categories</div>
       </div>
       <div className="pageContentContainer">
-        <Table
-          dataSource={dataSource}
-          columns={columnsWithLinks}
-          pagination={false}
-        />
+        {loading ? (
+          <LoadingOutlined />
+        ) : (
+          <Table
+            dataSource={receivedData}
+            columns={columnsWithLinks}
+            pagination={false}
+          />
+        )}
       </div>
     </Fragment>
   );
