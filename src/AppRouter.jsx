@@ -12,45 +12,34 @@ import Category from './components/singleCategory';
 import CategoryList from './components/categoryList';
 import Day from './components/day';
 import Event from './components/event';
-import Login from './components/login';
 import MenuContainer from './components/menu';
 import NewEventButton from './components/newEventButton';
 
-const AppRouter = () => {
-  const [{ userId, selectedCategory }, dispatch] = useGlobalState();
+const AppRouter = ({ user, signOut }) => {
+  const { selectedCategory } = useGlobalState()[0];
 
-  // const updateUser = (uid) => dispatch({ type: 'SET_USER', userId: uid });
-
-  const devSignIn = true;
   return (
     <Router>
-      {devSignIn && (
-        <Fragment>
-          <MenuContainer />
-          <NewEventButton />
-        </Fragment>
-      )}
+      <Fragment>
+        <MenuContainer signOut={signOut} />
+        <NewEventButton />
+      </Fragment>
       <Switch>
         <Route path="/calendar">
-          {devSignIn ? <Calendar /> : <Redirect to="/login" />}
+          <Calendar />
         </Route>
         <Route path="/categories">
-          {devSignIn ? <CategoryList /> : <Redirect to="/login" />}
+          <CategoryList />
         </Route>
         <Route path="/category">
-          {devSignIn && selectedCategory ? (
-            <Category />
-          ) : (
-            <Redirect to="/login" />
-          )}
+          {selectedCategory ? <Category /> : <Redirect to="/" />}
         </Route>
         <Route path="/event">
-          {devSignIn ? <Event /> : <Redirect to="/login" />}
+          <Event />
         </Route>
-        <Route path="/login">
-          {!devSignIn ? <Login /> : <Redirect to="/" />}
+        <Route path="/">
+          <Day />
         </Route>
-        <Route path="/">{devSignIn ? <Day /> : <Redirect to="/login" />}</Route>
       </Switch>
     </Router>
   );

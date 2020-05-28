@@ -1,13 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
-import firebase from 'firebase/app';
 
 import { useGlobalState } from '../../state';
 
 import styles from './menu.module.css';
 
-const MenuContainer = () => {
+const MenuContainer = ({ signOut }) => {
   const dispatch = useGlobalState()[1];
   const history = useHistory();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -48,13 +47,7 @@ const MenuContainer = () => {
             </div>
             <ul className={styles.list}>
               {menuLinks}
-              <li
-                onClick={() => {
-                  firebase.app().auth().signOut();
-                }}
-              >
-                Sign Out
-              </li>
+              <li onClick={signOut}>Sign Out</li>
             </ul>
           </div>
         </Fragment>

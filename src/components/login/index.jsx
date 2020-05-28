@@ -1,16 +1,10 @@
 import React from 'react';
-import firebase from 'firebase/app';
 import { Button } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
 
 import styles from './login.module.css';
 
-const Login = () => {
-  const signInWithGoogle = () => {
-    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(googleAuthProvider);
-  };
-
+const Login = ({ signInWithGoogle }) => {
   return (
     <div className={styles.container}>
       <div className={styles.welcome}>
