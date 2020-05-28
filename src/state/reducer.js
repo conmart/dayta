@@ -13,10 +13,14 @@ export const reducer = (state, action) => {
         selectedEvent: action.eventId,
       };
     case 'CATEGORY_SELECTED':
-      console.log(action)
       return {
         ...state,
-        selectedCategory: action.categoryName,
+        selectedCategory: action.selectedCategory,
+      };
+    case 'SET_USER':
+      return {
+        ...state,
+        userId: action.userId,
       };
     case 'CLEAR_USER_SELECTIONS':
       return {

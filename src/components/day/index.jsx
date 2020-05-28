@@ -23,34 +23,6 @@ const Day = () => {
     history.push('/event');
   };
 
-  const combinedWhere = [
-    {
-      field: 'uid',
-      operator: '==',
-      value: '11VOsEy13qhDyQQfNKVU0JbIwPb2',
-    },
-    {
-      field: 'start_date',
-      operator: '==',
-      value: selectedDate.format('MMMMDoYYYY'),
-    },
-  ];
-  const startToday = {
-    field: 'start_date',
-    operator: '==',
-    value: selectedDate.format('MMMMDoYYYY'),
-  };
-  const userData = {
-    field: 'uid',
-    operator: '==',
-    value: '11VOsEy13qhDyQQfNKVU0JbIwPb2',
-  };
-
-  // const start = selectedDate.clone().startOf('day').unix();
-  // const end = selectedDate.clone().endOf('day').unix();
-
-  // console.log(start);
-
   return (
     <Fragment>
       <DayHeader
@@ -59,7 +31,8 @@ const Day = () => {
         selectedDate={selectedDate}
       />
       <div className="pageContentContainer">
-        <FirestoreCollection path="/events">
+        Work in progress
+        {/* <FirestoreCollection path="/events">
           {(events) => {
             if (events.isLoading) {
               return <LoadingOutlined />;
@@ -77,7 +50,7 @@ const Day = () => {
               ));
             }
           }}
-        </FirestoreCollection>
+        </FirestoreCollection> */}
       </div>
     </Fragment>
   );

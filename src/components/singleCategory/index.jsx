@@ -11,21 +11,16 @@ const Category = () => {
   const { selectedCategory } = useGlobalState()[0];
   const [eventList, toggleEventList] = useState(false);
 
-  const onlySelectedCategory = {
-    field: 'category_name',
-    operator: '==',
-    value: selectedCategory,
-  };
-
   return (
     <Fragment>
       <div className="pageTitleContainer">
-        <div className="pageTitle">{selectedCategory}</div>
+        <div className="pageTitle">{selectedCategory.name}</div>
       </div>
-      <FirestoreCollection path="/events" where={onlySelectedCategory}>
+      <FirestoreCollection
+        path={`/categories/${selectedCategory.id}/events`}
+      >
         {(res) => {
-          console.log(res)
-          debugger
+          console.log(res, 'categoryRes');
           if (res.isLoading) {
             return <LoadingOutlined />;
           }

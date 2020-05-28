@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const initialState = {
-  authenticated: true,
+  userId: null,
   selectedCategory: null,
   selectedDate: moment(),
   selectedEvent: null,
