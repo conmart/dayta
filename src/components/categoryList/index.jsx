@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
+import { getCategories } from '../../services/firebase'
 
 import styles from './categories.module.css';
 import 'antd/dist/antd.css';
@@ -16,6 +17,16 @@ import { dataSource, columns } from './dummyData';
 const CategoryList = () => {
   const history = useHistory();
   const [{ userId }, dispatch] = useGlobalState();
+  const [categories, setCategories] = useState(null);
+
+  useEffect(() => {
+    getCategories().then(res => {
+      console.log(res)
+      console.log(res.exists)
+      console.log(res.value)
+    })
+  })
+
 
   const goToCategory = (categoryName) => {
     const selectedCategory = {
