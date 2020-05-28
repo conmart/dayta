@@ -12,8 +12,6 @@ const Category = () => {
   const [eventList, toggleEventList] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  console.log(selectedCategory);
-
   useEffect(() => {
     if (loading) {
       getSingleCategory(selectedCategory).then((category) => {

@@ -69,8 +69,6 @@ const CategoryList = () => {
     );
   };
 
-  console.log(receivedData, categoryIdMap, loading, 'local state');
-
   return (
     <Fragment>
       <div className="pageTitleContainer">
