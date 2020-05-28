@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { FirestoreCollection } from '@react-firebase/firestore';
+
 import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
@@ -32,25 +32,12 @@ const Day = () => {
       />
       <div className="pageContentContainer">
         Work in progress
-        {/* <FirestoreCollection path="/events">
-          {(events) => {
-            if (events.isLoading) {
-              return <LoadingOutlined />;
-            } else if (!events.value.length) {
-              return 'no events found';
-            } else {
-              console.log(events);
-              return events.value.map((event, index) => (
-                <DayEvent
+        {/* <DayEvent
                   category={event['category_name']}
                   key={events.ids[index]}
                   goToEvent={goToEvent}
                   eventId={events.ids[index]}
-                />
-              ));
-            }
-          }}
-        </FirestoreCollection> */}
+                /> */}
       </div>
     </Fragment>
   );

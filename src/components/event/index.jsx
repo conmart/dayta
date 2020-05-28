@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   AutoComplete,
   DatePicker,
@@ -7,10 +7,8 @@ import {
   TimePicker,
 } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
-import { FirestoreMutation } from '@react-firebase/firestore';
 
 import { useGlobalState } from '../../state';
-import Mutator from './mutator';
 
 import { options } from './dummyData';
 
@@ -27,18 +25,6 @@ const Event = () => {
   const [eventEnd, setEnd] = useState(null);
   const [duration, setDuration] = useState(null);
   const [durationUnit, setDurationUnit] = useState(1);
-
-  let newEventData = {};
-
-  useEffect(() => {
-    // console.log('hello')
-    // console.log(categoryName);
-    newEventData = {
-      category_name: categoryName,
-      uid: '11VOsEy13qhDyQQfNKVU0JbIwPb2',
-    };
-    console.log(newEventData)
-  })
 
   const onCategoryChange = (category) => setCategory(category);
   const onDateChange = (date) => setDate(date);
@@ -126,9 +112,7 @@ const Event = () => {
             )}
           </div>
         </div>
-        <div>{categoryName}</div>
-        
-        <Mutator categoryName={categoryName} />
+        <div className={styles.saveIcon}><CheckCircleFilled /></div>
       </div>
     </Fragment>
   );
