@@ -7,6 +7,13 @@ import { firebaseConfig } from './firebaseConfig';
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-export const getCategories = () => (
-  db.collection('categories').get()
-);
+export const getCategories = () =>
+  db
+    .collection('categories')
+    .where('uid', '==', '11VOsEy13qhDyQQfNKVU0JbIwPb2')
+    .get();
+
+export const getEventsByCategory = (categoryId) => {
+  console.log(categoryId);
+  return db.collection('categories').doc(categoryId).get();
+};

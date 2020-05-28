@@ -20,13 +20,18 @@ const CategoryList = () => {
   const [categories, setCategories] = useState(null);
 
   useEffect(() => {
-    getCategories().then(res => {
-      console.log(res)
-      console.log(res.exists)
-      console.log(res.value)
+    getCategories().then(doc => {
+      console.log(doc)
+      console.log(doc.data)
+      // console.log(doc.value)
     })
   })
 
+  getCategories().then((doc) => {
+    console.log(doc);
+    console.log(doc.data);
+    // console.log(res.value)
+  }).catch(err => console.log(err, 'err'));
 
   const goToCategory = (categoryName) => {
     const selectedCategory = {
