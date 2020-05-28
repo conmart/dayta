@@ -9,6 +9,7 @@ import {
 import { CheckCircleFilled } from '@ant-design/icons';
 
 import { useGlobalState } from '../../state';
+import { createNewCategory } from '../../services/firebase';
 
 import { options } from './dummyData';
 
@@ -112,7 +113,12 @@ const Event = () => {
             )}
           </div>
         </div>
-        <div className={styles.saveIcon}><CheckCircleFilled /></div>
+        <div
+          className={styles.saveIcon}
+          onClick={createNewCategory}
+        >
+          <CheckCircleFilled />
+        </div>
       </div>
     </Fragment>
   );

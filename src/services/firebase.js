@@ -4,16 +4,26 @@ import 'firebase/auth';
 
 import { firebaseConfig } from './firebaseConfig';
 
+const myUid = '11VOsEy13qhDyQQfNKVU0JbIwPb2';
+
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 export const getCategories = () =>
   db
     .collection('categories')
-    .where('uid', '==', '11VOsEy13qhDyQQfNKVU0JbIwPb2')
-    .get();
+    .get().then(res => {
+      console.log(res)
+    });
 
 export const getEventsByCategory = (categoryId) => {
   console.log(categoryId);
   return db.collection('categories').doc(categoryId).get();
 };
+
+export const createNewCategory = () => {
+  db.collection('categories').add({
+    name: 'NewCat08',
+    uid: myUid,
+  })
+}
