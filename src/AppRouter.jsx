@@ -5,7 +5,6 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import { FirebaseAuthConsumer } from '@react-firebase/auth';
 import { useGlobalState } from './state';
 
 import Calendar from './components/calendar';
@@ -20,50 +19,40 @@ import NewEventButton from './components/newEventButton';
 const AppRouter = () => {
   const [{ userId, selectedCategory }, dispatch] = useGlobalState();
 
-  const updateUser = (uid) => dispatch({ type: 'SET_USER', userId: uid });
+  // const updateUser = (uid) => dispatch({ type: 'SET_USER', userId: uid });
 
+  const devSignIn = true;
   return (
-    <FirebaseAuthConsumer>
-      {({ isSignedIn, user }) => {
-        const devSignIn = true;
-        const uid = isSignedIn ? user.uid : null;
-        if (uid !== userId) updateUser(uid);
-        return (
-          <Router>
-            {devSignIn && (
-              <Fragment>
-                <MenuContainer />
-                <NewEventButton />
-              </Fragment>
-            )}
-            <Switch>
-              <Route path="/calendar">
-                {devSignIn ? <Calendar /> : <Redirect to="/login" />}
-              </Route>
-              <Route path="/categories">
-                {devSignIn ? <CategoryList /> : <Redirect to="/login" />}
-              </Route>
-              <Route path="/category">
-                {devSignIn && selectedCategory ? (
-                  <Category />
-                ) : (
-                  <Redirect to="/login" />
-                )}
-              </Route>
-              <Route path="/event">
-                {devSignIn ? <Event /> : <Redirect to="/login" />}
-              </Route>
-              <Route path="/login">
-                {!devSignIn ? <Login /> : <Redirect to="/" />}
-              </Route>
-              <Route path="/">
-                {devSignIn ? <Day /> : <Redirect to="/login" />}
-              </Route>
-            </Switch>
-          </Router>
-        );
-      }}
-    </FirebaseAuthConsumer>
+    <Router>
+      {devSignIn && (
+        <Fragment>
+          <MenuContainer />
+          <NewEventButton />
+        </Fragment>
+      )}
+      <Switch>
+        <Route path="/calendar">
+          {devSignIn ? <Calendar /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/categories">
+          {devSignIn ? <CategoryList /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/category">
+          {devSignIn && selectedCategory ? (
+            <Category />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+        <Route path="/event">
+          {devSignIn ? <Event /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/login">
+          {!devSignIn ? <Login /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/">{devSignIn ? <Day /> : <Redirect to="/login" />}</Route>
+      </Switch>
+    </Router>
   );
 };
 
