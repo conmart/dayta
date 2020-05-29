@@ -4,7 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
-import { eventsByDate } from '../../services/firebase';
+import { getEventsByDate } from '../../services/firebase';
 
 import DayHeader from './dayHeader';
 import DayEvent from './dayEvent';
@@ -17,7 +17,7 @@ const Day = () => {
 
   useEffect(() => {
     const unixDate = selectedDate.clone().startOf('day').unix();
-    eventsByDate(unixDate, uid).then((events) => {
+    getEventsByDate(unixDate, uid).then((events) => {
       setLoading(false);
       const eventList = [];
       events.forEach((doc) => {

@@ -17,13 +17,13 @@ import { columns } from './dummyData';
 
 const CategoryList = () => {
   const history = useHistory();
-  const dispatch = useGlobalState()[1];
+  const [{ uid }, dispatch] = useGlobalState();
   const [categoryMap, setCategoryMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [receivedData, setReceivedData] = useState([]);
 
   useEffect(() => {
-      getCategories()
+      getCategories(uid)
         .then((categories) => {
           setLoading(false);
           if (!categories.empty) {
@@ -45,7 +45,7 @@ const CategoryList = () => {
           }
         })
         .catch((err) => console.log(err));
-  }, [loading]);
+  }, [loading, uid]);
 
   const goToCategory = (categoryName) => {
     const selectedCategory = categoryMap[categoryName];

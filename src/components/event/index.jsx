@@ -32,7 +32,7 @@ const Event = () => {
   const [eventStart, setStart] = useState(null);
   const [eventEnd, setEnd] = useState(null);
   const [duration, setDuration] = useState(null);
-  const [durationUnit, setDurationUnit] = useState(1);
+  const [durationUnit, setDurationUnit] = useState(2);
 
   const onCategoryChange = (category) => setCategory(category);
   const onDateChange = (date) => setDate(date);
@@ -127,8 +127,9 @@ const Event = () => {
                   style={{ width: '50%' }}
                   value={durationUnit}
                 >
-                  <Option value={1}>{'minute(s)'}</Option>
-                  <Option value={2}>{'hour(s)'}</Option>
+                  <Option value={1}>{'second(s)'}</Option>
+                  <Option value={2}>{'minute(s)'}</Option>
+                  <Option value={3}>{'hour(s)'}</Option>
                 </Select>
               </Fragment>
             )}
