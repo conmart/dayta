@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
   AutoComplete,
   DatePicker,
@@ -9,8 +9,9 @@ import {
 import { CheckCircleFilled } from '@ant-design/icons';
 
 import { useGlobalState } from '../../state';
-import { createNewEvent } from '../../services/firebase';
+import * as fs from '../../services/firebase';
 
+import { buildEvent, buildCategory } from './utils';
 import { options } from './dummyData';
 
 import styles from './event.module.css';
@@ -22,7 +23,7 @@ const Event = () => {
   const {
     selectedCategory,
     selectedDate,
-    selectedEvent,
+    // selectedEvent,
     uid,
   } = useGlobalState()[0];
   const [categoryName, setCategory] = useState(
@@ -33,6 +34,17 @@ const Event = () => {
   const [eventEnd, setEnd] = useState(null);
   const [duration, setDuration] = useState(null);
   const [durationUnit, setDurationUnit] = useState(2);
+  const [categoryNameIdMap, setCategoryNameIdMap] = useState(null);
+
+  useEffect(() => {
+    fs.getCategories(uid).then((categories) => {
+      const catNameMap = {};
+      categories.forEach((doc) => {
+        catNameMap[doc.data().name] = doc.id;
+      });
+      setCategoryNameIdMap(catNameMap);
+    });
+  }, [uid]);
 
   const onCategoryChange = (category) => setCategory(category);
   const onDateChange = (date) => setDate(date);
@@ -45,19 +57,25 @@ const Event = () => {
   const timeFormat = 'h:mm a';
   const hideDuration = eventStart && eventEnd;
 
-  const testNewEvent = () => {
-    const newEvent = {
-      category_name: 'TestCat1',
-      duration: 60,
-      start_date: selectedDate.clone().startOf('day').unix(),
-      start_time: selectedDate.clone().unix(),
-      uid: uid,
-    };
+  const handleSave = () => {
+    const newEvent = buildEvent(
+      categoryName,
+      eventDate,
+      eventStart,
+      eventEnd,
+      duration,
+      durationUnit,
+      uid
+    );
     console.log(newEvent);
-    createNewEvent(newEvent);
+    fs.createNewEvent(newEvent);
+    if (!categoryNameIdMap[categoryName]) {
+      const newCategory = buildCategory(categoryName, uid);
+      fs.createNewCategory(newCategory);
+    }
   };
 
-  console.log(selectedEvent);
+  // console.log(categoryNameIdMap, 'foundcategories');
 
   return (
     <Fragment>
@@ -135,7 +153,7 @@ const Event = () => {
             )}
           </div>
         </div>
-        <div className={styles.saveIcon} onClick={testNewEvent}>
+        <div className={styles.saveIcon} onClick={handleSave}>
           <CheckCircleFilled />
         </div>
       </div>
