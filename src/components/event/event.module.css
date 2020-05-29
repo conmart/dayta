@@ -34,8 +34,19 @@
   height: 32px;
 }
 
-.saveIcon {
+.footerContainer {
   font-size: 50px;
   padding-top: 17px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.saveIcon {
   color: green;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  color: red;
+  cursor: pointer;
 }
