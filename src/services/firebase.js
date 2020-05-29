@@ -15,11 +15,24 @@ export const getSingleCategory = (categoryId) => {
   return db.collection('categories').doc(categoryId).get();
 };
 
-export const getEventsForCategory = (categoryId) => {};
-
-export const createNewCategory = () => {
-  db.collection('categories').add({
-    name: 'NewCat08',
-    uid: myUid,
-  });
+export const getEventsForCategory = (categoryId) => {
+  return db.collection('categories').doc(categoryId).collection('events').get();
 };
+
+// const createNewCategory = (name) => {
+//   db.collection('categories').add({
+//     name: 'NewCat08',
+//     uid: myUid,
+//   });
+// };
+
+export const createEventForExistingCategory = (categoryId, newEvent) => {
+  db.collection('categories')
+    .doc(categoryId)
+    .collection('events')
+    .add(newEvent);
+};
+
+export const updateEvent = (eventId, updatedEvent) => {
+  db.collection('events')
+}

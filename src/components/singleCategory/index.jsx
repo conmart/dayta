@@ -1,24 +1,31 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
+// import { LoadingOutlined } from '@ant-design/icons';
 
 import { useGlobalState } from '../../state';
-import { getSingleCategory } from '../../services/firebase';
+import { getEventsForCategory } from '../../services/firebase';
 
 import EventList from './eventList';
 import ShowCategory from './showCategory';
 
 const Category = () => {
   const { selectedCategory } = useGlobalState()[0];
-  const [eventList, toggleEventList] = useState(false);
+  const [displayEventList, toggleEventList] = useState(false);
+  const [eventList, setEventList] = useState(null)
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     if (loading) {
-      getSingleCategory(selectedCategory).then((category) => {
+      getEventsForCategory(selectedCategory.id).then((events) => {
         setLoading(false);
-        if (category.exists) {
-          console.log(category.data());
-        }
+        const eventData = [];
+        events.forEach((doc) => {
+          const data = doc.data();
+          data['id'] = doc.id;
+          eventData.push(data)
+        })
+        console.log(eventData, 'foundeventdata');
+        setEventList(eventData);
       });
     }
   });
@@ -28,15 +35,14 @@ const Category = () => {
       <div className="pageTitleContainer">
         <div className="pageTitle">{selectedCategory.name}</div>
       </div>
-      {eventList ? (
+      {displayEventList ? (
         <EventList
           backToShow={() => toggleEventList(false)}
-          events={'needthis'}
+          events={eventList}
         />
       ) : (
         <ShowCategory
           showEventList={() => toggleEventList(true)}
-          events={'needthis'}
         />
       )}
     </Fragment>
