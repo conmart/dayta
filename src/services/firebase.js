@@ -26,6 +26,10 @@ export const getEventsForCategory = (categoryId) => {
 //   });
 // };
 
+export const createNewEvent = (newEvent) => {
+  db.collection('events').add(newEvent)
+}
+
 export const createEventForExistingCategory = (categoryId, newEvent) => {
   db.collection('categories')
     .doc(categoryId)
@@ -35,4 +39,10 @@ export const createEventForExistingCategory = (categoryId, newEvent) => {
 
 export const updateEvent = (eventId, updatedEvent) => {
   db.collection('events')
+}
+
+export const eventsByDate = (date, uid) => {
+  let query = db.collection('events').where('start_date', '==', date)
+  query = query.where('uid', '==', uid)
+  return query.get();
 }

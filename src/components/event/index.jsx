@@ -7,10 +7,9 @@ import {
   TimePicker,
 } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
-import moment from 'moment'
 
 import { useGlobalState } from '../../state';
-import { createEventForExistingCategory } from '../../services/firebase';
+import { createNewEvent } from '../../services/firebase';
 
 import { options } from './dummyData';
 
@@ -20,8 +19,15 @@ import 'antd/dist/antd.css';
 const { Option } = Select;
 
 const Event = () => {
-  const { selectedCategory, selectedDate } = useGlobalState()[0];
-  const [categoryName, setCategory] = useState(selectedCategory ? selectedCategory.name : null);
+  const {
+    selectedCategory,
+    selectedDate,
+    selectedEvent,
+    uid,
+  } = useGlobalState()[0];
+  const [categoryName, setCategory] = useState(
+    selectedCategory ? selectedCategory.name : null
+  );
   const [eventDate, setDate] = useState(selectedDate);
   const [eventStart, setStart] = useState(null);
   const [eventEnd, setEnd] = useState(null);
@@ -39,18 +45,19 @@ const Event = () => {
   const timeFormat = 'h:mm a';
   const hideDuration = eventStart && eventEnd;
 
-  const createNewEvent = () => {
-    console.log(selectedCategory.id);
-    const now = moment();
+  const testNewEvent = () => {
     const newEvent = {
       category_name: 'TestCat1',
-      duration: '1 hour',
-      start_date: now.format('MMMM Do, YYYY'),
-      start_time: now.format('h:mm a'),
+      duration: 60,
+      start_date: selectedDate.clone().startOf('day').unix(),
+      start_time: selectedDate.clone().unix(),
+      uid: uid,
     };
-    console.log(newEvent)
-    createEventForExistingCategory(selectedCategory.id, newEvent)
-  }
+    console.log(newEvent);
+    createNewEvent(newEvent);
+  };
+
+  console.log(selectedEvent);
 
   return (
     <Fragment>
@@ -127,10 +134,7 @@ const Event = () => {
             )}
           </div>
         </div>
-        <div
-          className={styles.saveIcon}
-          onClick={createNewEvent}
-        >
+        <div className={styles.saveIcon} onClick={testNewEvent}>
           <CheckCircleFilled />
         </div>
       </div>

@@ -28,7 +28,7 @@ const Category = () => {
         setEventList(eventData);
       });
     }
-  });
+  }, [loading, selectedCategory]);
 
   return (
     <Fragment>

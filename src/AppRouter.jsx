@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -16,7 +16,11 @@ import MenuContainer from './components/menu';
 import NewEventButton from './components/newEventButton';
 
 const AppRouter = ({ user, signOut }) => {
-  const { selectedCategory } = useGlobalState()[0];
+  const [{ selectedCategory }, dispatch] = useGlobalState();
+
+  useEffect(() => {
+    dispatch({ type: 'SET_USER', uid: user.uid })
+  }, [user, dispatch])  
 
   return (
     <Router>

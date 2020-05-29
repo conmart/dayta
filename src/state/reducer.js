@@ -10,7 +10,7 @@ export const reducer = (state, action) => {
     case 'EVENT_SELECTED':
       return {
         ...state,
-        selectedEvent: action.eventId,
+        selectedEvent: action.event,
       };
     case 'CATEGORY_SELECTED':
       return {
@@ -20,7 +20,7 @@ export const reducer = (state, action) => {
     case 'SET_USER':
       return {
         ...state,
-        userId: action.userId,
+        uid: action.uid,
       };
     case 'CLEAR_USER_SELECTIONS':
       return {

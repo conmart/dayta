@@ -23,7 +23,6 @@ const CategoryList = () => {
   const [receivedData, setReceivedData] = useState([]);
 
   useEffect(() => {
-    if (loading) {
       getCategories()
         .then((categories) => {
           setLoading(false);
@@ -46,8 +45,7 @@ const CategoryList = () => {
           }
         })
         .catch((err) => console.log(err));
-    }
-  });
+  }, [loading]);
 
   const goToCategory = (categoryName) => {
     const selectedCategory = categoryMap[categoryName];

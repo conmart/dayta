@@ -1,16 +1,33 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
+import { eventsByDate } from '../../services/firebase';
 
 import DayHeader from './dayHeader';
 import DayEvent from './dayEvent';
 
 const Day = () => {
-  const [{ selectedDate }, dispatch] = useGlobalState();
+  const [{ selectedDate, uid }, dispatch] = useGlobalState();
   const history = useHistory();
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unixDate = selectedDate.clone().startOf('day').unix();
+    eventsByDate(unixDate, uid).then((events) => {
+      setLoading(false);
+      const eventList = [];
+      events.forEach((doc) => {
+        const data = doc.data();
+        data['id'] = doc.id;
+        eventList.push(data);
+      });
+      setEvents(eventList);
+    })
+  }, [loading, selectedDate, uid])
 
   const updateSelectedDate = (nextDay) => {
     const updatedDate = selectedDate.clone();
@@ -18,10 +35,12 @@ const Day = () => {
     dispatch({ type: 'NEW_DATE', selectedDate: updatedDate });
   };
 
-  const goToEvent = (eventId) => {
-    dispatch({ type: 'EVENT_SELECTED', eventId });
+  const goToEvent = (event) => {
+    dispatch({ type: 'EVENT_SELECTED', event });
     history.push('/event');
   };
+
+  const noEvents = !loading && !events.length
 
   return (
     <Fragment>
@@ -31,13 +50,16 @@ const Day = () => {
         selectedDate={selectedDate}
       />
       <div className="pageContentContainer">
-        Work in progress
-        {/* <DayEvent
-                  category={event['category_name']}
-                  key={events.ids[index]}
-                  goToEvent={goToEvent}
-                  eventId={events.ids[index]}
-                /> */}
+        {loading ? (<LoadingOutlined />) : (
+          events.map(event => (
+            <DayEvent
+              category={event['category_name']}
+              key={event.id}
+              goToEvent={() => goToEvent(event)}
+              />
+          ))
+        )}
+        {noEvents && <div>no events found</div>}
       </div>
     </Fragment>
   );
