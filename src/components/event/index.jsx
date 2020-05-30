@@ -66,7 +66,6 @@ const Event = () => {
       durationUnit,
       uid
     );
-    console.log(newEvent);
     fs.createNewEvent(newEvent).then(() => {
       const existingCategory = categoryNameIdMap[categoryName];
       if (existingCategory) {
@@ -78,8 +77,6 @@ const Event = () => {
       }
     })
   };
-
-  console.log(categoryNameIdMap, 'mapObj')
 
   const title = selectedEvent ? 'Edit Event' : 'New Event';
 

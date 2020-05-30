@@ -13,7 +13,6 @@ export const createNewCategory = (newCategory) => {
 };
 
 export const updateCategory = (categoryId, newData) => {
-  console.log('updating', categoryId, newData);
   db.collection('categories').doc(categoryId).update(newData);
 };
 
