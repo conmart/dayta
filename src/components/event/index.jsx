@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 import { useGlobalState } from '../../state';
 import * as fs from '../../services/firebase';
-import { buildEvent, buildCategory } from './utils';
+import { buildEvent, buildNewCategory } from './utils';
 import EventForm from './eventForm';
 import FormFooter from './formFooter';
 
@@ -29,7 +29,8 @@ const Event = () => {
     fs.getCategories(uid).then((categories) => {
       const catNameMap = {};
       categories.forEach((doc) => {
-        catNameMap[doc.data().name] = doc.id;
+        const data = doc.data();
+        catNameMap[data.name] = [doc.id, data.total_events];
       });
       setCategoryNameIdMap(catNameMap);
     });
@@ -43,6 +44,18 @@ const Event = () => {
   const onDurationChange = (length) => setDuration(length);
   const onUnitChange = (unit) => setDurationUnit(unit);
 
+  const updateExistingCategory = (categoryId, newCount) => {
+    fs.getMostRecentEventForCategory(categoryName, uid).then((collection) => {
+      let latestEvent;
+      collection.forEach((doc) => latestEvent = doc.data());
+      const updatedCategoryData = {
+        total_events: newCount,
+        most_recent_event: latestEvent
+      }
+      fs.updateCategory(categoryId, updatedCategoryData);
+    });
+  }
+
   const handleSave = () => {
     const newEvent = buildEvent(
       categoryName,
@@ -54,12 +67,19 @@ const Event = () => {
       uid
     );
     console.log(newEvent);
-    fs.createNewEvent(newEvent);
-    if (!categoryNameIdMap[categoryName]) {
-      const newCategory = buildCategory(categoryName, uid);
-      fs.createNewCategory(newCategory);
-    }
+    fs.createNewEvent(newEvent).then(() => {
+      const existingCategory = categoryNameIdMap[categoryName];
+      if (existingCategory) {
+        const newCount = existingCategory[1] + 1;
+        updateExistingCategory(existingCategory[0], newCount);
+      } else {
+        const newCategory = buildNewCategory(categoryName, eventDate, uid);
+        fs.createNewCategory(newCategory);
+      }
+    })
   };
+
+  console.log(categoryNameIdMap, 'mapObj')
 
   const title = selectedEvent ? 'Edit Event' : 'New Event';
 

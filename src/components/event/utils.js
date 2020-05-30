@@ -38,12 +38,13 @@ export const buildEvent = (categoryName, eventDate, start, end, duration, unit, 
   return newEvent;
 }
 
-export const buildCategory = (categoryName, uid) => {
+export const buildNewCategory = (categoryName, eventDate, uid ) => {
   return {
     name: categoryName,
     uid,
     total_events: 1,
-  }
+    most_recent_event: eventDate.clone().startOf('day').unix(),
+  };
 }
 
 export const durationToFriendly = (duration) => {
