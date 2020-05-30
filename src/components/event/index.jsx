@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
 import * as fs from '../../services/firebase';
@@ -9,12 +10,13 @@ import FormFooter from './formFooter';
 import styles from './event.module.css';
 
 const Event = () => {
-  const {
+  const history = useHistory();
+  const [{
     selectedCategory,
     selectedDate,
     selectedEvent,
     uid,
-  } = useGlobalState()[0];
+  }, dispatch] = useGlobalState();
   const [categoryName, setCategory] = useState(
     selectedCategory ? selectedCategory.name : null
   );
@@ -43,6 +45,11 @@ const Event = () => {
   const onEndChange = (time) => setEnd(time);
   const onDurationChange = (length) => setDuration(length);
   const onUnitChange = (unit) => setDurationUnit(unit);
+
+  const returnHome = () => {
+    dispatch({ type: 'NEW_DATE', selectedDate: eventDate });
+    history.push('/');
+  }
 
   const updateExistingCategory = (categoryId, newCount) => {
     fs.getMostRecentEventForCategory(categoryName, uid).then((collection) => {
@@ -75,6 +82,7 @@ const Event = () => {
         const newCategory = buildNewCategory(categoryName, eventDate, uid);
         fs.createNewCategory(newCategory);
       }
+      returnHome();
     })
   };
 

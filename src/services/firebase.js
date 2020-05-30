@@ -48,7 +48,7 @@ const getEventsByCategoryHelper = (categoryName, uid) => {
 
 export const getEventsByCategory = (categoryName, uid) => {
   const query = getEventsByCategoryHelper(categoryName, uid);
-  return query.limit(2).get();
+  return query.get();
 };
 
 export const getMostRecentEventForCategory = (categoryName, uid) => {
