@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import { useGlobalState } from '../../state';
 import { getCategories } from '../../services/firebase';
@@ -25,7 +26,6 @@ const CategoryList = () => {
   useEffect(() => {
       getCategories(uid)
         .then((categories) => {
-          setLoading(false);
           if (!categories.empty) {
             const categoryData = [];
             const catMap = {};
@@ -33,19 +33,21 @@ const CategoryList = () => {
               const data = doc.data();
               data['id'] = doc.id;
               catMap[data.name] = data;
+              const latestDate = moment.unix(data['most_recent_event']);
               categoryData.push({
                 key: doc.id,
                 name: data.name,
-                instances: 'count',
-                latest: 'date goes here',
+                instances: data['total_events'],
+                latest: latestDate.format('M/DD/YY'),
               });
             });
             setCategoryMap(catMap);
             setReceivedData(categoryData);
+            setLoading(false);
           }
         })
         .catch((err) => console.log(err));
-  }, [loading, uid]);
+  }, [uid]);
 
   const goToCategory = (categoryName) => {
     const selectedCategory = categoryMap[categoryName];

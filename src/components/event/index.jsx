@@ -54,7 +54,7 @@ const Event = () => {
   const updateExistingCategory = (categoryId, newCount) => {
     fs.getMostRecentEventForCategory(categoryName, uid).then((collection) => {
       let latestEvent;
-      collection.forEach((doc) => latestEvent = doc.data());
+      collection.forEach((doc) => latestEvent = doc.data()['start_date']);
       const updatedCategoryData = {
         total_events: newCount,
         most_recent_event: latestEvent

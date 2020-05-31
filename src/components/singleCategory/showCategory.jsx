@@ -1,20 +1,26 @@
 import React from 'react';
 import { Divider, Table } from 'antd';
 import { DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import moment from 'moment'
 
 import styles from './category.module.css';
 import 'antd/dist/antd.css';
 
-import { showSource, showColumns } from './dummyData';
+import { buildDataSource, showSource, showColumns } from './utils';
 
-const ShowCategory = ({ showEventList }) => {
+const ShowCategory = ({ events, selectedCategory, showEventList }) => {
+  const formattedMostRecent = moment
+    .unix(selectedCategory['most_recent_event'])
+    .format('MMMM Do, YYYY');
+
+  buildDataSource(events, selectedCategory);
 
   return (
     <div className={styles.showContainer}>
       <Table dataSource={showSource} columns={showColumns} pagination={false} />
       <div className={styles.mostRecent}>
         <Divider>Most Recent Event</Divider>
-        September 19th, 2019
+        {formattedMostRecent}
       </div>
       <div className={styles.showIconsContainer}>
         <div className={styles.showIcon}>

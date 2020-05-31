@@ -9,11 +9,12 @@ import ShowCategory from './showCategory';
 
 const Category = () => {
   const {
+    selectedCategory,
     selectedCategory: { name: categoryName },
     uid,
   } = useGlobalState()[0];
   const [displayEventList, toggleEventList] = useState(false);
-  const [eventList, setEventList] = useState(null);
+  const [events, setEvents] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,8 +25,7 @@ const Category = () => {
         data['id'] = doc.id;
         eventData.push(data);
       });
-      console.log(eventData, 'foundeventdata');
-      setEventList(eventData);
+      setEvents(eventData);
       setLoading(false);
     });
   }, [loading, categoryName, uid]);
@@ -41,15 +41,13 @@ const Category = () => {
         </div>
       )}
       {!loading && displayEventList && (
-        <EventList
-          backToShow={() => toggleEventList(false)}
-          events={eventList}
-        />
+        <EventList backToShow={() => toggleEventList(false)} events={events} />
       )}
       {!loading && !displayEventList && (
         <ShowCategory
+          events={events}
+          selectedCategory={selectedCategory}
           showEventList={() => toggleEventList(true)}
-          events={eventList}
         />
       )}
     </Fragment>
