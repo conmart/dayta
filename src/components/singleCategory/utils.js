@@ -1,36 +1,35 @@
+import moment from 'moment';
 import { secondsToFriendly } from '../../services/utils';
 
-// const showSource = [
-  // {
-  //   key: '1',
-  //   label: 'Month Total',
-  //   events: 10,
-  //   duration: '5 hours',
-  // },
-  // {
-  //   key: '2',
-  //   label: 'Year Total',
-  //   events: 40,
-  //   duration: '25 hours',
-  // },
-  // {
-  //   key: '3',
-  //   label: 'All Time',
-  //   events: 43,
-  //   duration: '30 hours',
-  // },
-// ];
+const getAggregateNumbers = (events, interval) => {
+  const label = interval === 'month' ? 'Month Total' : 'Year Total';
+  const lowerBound = moment().startOf(interval).unix();
+  const filteredEvents = events.filter(
+    (event) => event['start_date'] >= lowerBound
+  );
+  const totalDuration = filteredEvents
+    .filter((event) => event.duration)
+    .reduce((acc, event) => { return acc + event.duration }, 0);
+  return {
+    key: interval,
+    label,
+    count: filteredEvents.length,
+    duration: secondsToFriendly(totalDuration),
+  }
+};
 
 export const buildDataSource = (events, selectedCategory) => {
   const dataSource = [];
+  dataSource.push(getAggregateNumbers(events, 'month'))
+  dataSource.push(getAggregateNumbers(events, 'year'));
   dataSource.push({
-    key: '3',
+    key: 'total',
     label: 'All Time',
-    events: selectedCategory['total_events'],
-    duration: secondsToFriendly(selectedCategory['total_duration'])
+    count: selectedCategory['total_events'],
+    duration: secondsToFriendly(selectedCategory['total_duration']),
   });
   return dataSource;
-}
+};
 
 export const showColumns = [
   {
@@ -40,7 +39,7 @@ export const showColumns = [
   },
   {
     title: 'Events',
-    dataIndex: 'events',
+    dataIndex: 'count',
     key: 'c2',
   },
   {

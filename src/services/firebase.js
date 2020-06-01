@@ -51,7 +51,7 @@ const eventsByCategoryHelper = (categoryName, uid) => {
 
 export const getEventsByCategory = (categoryName, uid) => {
   const query = eventsByCategoryHelper(categoryName, uid);
-  return query.get();
+  return query.orderBy('start_date', 'desc').get();
 };
 
 export const getMostRecentEventForCategory = (categoryName, uid) => {

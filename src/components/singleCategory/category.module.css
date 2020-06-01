@@ -31,3 +31,20 @@
 .mostRecent {
   padding: 10px 0 35px;
 }
+
+.eventListTable {
+  width: 100%;
+}
+
+.eventListTable thead {
+  border-bottom: 1px solid black;
+}
+
+.eventListTable tr {
+  display: flex;
+}
+
+.eventListTable td, .eventListTable th {
+  width: 33%;
+  padding: 7px 0;
+}

@@ -1,3 +1,10 @@
+import moment from 'moment';
+
+export const formatDate = (date, format) => {
+  if (!date) return null;
+  return moment.unix(date).format(format)
+}
+
 export const secondsToFriendly = (duration) => {
   if (!duration) return null;
   let number = duration;

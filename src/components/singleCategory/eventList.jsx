@@ -1,15 +1,15 @@
 import React from 'react';
 import { LeftCircleFilled } from '@ant-design/icons';
 
+import { formatDate, secondsToFriendly } from '../../services/utils';
+
 import styles from './category.module.css';
 
-const EventList = ({ backToShow, events }) => {
-  // TODO: style list
-  // TODO: pass down function to update selected Event
-  console.log(events)
+const EventList = ({ backToShow, events, goToEvent }) => {
+
   return (
     <div className="pageContentContainer">
-      <table>
+      <table className={styles.eventListTable}>
         <thead>
           <tr>
             <th>Date</th>
@@ -19,10 +19,10 @@ const EventList = ({ backToShow, events }) => {
         </thead>
         <tbody>
           {events.map((event) => (
-            <tr onClick={() => console.log(event.id)} key={event.id}>
-              <td>{event['start_date']}</td>
-              <td>{event['start_time']}</td>
-              <td>{event['duration']}</td>
+            <tr onClick={() => goToEvent(event)} key={event.id}>
+              <td>{formatDate(event['start_date'], 'M/DD/YY')}</td>
+              <td>{formatDate(event['start_time'], 'h:mm a')}</td>
+              <td>{secondsToFriendly(event['duration'])}</td>
             </tr>
           ))}
         </tbody>
