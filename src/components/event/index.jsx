@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
 import * as fs from '../../services/firebase';
-import { buildEvent, buildNewCategory } from './utils';
+import { buildEvent, buildNewCategory, handleCategoryUpdate } from './utils';
 import EventForm from './eventForm';
 import FormFooter from './formFooter';
 
@@ -11,12 +11,10 @@ import styles from './event.module.css';
 
 const Event = () => {
   const history = useHistory();
-  const [{
-    selectedCategory,
-    selectedDate,
-    selectedEvent,
-    uid,
-  }, dispatch] = useGlobalState();
+  const [
+    { selectedCategory, selectedDate, selectedEvent, uid },
+    dispatch,
+  ] = useGlobalState();
   const [categoryName, setCategory] = useState(
     selectedCategory ? selectedCategory.name : null
   );
@@ -32,7 +30,12 @@ const Event = () => {
       const catNameMap = {};
       categories.forEach((doc) => {
         const data = doc.data();
-        catNameMap[data.name] = [doc.id, data.total_events];
+        catNameMap[data.name] = {
+          count: data.total_events,
+          duration: data.total_duration,
+          id: doc.id,
+          name: data.name,
+        };
       });
       setCategoryNameIdMap(catNameMap);
     });
@@ -49,19 +52,19 @@ const Event = () => {
   const returnHome = () => {
     dispatch({ type: 'NEW_DATE', selectedDate: eventDate });
     history.push('/');
-  }
+  };
 
-  const updateExistingCategory = (categoryId, newCount) => {
-    fs.getMostRecentEventForCategory(categoryName, uid).then((collection) => {
-      let latestEvent;
-      collection.forEach((doc) => latestEvent = doc.data()['start_date']);
-      const updatedCategoryData = {
-        total_events: newCount,
-        most_recent_event: latestEvent
-      }
-      fs.updateCategory(categoryId, updatedCategoryData);
-    });
-  }
+  const deleteEvent = () => {
+    const { category_name: name, duration, id } = selectedEvent;
+    fs.deleteEvent(id)
+      .then(() => {
+        const category = categoryNameIdMap[name];
+        handleCategoryUpdate(false, category, duration, uid)
+        dispatch({ type: 'EVENT_SELECTED', selectedEvent: null });
+        history.push('/');
+      })
+      .catch((err) => console.log('something went wrong', err));
+  };
 
   const handleSave = () => {
     const newEvent = buildEvent(
@@ -74,19 +77,26 @@ const Event = () => {
       uid
     );
     fs.createNewEvent(newEvent).then(() => {
+      const eventDuration = newEvent.duration;
       const existingCategory = categoryNameIdMap[categoryName];
       if (existingCategory) {
-        const newCount = existingCategory[1] + 1;
-        updateExistingCategory(existingCategory[0], newCount);
+        handleCategoryUpdate(true, existingCategory, eventDuration, uid)
       } else {
-        const newCategory = buildNewCategory(categoryName, eventDate, uid);
+        const newCategory = buildNewCategory(
+          categoryName,
+          eventDuration,
+          eventDate,
+          uid
+        );
+        console.log(newCategory);
         fs.createNewCategory(newCategory);
       }
       returnHome();
-    })
+    });
   };
 
   const title = selectedEvent ? 'Edit Event' : 'New Event';
+  const handleDelete = selectedEvent ? deleteEvent : null;
 
   return (
     <Fragment>
@@ -109,7 +119,7 @@ const Event = () => {
           onStartChange={onStartChange}
           onUnitChange={onUnitChange}
         />
-        <FormFooter handleSave={handleSave} />
+        <FormFooter handleDelete={handleDelete} handleSave={handleSave} />
       </div>
     </Fragment>
   );

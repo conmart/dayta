@@ -36,7 +36,7 @@ const Day = () => {
   };
 
   const goToEvent = (event) => {
-    dispatch({ type: 'EVENT_SELECTED', event });
+    dispatch({ type: 'EVENT_SELECTED', selectedEvent: event });
     history.push('/event');
   };
 

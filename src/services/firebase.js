@@ -23,6 +23,9 @@ export const getSingleCategory = (categoryId) => {
   return db.collection('categories').doc(categoryId).get();
 };
 
+export const deleteCategory = (categoryId) =>
+  db.collection('categories').doc(categoryId).delete();
+
 // Event Calls
 export const createNewEvent = async (newEvent) => {
   await db.collection('events').add(newEvent);
@@ -55,3 +58,11 @@ export const getMostRecentEventForCategory = (categoryName, uid) => {
   const query = getEventsByCategoryHelper(categoryName, uid);
   return query.orderBy('start_date', 'desc').limit(1).get();
 };
+
+export const deleteEvent = (eventId) =>
+  db.collection('events').doc(eventId).delete();
+
+export const deleteEventsByCategory = (categoryName, uid) => {
+  const query = getEventsByCategoryHelper(categoryName, uid);
+  return query.delete();
+}

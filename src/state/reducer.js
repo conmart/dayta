@@ -10,7 +10,7 @@ export const reducer = (state, action) => {
     case 'EVENT_SELECTED':
       return {
         ...state,
-        selectedEvent: action.event,
+        selectedEvent: action.selectedEvent,
       };
     case 'CATEGORY_SELECTED':
       return {
