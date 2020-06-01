@@ -6,7 +6,7 @@ import moment from 'moment';
 import styles from './category.module.css';
 import 'antd/dist/antd.css';
 
-import { buildDataSource, showSource, showColumns } from './utils';
+import { buildDataSource, showColumns } from './utils';
 
 const ShowCategory = ({
   handleDelete,
@@ -18,11 +18,11 @@ const ShowCategory = ({
     .unix(selectedCategory['most_recent_event'])
     .format('MMMM Do, YYYY');
 
-  buildDataSource(events, selectedCategory);
+  const dataSource = buildDataSource(events, selectedCategory);
 
   return (
     <div className={styles.showContainer}>
-      <Table dataSource={showSource} columns={showColumns} pagination={false} />
+      <Table dataSource={dataSource} columns={showColumns} pagination={false} />
       <div className={styles.mostRecent}>
         <Divider>Most Recent Event</Divider>
         {formattedMostRecent}

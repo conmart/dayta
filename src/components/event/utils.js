@@ -83,17 +83,3 @@ export const handleCategoryUpdate = (add, category, eventDuration, uid) => {
     : false;
   updateExistingCategory(id, name, newCount, newDuration, uid);
 };
-
-export const durationToFriendly = (duration) => {
-  let number = duration;
-  let unit = number === 1 ? 'second' : 'seconds';
-  if (duration >= 60) {
-    number = duration / 60;
-    unit = number === 1 ? 'minute' : 'minutes';
-  }
-  if (duration >= 3600) {
-    number = duration / 3600;
-    unit = number === 1 ? 'hour' : 'hours';
-  }
-  return `${number} ${unit}`;
-};

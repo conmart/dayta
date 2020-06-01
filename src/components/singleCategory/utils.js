@@ -1,4 +1,6 @@
-export const showSource = [
+import { secondsToFriendly } from '../../services/utils';
+
+// const showSource = [
   // {
   //   key: '1',
   //   label: 'Month Total',
@@ -17,16 +19,16 @@ export const showSource = [
   //   events: 43,
   //   duration: '30 hours',
   // },
-];
+// ];
 
 export const buildDataSource = (events, selectedCategory) => {
-  const allTimeData = {
+  const dataSource = [];
+  dataSource.push({
     key: '3',
     label: 'All Time',
     events: selectedCategory['total_events'],
-    duration: 'duration coming soon'
-  }
-  const dataSource = showSource.push(allTimeData);
+    duration: secondsToFriendly(selectedCategory['total_duration'])
+  });
   return dataSource;
 }
 
