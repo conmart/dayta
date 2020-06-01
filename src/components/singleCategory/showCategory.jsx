@@ -1,14 +1,19 @@
 import React from 'react';
 import { Divider, Table } from 'antd';
 import { DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import moment from 'moment'
+import moment from 'moment';
 
 import styles from './category.module.css';
 import 'antd/dist/antd.css';
 
 import { buildDataSource, showSource, showColumns } from './utils';
 
-const ShowCategory = ({ events, selectedCategory, showEventList }) => {
+const ShowCategory = ({
+  handleDelete,
+  events,
+  selectedCategory,
+  showEventList,
+}) => {
   const formattedMostRecent = moment
     .unix(selectedCategory['most_recent_event'])
     .format('MMMM Do, YYYY');
@@ -23,7 +28,7 @@ const ShowCategory = ({ events, selectedCategory, showEventList }) => {
         {formattedMostRecent}
       </div>
       <div className={styles.showIconsContainer}>
-        <div className={styles.showIcon}>
+        <div className={styles.showIcon} onClick={handleDelete}>
           <DeleteOutlined />
         </div>
         <div className={styles.showIcon} onClick={showEventList}>

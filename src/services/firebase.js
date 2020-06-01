@@ -41,7 +41,7 @@ export const getEventsByDate = (date, uid) => {
   return query.get();
 };
 
-const getEventsByCategoryHelper = (categoryName, uid) => {
+const eventsByCategoryHelper = (categoryName, uid) => {
   let query = db
     .collection('events')
     .where('category_name', '==', categoryName);
@@ -50,19 +50,25 @@ const getEventsByCategoryHelper = (categoryName, uid) => {
 };
 
 export const getEventsByCategory = (categoryName, uid) => {
-  const query = getEventsByCategoryHelper(categoryName, uid);
+  const query = eventsByCategoryHelper(categoryName, uid);
   return query.get();
 };
 
 export const getMostRecentEventForCategory = (categoryName, uid) => {
-  const query = getEventsByCategoryHelper(categoryName, uid);
+  const query = eventsByCategoryHelper(categoryName, uid);
   return query.orderBy('start_date', 'desc').limit(1).get();
 };
 
 export const deleteEvent = (eventId) =>
   db.collection('events').doc(eventId).delete();
 
-export const deleteEventsByCategory = (categoryName, uid) => {
-  const query = getEventsByCategoryHelper(categoryName, uid);
-  return query.delete();
-}
+export const deleteAllEventsForCategory = (categoryName, uid) => {
+  // TODO: There will be issues when deleting more than 500 events this way
+  getEventsByCategory(categoryName, uid).then((events) => {
+    const batch = db.batch();
+    events.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    return batch.commit();
+  });
+};

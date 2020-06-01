@@ -6,6 +6,7 @@ import styles from './category.module.css';
 const EventList = ({ backToShow, events }) => {
   // TODO: style list
   // TODO: pass down function to update selected Event
+  console.log(events)
   return (
     <div className="pageContentContainer">
       <table>

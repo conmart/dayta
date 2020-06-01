@@ -2,17 +2,21 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { useGlobalState } from '../../state';
-import { getEventsByCategory } from '../../services/firebase';
+import {
+  deleteCategory,
+  deleteAllEventsForCategory,
+  getEventsByCategory,
+} from '../../services/firebase';
 
 import EventList from './eventList';
 import ShowCategory from './showCategory';
 
 const Category = () => {
-  const {
+  const [{
     selectedCategory,
     selectedCategory: { name: categoryName },
     uid,
-  } = useGlobalState()[0];
+  }, dispatch] = useGlobalState();
   const [displayEventList, toggleEventList] = useState(false);
   const [events, setEvents] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,6 +34,16 @@ const Category = () => {
     });
   }, [loading, categoryName, uid]);
 
+  const handleDelete = () => {
+    const { id } = selectedCategory;
+    deleteCategory(id)
+      .then(() => {
+        deleteAllEventsForCategory(categoryName, uid);
+        dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
+      })
+      .catch((err) => console.log('err', err));
+  };
+
   return (
     <Fragment>
       <div className="pageTitleContainer">
@@ -45,6 +59,7 @@ const Category = () => {
       )}
       {!loading && !displayEventList && (
         <ShowCategory
+          handleDelete={handleDelete}
           events={events}
           selectedCategory={selectedCategory}
           showEventList={() => toggleEventList(true)}
