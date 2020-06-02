@@ -17,7 +17,7 @@ export const updateCategory = (categoryId, newData) => {
 };
 
 export const getCategories = (uid) =>
-  db.collection('categories').where('uid', '==', uid).get();
+  db.collection('categories').where('uid', '==', uid).orderBy('name').get();
 
 export const getSingleCategory = (categoryId) => {
   return db.collection('categories').doc(categoryId).get();
@@ -31,8 +31,8 @@ export const createNewEvent = async (newEvent) => {
   await db.collection('events').add(newEvent);
 };
 
-export const updateEvent = (eventId, newData) => {
-  db.collection('events').doc(eventId).update(newData);
+export const updateEvent = async (eventId, newData) => {
+  await db.collection('events').doc(eventId).update(newData);
 };
 
 export const getEventsByDate = (date, uid) => {
