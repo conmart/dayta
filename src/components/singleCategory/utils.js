@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { secondsToFriendly } from '../../services/utils';
+import { formattedSeconds } from '../../services/utils';
 
 const getAggregateNumbers = (events, interval) => {
   const label = interval === 'month' ? 'Month Total' : 'Year Total';
@@ -14,7 +14,7 @@ const getAggregateNumbers = (events, interval) => {
     key: interval,
     label,
     count: filteredEvents.length,
-    duration: secondsToFriendly(totalDuration),
+    duration: formattedSeconds(totalDuration),
   }
 };
 
@@ -26,7 +26,7 @@ export const buildDataSource = (events, selectedCategory) => {
     key: 'total',
     label: 'All Time',
     count: selectedCategory['total_events'],
-    duration: secondsToFriendly(selectedCategory['total_duration']),
+    duration: formattedSeconds(selectedCategory['total_duration']),
   });
   return dataSource;
 };

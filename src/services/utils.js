@@ -2,11 +2,10 @@ import moment from 'moment';
 
 export const formatDate = (date, format) => {
   if (!date) return null;
-  return moment.unix(date).format(format)
-}
+  return moment.unix(date).format(format);
+};
 
 export const secondsToFriendly = (duration) => {
-  if (!duration) return null;
   let number = duration;
   let unit = number === 1 ? 'second' : 'seconds';
   if (duration >= 60) {
@@ -18,5 +17,11 @@ export const secondsToFriendly = (duration) => {
     unit = number === 1 ? 'hour' : 'hours';
   }
   number = Math.round(number * 100) / 100;
+  return [number, unit];
+};
+
+export const formattedSeconds = (duration) => {
+  if (!duration) return null;
+  const [number, unit] = secondsToFriendly(duration);
   return `${number} ${unit}`;
 };

@@ -3,7 +3,12 @@ import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
 import * as fs from '../../services/firebase';
-import { buildEvent, buildNewCategory, handleCategoryUpdate } from './utils';
+import {
+  buildEvent,
+  buildNewCategory,
+  calcDefaultValues,
+  handleCategoryUpdate,
+} from './utils';
 import EventForm from './eventForm';
 import FormFooter from './formFooter';
 
@@ -15,14 +20,21 @@ const Event = () => {
     { selectedCategory, selectedDate, selectedEvent, uid },
     dispatch,
   ] = useGlobalState();
-  const [categoryName, setCategory] = useState(
-    selectedCategory ? selectedCategory.name : null
-  );
-  const [eventDate, setDate] = useState(selectedDate);
-  const [eventStart, setStart] = useState(null);
-  const [eventEnd, setEnd] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [durationUnit, setDurationUnit] = useState(2);
+  const [
+    defaultCategoryName,
+    defaultEventDate,
+    defaultEventStart,
+    defaultEventEnd,
+    defaultDuration,
+    defaultDurationUnit,
+  ] = calcDefaultValues(selectedCategory, selectedEvent, selectedDate);
+
+  const [categoryName, setCategory] = useState(defaultCategoryName);
+  const [eventDate, setDate] = useState(defaultEventDate);
+  const [eventStart, setStart] = useState(defaultEventStart);
+  const [eventEnd, setEnd] = useState(defaultEventEnd);
+  const [duration, setDuration] = useState(defaultDuration);
+  const [durationUnit, setDurationUnit] = useState(defaultDurationUnit);
   const [categoryNameIdMap, setCategoryNameIdMap] = useState({});
 
   useEffect(() => {
@@ -59,7 +71,7 @@ const Event = () => {
     fs.deleteEvent(id)
       .then(() => {
         const category = categoryNameIdMap[name];
-        handleCategoryUpdate(false, category, duration, uid)
+        handleCategoryUpdate(false, category, duration, uid);
         dispatch({ type: 'EVENT_SELECTED', selectedEvent: null });
         history.push('/');
       })
@@ -80,7 +92,7 @@ const Event = () => {
       const eventDuration = newEvent.duration;
       const existingCategory = categoryNameIdMap[categoryName];
       if (existingCategory) {
-        handleCategoryUpdate(true, existingCategory, eventDuration, uid)
+        handleCategoryUpdate(true, existingCategory, eventDuration, uid);
       } else {
         const newCategory = buildNewCategory(
           categoryName,
@@ -94,6 +106,8 @@ const Event = () => {
       returnHome();
     });
   };
+
+  console.log(selectedEvent, 'found selectedevent');
 
   const title = selectedEvent ? 'Edit Event' : 'New Event';
   const handleDelete = selectedEvent ? deleteEvent : null;

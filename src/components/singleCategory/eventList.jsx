@@ -1,7 +1,7 @@
 import React from 'react';
 import { LeftCircleFilled } from '@ant-design/icons';
 
-import { formatDate, secondsToFriendly } from '../../services/utils';
+import { formatDate, formattedSeconds } from '../../services/utils';
 
 import styles from './category.module.css';
 
@@ -22,7 +22,7 @@ const EventList = ({ backToShow, events, goToEvent }) => {
             <tr onClick={() => goToEvent(event)} key={event.id}>
               <td>{formatDate(event['start_date'], 'M/DD/YY')}</td>
               <td>{formatDate(event['start_time'], 'h:mm a')}</td>
-              <td>{secondsToFriendly(event['duration'])}</td>
+              <td>{formattedSeconds(event['duration'])}</td>
             </tr>
           ))}
         </tbody>

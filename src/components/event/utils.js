@@ -1,4 +1,6 @@
+import moment from 'moment';
 import * as fs from '../../services/firebase';
+import { secondsToFriendly } from '../../services/utils';
 
 const durationToSeconds = (duration, unit) => {
   // unit is stored in index.jsx as 1 = seconds, 2 = minutes, 3 = hours
@@ -53,13 +55,7 @@ export const buildNewCategory = (categoryName, duration, eventDate, uid) => {
   };
 };
 
-const updateExistingCategory = (
-  id,
-  name,
-  newCount,
-  newDuration,
-  uid
-) => {
+const updateExistingCategory = (id, name, newCount, newDuration, uid) => {
   fs.getMostRecentEventForCategory(name, uid).then((collection) => {
     let latestEvent;
     collection.forEach((doc) => (latestEvent = doc.data()['start_date']));
@@ -82,4 +78,61 @@ export const handleCategoryUpdate = (add, category, eventDuration, uid) => {
     ? createNewDuration(add, duration, eventDuration)
     : false;
   updateExistingCategory(id, name, newCount, newDuration, uid);
+};
+
+const extractValuesFromEvent = (event) => {
+  if (!event) return [null, null, null, null];
+  const oldDuration = event['duration'];
+  const oldEventName = event['category_name'];
+  const oldStartDate = event['start_date'];
+  const oldStartTime = event['start_time'];
+  return [oldDuration, oldEventName, oldStartDate, oldStartTime];
+};
+
+const getCategoryName = (oldEventName, category) => {
+  if (oldEventName) {
+    return oldEventName;
+  }
+  if (category && category['name']) {
+    return category['name'];
+  }
+  return null;
+};
+
+export const eventDurationUnits = (duration) => {
+  if (!duration) return [null, null];
+  // unit is stored in index.jsx as 1 = seconds, 2 = minutes, 3 = hours
+  const unitMap = { s: 1, m: 2, h: 3 };
+  const [number, unit] = secondsToFriendly(duration);
+  const mappedUnit = unitMap[unit[0]];
+  return [number, mappedUnit];
+};
+
+export const calcDefaultValues = (category, event, selectedDate) => {
+  const [
+    oldDuration,
+    oldEventName,
+    oldStartDate,
+    oldStartTime,
+  ] = extractValuesFromEvent(event);
+  const defaultCategoryName = getCategoryName(oldEventName, category);
+  const defaultEventDate = oldStartDate
+    ? moment.unix(oldStartDate)
+    : selectedDate;
+  const defaultEventStart = oldStartTime ? moment.unix(oldStartTime) : null;
+  const defaultEventEnd =
+    oldDuration && oldStartTime
+      ? moment.unix(oldStartTime).add(oldDuration, 'seconds')
+      : null;
+  const [durNum, durUnit] = eventDurationUnits(oldDuration);
+  const defaultDuration = durNum ? durNum : null;
+  const defaultDurationUnit = durUnit ? durUnit : 2;
+  return [
+    defaultCategoryName,
+    defaultEventDate,
+    defaultEventStart,
+    defaultEventEnd,
+    defaultDuration,
+    defaultDurationUnit,
+  ];
 };
