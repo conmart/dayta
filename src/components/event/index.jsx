@@ -7,6 +7,7 @@ import {
   buildEvent,
   buildNewCategory,
   calcDefaultValues,
+  compareEvents,
   handleCategoryUpdate,
 } from './utils';
 import EventForm from './eventForm';
@@ -36,6 +37,7 @@ const Event = () => {
   const [duration, setDuration] = useState(defaultDuration);
   const [durationUnit, setDurationUnit] = useState(defaultDurationUnit);
   const [categoryNameIdMap, setCategoryNameIdMap] = useState({});
+  // const [eventDiff]
 
   useEffect(() => {
     fs.getCategories(uid).then((categories) => {
@@ -52,6 +54,10 @@ const Event = () => {
       setCategoryNameIdMap(catNameMap);
     });
   }, [uid]);
+
+  // useEffect(() => {
+
+  // })
 
   const onCategoryChange = (category) => setCategory(category);
   const onDateChange = (date) => setDate(date);
@@ -71,11 +77,55 @@ const Event = () => {
     fs.deleteEvent(id)
       .then(() => {
         const category = categoryNameIdMap[name];
-        handleCategoryUpdate(false, category, duration, uid);
+        const durationChange = duration * -1;
+        handleCategoryUpdate(-1, category, durationChange, uid);
         dispatch({ type: 'EVENT_SELECTED', selectedEvent: null });
         history.push('/');
       })
       .catch((err) => console.log('something went wrong', err));
+  };
+
+  const newEventCategoryUpdate = (newEvent) => {
+    const { duration: newEventDuration } = newEvent;
+    const existingCategory = categoryNameIdMap[categoryName];
+    if (existingCategory) {
+      handleCategoryUpdate(1, existingCategory, newEventDuration, uid);
+    } else {
+      const newCategory = buildNewCategory(newEvent, uid);
+      console.log(newCategory);
+      fs.createNewCategory(newCategory);
+    }
+  };
+
+  const addEvent = (newEvent) => {
+    fs.createNewEvent(newEvent).then(() => {
+      newEventCategoryUpdate(newEvent);
+      returnHome();
+    });
+  };
+
+  const updateEvent = (newEvent) => {
+    const {
+      id,
+      duration: oldDuration,
+      category_name: oldCategoryName,
+    } = selectedEvent;
+    const eventDiff = compareEvents(newEvent, selectedEvent);
+    console.log(eventDiff);
+    fs.updateEvent(id, eventDiff).then(() => {
+      const category = categoryNameIdMap[oldCategoryName];
+      const oldDurNum = oldDuration ? oldDuration : 0
+      const newDurNum = newEvent.duration ? newEvent.duration : 0;
+      if (eventDiff['category_name']) {
+        newEventCategoryUpdate(newEvent);
+        const durationChange = oldDurNum * -1;
+        handleCategoryUpdate(-1, category, durationChange, uid);
+      } else {
+        const durationChange = newDurNum - oldDurNum;
+        handleCategoryUpdate(0, category, durationChange, uid);
+      }
+      returnHome();
+    });
   };
 
   const handleSave = () => {
@@ -88,26 +138,12 @@ const Event = () => {
       durationUnit,
       uid
     );
-    fs.createNewEvent(newEvent).then(() => {
-      const eventDuration = newEvent.duration;
-      const existingCategory = categoryNameIdMap[categoryName];
-      if (existingCategory) {
-        handleCategoryUpdate(true, existingCategory, eventDuration, uid);
-      } else {
-        const newCategory = buildNewCategory(
-          categoryName,
-          eventDuration,
-          eventDate,
-          uid
-        );
-        console.log(newCategory);
-        fs.createNewCategory(newCategory);
-      }
-      returnHome();
-    });
+    if (selectedEvent) {
+      updateEvent(newEvent);
+    } else {
+      addEvent(newEvent);
+    }
   };
-
-  console.log(selectedEvent, 'found selectedevent');
 
   const title = selectedEvent ? 'Edit Event' : 'New Event';
   const handleDelete = selectedEvent ? deleteEvent : null;

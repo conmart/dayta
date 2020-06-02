@@ -45,17 +45,28 @@ export const buildEvent = (
   return newEvent;
 };
 
-export const buildNewCategory = (categoryName, duration, eventDate, uid) => {
+export const buildNewCategory = (newEvent, uid) => {
+  const {
+    category_name: categoryName,
+    duration,
+    start_date: startDate,
+  } = newEvent;
   return {
     name: categoryName,
     uid,
     total_duration: duration ? duration : 0,
     total_events: 1,
-    most_recent_event: eventDate.clone().startOf('day').unix(),
+    most_recent_event: startDate,
   };
 };
 
-const updateExistingCategory = (id, name, newCount, newDuration, uid) => {
+export const updateExistingCategory = (
+  id,
+  name,
+  newCount,
+  newDuration,
+  uid
+) => {
   fs.getMostRecentEventForCategory(name, uid).then((collection) => {
     let latestEvent;
     collection.forEach((doc) => (latestEvent = doc.data()['start_date']));
@@ -68,15 +79,15 @@ const updateExistingCategory = (id, name, newCount, newDuration, uid) => {
   });
 };
 
-const createNewDuration = (add, categoryDuration, eventDuration) =>
-  add ? categoryDuration + eventDuration : categoryDuration - eventDuration;
-
-export const handleCategoryUpdate = (add, category, eventDuration, uid) => {
+export const handleCategoryUpdate = (
+  countIncr,
+  category,
+  durationChange,
+  uid
+) => {
   const { count, duration, id, name } = category;
-  const newCount = add ? count + 1 : count - 1;
-  const newDuration = eventDuration
-    ? createNewDuration(add, duration, eventDuration)
-    : false;
+  const newCount = count + countIncr;
+  const newDuration = durationChange ? duration + durationChange : false;
   updateExistingCategory(id, name, newCount, newDuration, uid);
 };
 
@@ -135,4 +146,17 @@ export const calcDefaultValues = (category, event, selectedDate) => {
     defaultDuration,
     defaultDurationUnit,
   ];
+};
+
+export const compareEvents = (newEvent, oldEvent) => {
+  const eventFields = ['category_name', 'duration', 'start_date', 'start_time'];
+  const eventDiff = {};
+  for (const field of eventFields) {
+    if (newEvent[field] !== oldEvent[field]) {
+      eventDiff[field] = newEvent[field] ? newEvent[field] : null;
+    } else {
+      delete eventDiff[field];
+    }
+  }
+  return eventDiff;
 };
