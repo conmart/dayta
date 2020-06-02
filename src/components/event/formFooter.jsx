@@ -1,10 +1,17 @@
 import React from 'react';
+import classNames from 'classnames/bind';
 
 import { CheckCircleFilled, DeleteFilled } from '@ant-design/icons';
 
 import styles from './event.module.css';
 
-const FormFooter = ({ handleDelete, handleSave }) => {
+const cx = classNames.bind(styles);
+
+const FormFooter = ({ handleDelete, handleSave, noChange, validForm }) => {
+  const disableUpdate = (handleDelete && noChange) || !validForm;
+  const handleClick = disableUpdate ? null : handleSave;
+  const saveStyles = cx('saveIcon', { disableUpdate });
+
   return (
     <div className={styles.footerContainer}>
       {handleDelete && (
@@ -12,7 +19,7 @@ const FormFooter = ({ handleDelete, handleSave }) => {
           <DeleteFilled />
         </div>
       )}
-      <div className={styles.saveIcon} onClick={handleSave}>
+      <div className={saveStyles} onClick={handleClick}>
         <CheckCircleFilled />
       </div>
     </div>

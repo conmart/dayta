@@ -9,6 +9,7 @@ import {
   calcDefaultValues,
   compareEvents,
   handleCategoryUpdate,
+  validateTime,
 } from './utils';
 import EventForm from './eventForm';
 import FormFooter from './formFooter';
@@ -37,7 +38,8 @@ const Event = () => {
   const [duration, setDuration] = useState(defaultDuration);
   const [durationUnit, setDurationUnit] = useState(defaultDurationUnit);
   const [categoryNameIdMap, setCategoryNameIdMap] = useState({});
-  // const [eventDiff]
+  const [newEvent, setNewEvent] = useState({});
+  const [eventDiff, setEventDiff] = useState({});
 
   useEffect(() => {
     fs.getCategories(uid).then((categories) => {
@@ -55,15 +57,42 @@ const Event = () => {
     });
   }, [uid]);
 
-  // useEffect(() => {
-
-  // })
+  useEffect(() => {
+    const formattedNewEvent = buildEvent(
+      categoryName,
+      eventDate,
+      eventStart,
+      eventEnd,
+      duration,
+      durationUnit,
+      uid
+    );
+    setNewEvent(formattedNewEvent);
+    if (selectedEvent) {
+      const differentFields = compareEvents(formattedNewEvent, selectedEvent);
+      setEventDiff(differentFields);
+    }
+  }, [
+    categoryName,
+    eventDate,
+    eventStart,
+    eventEnd,
+    duration,
+    durationUnit,
+    selectedEvent,
+    uid,
+  ]);
 
   const onCategoryChange = (category) => setCategory(category);
   const onDateChange = (date) => setDate(date);
-  const onStartChange = (time) => setStart(time);
-  // TODO: validate that end time is after start time
-  const onEndChange = (time) => setEnd(time);
+  const onStartChange = (time) => {
+    const newTime = validateTime(time, eventEnd)[0];
+    setStart(newTime);
+  };
+  const onEndChange = (time) => {
+    const newTime = validateTime(eventStart, time)[1];
+    setEnd(newTime)
+  };
   const onDurationChange = (length) => setDuration(length);
   const onUnitChange = (unit) => setDurationUnit(unit);
 
@@ -85,36 +114,33 @@ const Event = () => {
       .catch((err) => console.log('something went wrong', err));
   };
 
-  const newEventCategoryUpdate = (newEvent) => {
+  const newEventCategoryUpdate = () => {
     const { duration: newEventDuration } = newEvent;
     const existingCategory = categoryNameIdMap[categoryName];
     if (existingCategory) {
       handleCategoryUpdate(1, existingCategory, newEventDuration, uid);
     } else {
       const newCategory = buildNewCategory(newEvent, uid);
-      console.log(newCategory);
       fs.createNewCategory(newCategory);
     }
   };
 
-  const addEvent = (newEvent) => {
+  const addEvent = () => {
     fs.createNewEvent(newEvent).then(() => {
-      newEventCategoryUpdate(newEvent);
+      newEventCategoryUpdate();
       returnHome();
     });
   };
 
-  const updateEvent = (newEvent) => {
+  const updateEvent = () => {
     const {
       id,
       duration: oldDuration,
       category_name: oldCategoryName,
     } = selectedEvent;
-    const eventDiff = compareEvents(newEvent, selectedEvent);
-    console.log(eventDiff);
     fs.updateEvent(id, eventDiff).then(() => {
       const category = categoryNameIdMap[oldCategoryName];
-      const oldDurNum = oldDuration ? oldDuration : 0
+      const oldDurNum = oldDuration ? oldDuration : 0;
       const newDurNum = newEvent.duration ? newEvent.duration : 0;
       if (eventDiff['category_name']) {
         newEventCategoryUpdate(newEvent);
@@ -129,24 +155,17 @@ const Event = () => {
   };
 
   const handleSave = () => {
-    const newEvent = buildEvent(
-      categoryName,
-      eventDate,
-      eventStart,
-      eventEnd,
-      duration,
-      durationUnit,
-      uid
-    );
     if (selectedEvent) {
-      updateEvent(newEvent);
+      updateEvent();
     } else {
-      addEvent(newEvent);
+      addEvent();
     }
   };
 
   const title = selectedEvent ? 'Edit Event' : 'New Event';
   const handleDelete = selectedEvent ? deleteEvent : null;
+  const noChange = !Object.keys(eventDiff).length;
+  const validForm = newEvent['category_name'] && newEvent['start_date'];
 
   return (
     <Fragment>
@@ -169,7 +188,12 @@ const Event = () => {
           onStartChange={onStartChange}
           onUnitChange={onUnitChange}
         />
-        <FormFooter handleDelete={handleDelete} handleSave={handleSave} />
+        <FormFooter
+          handleDelete={handleDelete}
+          handleSave={handleSave}
+          noChange={noChange}
+          validForm={validForm}
+        />
       </div>
     </Fragment>
   );

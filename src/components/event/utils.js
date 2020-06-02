@@ -37,9 +37,9 @@ export const buildEvent = (
   const durationInSeconds = calcEventDuration(start, end, duration, unit);
   const newEvent = {
     category_name: categoryName,
-    start_date: eventDate.clone().startOf('day').unix(),
     uid: uid,
   };
+  if (eventDate) newEvent['start_date'] = eventDate.clone().startOf('day').unix();
   if (durationInSeconds) newEvent['duration'] = durationInSeconds;
   if (start) newEvent['start_time'] = start.clone().unix();
   return newEvent;
@@ -60,7 +60,7 @@ export const buildNewCategory = (newEvent, uid) => {
   };
 };
 
-export const updateExistingCategory = (
+const updateExistingCategory = (
   id,
   name,
   newCount,
@@ -101,12 +101,8 @@ const extractValuesFromEvent = (event) => {
 };
 
 const getCategoryName = (oldEventName, category) => {
-  if (oldEventName) {
-    return oldEventName;
-  }
-  if (category && category['name']) {
-    return category['name'];
-  }
+  if (oldEventName) return oldEventName;
+  if (category && category['name']) return category['name'];
   return null;
 };
 
@@ -160,3 +156,8 @@ export const compareEvents = (newEvent, oldEvent) => {
   }
   return eventDiff;
 };
+
+export const validateTime = (start, end) => {
+  if ((start && end) && !start.isBefore(end)) return [null, null];
+  return [start, end];
+}

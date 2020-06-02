@@ -27,16 +27,18 @@ const EventForm = ({
   onStartChange,
   onUnitChange,
 }) => {
-  const categoryOptions = Object.keys(categoryNameIdMap).map((catName) => (
-    { value: catName }
-  ));
+  const categoryOptions = Object.keys(categoryNameIdMap).map((catName) => ({
+    value: catName,
+  }));
   const timeFormat = 'h:mm a';
   const hideDuration = eventStart && eventEnd;
 
   return (
     <Fragment>
       <div className={styles.formRow}>
-        <span className={styles.label}>Category</span>
+        <span className={styles.label}>
+          Category <span className={styles.required}>*</span>
+        </span>
         <AutoComplete
           filterOption={(inputValue, option) =>
             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -48,7 +50,9 @@ const EventForm = ({
         />
       </div>
       <div className={styles.formRow}>
-        <span className={styles.label}>Date</span>
+        <span className={styles.label}>
+          Date <span className={styles.required}>*</span>
+        </span>
         <DatePicker
           format="MMMM Do, YYYY"
           onChange={onDateChange}

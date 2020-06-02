@@ -16,6 +16,10 @@
   padding-bottom: 5px;
 }
 
+.required {
+  color: red;
+}
+
 .startEndRow {
   display: flex;
   justify-content: space-between;
@@ -44,6 +48,11 @@
 .saveIcon {
   color: green;
   cursor: pointer;
+}
+
+.disableUpdate {
+  color: grey;
+  cursor: not-allowed;
 }
 
 .deleteIcon {
