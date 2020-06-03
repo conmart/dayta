@@ -1,15 +1,19 @@
 import React from 'react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { formatDate, formattedSeconds } from '../../services/utils';
 
 import styles from './day.module.css';
 
-const DayEvent = ({ category, goToEvent }) => {
+const DayEvent = ({ event, goToEvent }) => {
+  const { category_name: name, duration, start_time: start } = event;
+  const formattedStart = formatDate(start, 'h:mm a');
+  const formattedDuration = formattedSeconds(duration);
+
   return (
     <div className={styles.eventContainer} onClick={goToEvent}>
-      {category}
-      <div className={styles.eventIcons}>
-        <EditOutlined />
-        <DeleteOutlined />
+      <div>{name}</div>
+      <div className={styles.eventDetail}>
+        {formattedStart && <div>{formattedStart}</div>}
+        {formattedDuration && <div>{formattedDuration}</div>}
       </div>
     </div>
   );

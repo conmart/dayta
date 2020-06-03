@@ -12,10 +12,6 @@ import 'antd/dist/antd.css';
 
 import { columns } from './dummyData';
 
-// TODO: figure out dynamic container size with fixed header scroll prop: scroll={{ y: 500 }}
-// const parentElem = document.getElementById('categoryList');
-// console.log(parentElem)
-
 const CategoryList = () => {
   const history = useHistory();
   const [{ uid }, dispatch] = useGlobalState();

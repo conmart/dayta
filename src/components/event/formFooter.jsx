@@ -8,9 +8,9 @@ import styles from './event.module.css';
 const cx = classNames.bind(styles);
 
 const FormFooter = ({ handleDelete, handleSave, noChange, validForm }) => {
-  const disableUpdate = (handleDelete && noChange) || !validForm;
-  const handleClick = disableUpdate ? null : handleSave;
-  const saveStyles = cx('saveIcon', { disableUpdate });
+  const disableSave = (handleDelete && noChange) || !validForm;
+  const handleClick = disableSave ? null : handleSave;
+  const saveStyles = cx('saveIcon', { disableSave });
 
   return (
     <div className={styles.footerContainer}>

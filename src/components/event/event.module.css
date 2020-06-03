@@ -50,7 +50,7 @@
   cursor: pointer;
 }
 
-.disableUpdate {
+.disableSave {
   color: grey;
   cursor: not-allowed;
 }

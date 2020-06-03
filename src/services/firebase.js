@@ -38,7 +38,7 @@ export const updateEvent = async (eventId, newData) => {
 export const getEventsByDate = (date, uid) => {
   let query = db.collection('events').where('start_date', '==', date);
   query = query.where('uid', '==', uid);
-  return query.get();
+  return query.orderBy('category_name').orderBy('start_time').get();
 };
 
 const eventsByCategoryHelper = (categoryName, uid) => {

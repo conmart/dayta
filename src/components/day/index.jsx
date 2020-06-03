@@ -1,13 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react';
-
-import { LoadingOutlined } from '@ant-design/icons';
+import {
+  LeftOutlined,
+  LoadingOutlined,
+  RightOutlined,
+} from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
 import { getEventsByDate } from '../../services/firebase';
-
-import DayHeader from './dayHeader';
 import DayEvent from './dayEvent';
+
+import styles from './day.module.css';
 
 const Day = () => {
   const [{ selectedDate, uid }, dispatch] = useGlobalState();
@@ -18,7 +21,6 @@ const Day = () => {
   useEffect(() => {
     const unixDate = selectedDate.clone().startOf('day').unix();
     getEventsByDate(unixDate, uid).then((events) => {
-      setLoading(false);
       const eventList = [];
       events.forEach((doc) => {
         const data = doc.data();
@@ -26,6 +28,7 @@ const Day = () => {
         eventList.push(data);
       });
       setEvents(eventList);
+      setLoading(false);
     })
   }, [loading, selectedDate, uid])
 
@@ -41,25 +44,28 @@ const Day = () => {
   };
 
   const noEvents = !loading && !events.length
+  const formattedDate = selectedDate.format('MMMM Do, YYYY');
 
   return (
     <Fragment>
-      <DayHeader
-        nextDay={() => updateSelectedDate(true)}
-        previousDay={() => updateSelectedDate(false)}
-        selectedDate={selectedDate}
-      />
+      <div className="pageTitleContainer">
+        <LeftOutlined onClick={() => updateSelectedDate(false)} />
+        <div className="pageTitle">{formattedDate}</div>
+        <RightOutlined onClick={() => updateSelectedDate(true)} />
+      </div>
       <div className="pageContentContainer">
-        {loading ? (<LoadingOutlined />) : (
-          events.map(event => (
+        {loading ? (
+          <LoadingOutlined />
+        ) : (
+          events.map((event) => (
             <DayEvent
-              category={event['category_name']}
+              event={event}
               key={event.id}
               goToEvent={() => goToEvent(event)}
-              />
+            />
           ))
         )}
-        {noEvents && <div>no events found</div>}
+        {noEvents && <div className={styles.noEvents}>No events found</div>}
       </div>
     </Fragment>
   );

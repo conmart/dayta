@@ -7,7 +7,7 @@
 }
 
 .showContainer {
-  border: 1px solid black;
+  border: 1px solid #383838;
   width: 80%;
   margin: 0 auto;
 }
@@ -37,7 +37,7 @@
 }
 
 .eventListTable thead {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #383838;
 }
 
 .eventListTable tr {
@@ -47,4 +47,11 @@
 .eventListTable td, .eventListTable th {
   width: 33%;
   padding: 7px 0;
+}
+
+.eventRow {
+  background: bisque;
+  border-radius: 3px;
+  margin: 3px 1px 3px 2px;
+  cursor: pointer;
 }
