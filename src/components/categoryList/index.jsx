@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import moment from 'moment';
 
 import { useGlobalState } from '../../state';
 import { getCategories } from '../../services/firebase';
+import { formatDate } from '../../services/utils';
 
 import styles from './categories.module.css';
 import 'antd/dist/antd.css';
@@ -29,12 +29,15 @@ const CategoryList = () => {
               const data = doc.data();
               data['id'] = doc.id;
               catMap[data.name] = data;
-              const latestDate = moment.unix(data['most_recent_event']);
+              const latestDate = formatDate(
+                data['most_recent_event'],
+                'M/DD/YY'
+              );
               categoryData.push({
                 key: doc.id,
                 name: data.name,
                 instances: data['total_events'],
-                latest: latestDate.format('M/DD/YY'),
+                latest: latestDate,
               });
             });
             setCategoryMap(catMap);
