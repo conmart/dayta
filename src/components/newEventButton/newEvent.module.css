@@ -1,7 +1,16 @@
 .container {
-  position: fixed;
-  bottom: 7%;
-  right: 6%;
-  font-size: 70px;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  font-size: 48px;
   z-index: 1;
+  cursor: pointer;
+  background-color: #2a8ff7;
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }

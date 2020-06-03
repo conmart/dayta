@@ -14,7 +14,7 @@
   border-left: 2px solid black;
   padding: 15px 5px;
   box-sizing: border-box;
-  z-index: 1;
+  z-index: 2;
 }
 
 .iconContainer {

@@ -1,12 +1,15 @@
 import React from 'react';
 import { Divider, Table } from 'antd';
 import { DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import classNames from 'classnames/bind';
+
+import { formatDate } from '../../services/utils';
+import { buildDataSource, showColumns } from './utils';
 
 import styles from './category.module.css';
 import 'antd/dist/antd.css';
 
-import { buildDataSource, showColumns } from './utils';
+const cx = classNames.bind(styles)
 
 const ShowCategory = ({
   handleDelete,
@@ -14,11 +17,14 @@ const ShowCategory = ({
   selectedCategory,
   showEventList,
 }) => {
-  const formattedMostRecent = moment
-    .unix(selectedCategory['most_recent_event'])
-    .format('MMMM Do, YYYY');
+  const formattedMostRecent = formatDate(
+    selectedCategory['most_recent_event'],
+    'MMMM Do, YYYY'
+  );
 
   const dataSource = buildDataSource(events, selectedCategory);
+  const deleteStyles = cx('showIcon', 'delete');
+  const eventListStyles = cx('showIcon', 'eventListIcon');
 
   return (
     <div className={styles.showContainer}>
@@ -28,10 +34,10 @@ const ShowCategory = ({
         {formattedMostRecent}
       </div>
       <div className={styles.showIconsContainer}>
-        <div className={styles.showIcon} onClick={handleDelete}>
+        <div className={deleteStyles} onClick={handleDelete}>
           <DeleteOutlined />
         </div>
-        <div className={styles.showIcon} onClick={showEventList}>
+        <div className={eventListStyles} onClick={showEventList}>
           <UnorderedListOutlined />
         </div>
       </div>
