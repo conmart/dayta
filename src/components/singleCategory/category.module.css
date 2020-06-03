@@ -1,9 +1,21 @@
 .backToShow {
   position: absolute;
-  font-size: 40px;
+  font-size: 26px;
   bottom: 10%;
-  left: 7%;
+  left: 6%;
   cursor: pointer;
+  background-color: #2e2e2e;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.backToShowIcon {
+  padding-right: 3px;
 }
 
 .showContainer {
@@ -62,4 +74,8 @@
   border-radius: 3px;
   margin: 3px 1px 3px 2px;
   cursor: pointer;
+}
+
+.loadMore {
+  padding: 20px 0;
 }

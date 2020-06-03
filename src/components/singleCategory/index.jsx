@@ -6,8 +6,9 @@ import { useGlobalState } from '../../state';
 import {
   deleteCategory,
   deleteAllEventsForCategory,
-  getEventsByCategory,
+  getEventsByCategoryAndDateRange,
 } from '../../services/firebase';
+import { startAndEndOfYear } from './utils';
 
 import EventList from './eventList';
 import ShowCategory from './showCategory';
@@ -27,17 +28,19 @@ const Category = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: limit this call to current year events only
-    getEventsByCategory(categoryName, uid).then((events) => {
-      const eventData = [];
-      events.forEach((doc) => {
-        const data = doc.data();
-        data['id'] = doc.id;
-        eventData.push(data);
-      });
-      setEvents(eventData);
-      setLoading(false);
-    });
+    const [start, end] = startAndEndOfYear();
+    getEventsByCategoryAndDateRange(start, end, categoryName, uid).then(
+      (events) => {
+        const eventData = [];
+        events.forEach((doc) => {
+          const data = doc.data();
+          data['id'] = doc.id;
+          eventData.push(data);
+        });
+        setEvents(eventData);
+        setLoading(false);
+      }
+    );
   }, [loading, categoryName, uid]);
 
   const handleDelete = () => {
@@ -68,8 +71,9 @@ const Category = () => {
       {!loading && displayEventList && (
         <EventList
           backToShow={() => toggleEventList(false)}
-          events={events}
+          category={selectedCategory}
           goToEvent={goToEvent}
+          uid={uid}
         />
       )}
       {!loading && !displayEventList && (

@@ -1,11 +1,47 @@
-import React from 'react';
-import { LeftCircleFilled } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'antd';
+import { LeftOutlined, LoadingOutlined } from '@ant-design/icons';
 
+import { getLimitedEventsByCategory } from '../../services/firebase';
 import { formatDate, formattedSeconds } from '../../services/utils';
 
 import styles from './category.module.css';
+import 'antd/dist/antd.css'; // Do I need this here?
 
-const EventList = ({ backToShow, events, goToEvent }) => {
+const limit = 50;
+
+const EventList = ({ backToShow, category, goToEvent, uid }) => {
+  const { name: categoryName, total_events: totalEvents } = category;
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [moreEvents, setMoreEvents] = useState(false);
+  const [lastReceived, setLastReceived] = useState(null);
+
+  const loadEvents = () => {
+    console.log('ran');
+    setLoading(true);
+    getLimitedEventsByCategory(categoryName, lastReceived, limit, uid).then(
+      (receivedEvents) => {
+        setLastReceived(receivedEvents.docs[receivedEvents.docs.length - 1]);
+        let eventData = [];
+        receivedEvents.forEach((doc) => {
+          const data = doc.data();
+          data['id'] = doc.id;
+          eventData.push(data);
+        });
+        eventData = events.concat(eventData);
+        setEvents(eventData);
+        setLoading(false);
+        setMoreEvents(eventData.length < totalEvents);
+      }
+    );
+  };
+
+  // TODO: Figure out this linter warning
+  useEffect(() => {
+    loadEvents();
+  }, [categoryName]);
+
   return (
     <div className="pageContentContainer">
       <table className={styles.eventListTable}>
@@ -30,8 +66,18 @@ const EventList = ({ backToShow, events, goToEvent }) => {
           ))}
         </tbody>
       </table>
+      {loading && <LoadingOutlined />}
+      {moreEvents && !loading && (
+        <div className={styles.loadMore}>
+          <Button type="primary" onClick={loadEvents} size="large">
+            Load more events
+          </Button>
+        </div>
+      )}
       <div className={styles.backToShow} onClick={backToShow}>
-        <LeftCircleFilled />
+        <div className={styles.backToShowIcon}>
+          <LeftOutlined />
+        </div>
       </div>
     </div>
   );

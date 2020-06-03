@@ -48,3 +48,9 @@ export const showColumns = [
     key: 'c3',
   },
 ];
+
+export const startAndEndOfYear = () => {
+  const start = moment().startOf('year').unix();
+  const end = moment().endOf('year').unix();
+  return [start, end];
+}

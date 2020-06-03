@@ -49,9 +49,30 @@ const eventsByCategoryHelper = (categoryName, uid) => {
   return query;
 };
 
-export const getEventsByCategory = (categoryName, uid) => {
-  const query = eventsByCategoryHelper(categoryName, uid);
-  return query.orderBy('start_date', 'desc').get();
+export const getEventsByCategoryAndDateRange = (
+  start,
+  end,
+  categoryName,
+  uid
+) => {
+  let query = eventsByCategoryHelper(categoryName, uid);
+  query = query.where('start_date', '>=', start);
+  query = query.where('start_date', '<=', end);
+  return query.get();
+};
+
+export const getLimitedEventsByCategory = (
+  categoryName,
+  lastVisibleEvent,
+  limit,
+  uid
+) => {
+  let query = eventsByCategoryHelper(categoryName, uid).orderBy(
+    'start_date',
+    'desc'
+  );
+  if (lastVisibleEvent) query = query.startAfter(lastVisibleEvent);
+  return query.limit(limit).get();
 };
 
 export const getMostRecentEventForCategory = (categoryName, uid) => {
@@ -64,7 +85,8 @@ export const deleteEvent = (eventId) =>
 
 export const deleteAllEventsForCategory = (categoryName, uid) => {
   // TODO: There will be issues when deleting more than 500 events this way
-  getEventsByCategory(categoryName, uid).then((events) => {
+  const query = eventsByCategoryHelper(categoryName, uid);
+  query.get().then((events) => {
     const batch = db.batch();
     events.forEach((doc) => {
       batch.delete(doc.ref);
