@@ -73,7 +73,9 @@ const CategoryList = () => {
       </div>
       <div className="pageContentContainer">
         {loading ? (
-          <LoadingOutlined />
+          <div className="loadingContainer">
+            <LoadingOutlined />
+          </div>
         ) : (
           <Table
             dataSource={receivedData}

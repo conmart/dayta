@@ -65,7 +65,11 @@ const EventList = ({ backToShow, category, goToEvent, uid }) => {
           ))}
         </tbody>
       </table>
-      {loading && <LoadingOutlined />}
+      {loading && (
+        <div className="loadingContainer">
+          <LoadingOutlined />
+        </div>
+      )}
       {moreEvents && !loading && (
         <div className={styles.loadMore}>
           <Button type="primary" onClick={loadEvents} size="large">

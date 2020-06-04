@@ -1,10 +1,5 @@
 import React, { Fragment } from 'react';
-import {
-  AutoComplete,
-  DatePicker,
-  InputNumber,
-  Select,
-} from 'antd';
+import { AutoComplete, DatePicker, InputNumber, Select } from 'antd';
 import TextField from '@material-ui/core/TextField';
 
 import styles from './event.module.css';
@@ -65,8 +60,8 @@ const EventForm = ({
         <div className={styles.timePick}>
           <span className={styles.label}>Start</span>
           <TextField
+            className={styles.timePickInput}
             onChange={onStartChange}
-            // style={{ width: '100%' }}
             value={formatStart}
             type="time"
           />
@@ -74,8 +69,8 @@ const EventForm = ({
         <div className={styles.timePick}>
           <span className={styles.label}>End</span>
           <TextField
+            className={styles.timePickInput}
             onChange={onEndChange}
-            // style={{ width: '100%' }}
             value={formatEnd}
             type="time"
           />

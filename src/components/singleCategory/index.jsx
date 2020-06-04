@@ -64,7 +64,7 @@ const Category = () => {
         <div className="pageTitle">{categoryName}</div>
       </div>
       {loading && (
-        <div>
+        <div className="loadingContainer">
           <LoadingOutlined />
         </div>
       )}

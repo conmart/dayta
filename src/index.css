@@ -8,6 +8,7 @@ body {
   
   /* colors */
   --main-bg-color: coral;
+  --color-dk-gray: #454545;
 }
 
 code {
@@ -36,4 +37,9 @@ code {
   margin: 0 auto;
   height: 70%;
   overflow: auto;
+}
+
+.loadingContainer {
+  font-size: 32px;
+  padding-top: 10px;
 }

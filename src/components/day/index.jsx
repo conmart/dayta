@@ -55,7 +55,9 @@ const Day = () => {
       </div>
       <div className="pageContentContainer">
         {loading ? (
-          <LoadingOutlined />
+          <div className="loadingContainer">
+            <LoadingOutlined />
+          </div>
         ) : (
           events.map((event) => (
             <DayEvent
