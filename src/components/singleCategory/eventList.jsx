@@ -18,7 +18,6 @@ const EventList = ({ backToShow, category, goToEvent, uid }) => {
   const [lastReceived, setLastReceived] = useState(null);
 
   const loadEvents = () => {
-    console.log('ran');
     setLoading(true);
     getLimitedEventsByCategory(categoryName, lastReceived, limit, uid).then(
       (receivedEvents) => {

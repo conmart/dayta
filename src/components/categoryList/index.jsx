@@ -10,7 +10,7 @@ import { formatDate } from '../../services/utils';
 import styles from './categories.module.css';
 import 'antd/dist/antd.css';
 
-import { columns } from './dummyData';
+import { columns } from './utils';
 
 const CategoryList = () => {
   const history = useHistory();
@@ -20,32 +20,29 @@ const CategoryList = () => {
   const [receivedData, setReceivedData] = useState([]);
 
   useEffect(() => {
-      getCategories(uid)
-        .then((categories) => {
-          if (!categories.empty) {
-            const categoryData = [];
-            const catMap = {};
-            categories.forEach((doc) => {
-              const data = doc.data();
-              data['id'] = doc.id;
-              catMap[data.name] = data;
-              const latestDate = formatDate(
-                data['most_recent_event'],
-                'M/DD/YY'
-              );
-              categoryData.push({
-                key: doc.id,
-                name: data.name,
-                instances: data['total_events'],
-                latest: latestDate,
-              });
+    getCategories(uid)
+      .then((categories) => {
+        if (!categories.empty) {
+          const categoryData = [];
+          const catMap = {};
+          categories.forEach((doc) => {
+            const data = doc.data();
+            data['id'] = doc.id;
+            catMap[data.name] = data;
+            const latestDate = formatDate(data['most_recent_event'], 'M/DD/YY');
+            categoryData.push({
+              key: doc.id,
+              name: data.name,
+              instances: data['total_events'],
+              latest: latestDate,
             });
-            setCategoryMap(catMap);
-            setReceivedData(categoryData);
-            setLoading(false);
-          }
-        })
-        .catch((err) => console.log(err));
+          });
+          setCategoryMap(catMap);
+          setReceivedData(categoryData);
+          setLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
   }, [uid]);
 
   const goToCategory = (categoryName) => {
