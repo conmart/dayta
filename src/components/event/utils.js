@@ -39,7 +39,8 @@ export const buildEvent = (
     category_name: categoryName,
     uid: uid,
   };
-  if (eventDate) newEvent['start_date'] = eventDate.clone().startOf('day').unix();
+  if (eventDate)
+    newEvent['start_date'] = eventDate.clone().startOf('day').unix();
   if (durationInSeconds) newEvent['duration'] = durationInSeconds;
   if (start) newEvent['start_time'] = start.clone().unix();
   return newEvent;
@@ -60,13 +61,7 @@ export const buildNewCategory = (newEvent, uid) => {
   };
 };
 
-const updateExistingCategory = (
-  id,
-  name,
-  newCount,
-  newDuration,
-  uid
-) => {
+const updateExistingCategory = (id, name, newCount, newDuration, uid) => {
   fs.getMostRecentEventForCategory(name, uid).then((collection) => {
     let latestEvent;
     collection.forEach((doc) => (latestEvent = doc.data()['start_date']));
@@ -126,11 +121,11 @@ export const calcDefaultValues = (category, event, selectedDate) => {
   const defaultEventDate = oldStartDate
     ? moment.unix(oldStartDate)
     : selectedDate;
-  const defaultEventStart = oldStartTime ? moment.unix(oldStartTime) : null;
+  const defaultEventStart = oldStartTime ? moment.unix(oldStartTime) : '';
   const defaultEventEnd =
     oldDuration && oldStartTime
       ? moment.unix(oldStartTime).add(oldDuration, 'seconds')
-      : null;
+      : '';
   const [durNum, durUnit] = eventDurationUnits(oldDuration);
   const defaultDuration = durNum ? durNum : null;
   const defaultDurationUnit = durUnit ? durUnit : 2;
@@ -157,7 +152,11 @@ export const compareEvents = (newEvent, oldEvent) => {
   return eventDiff;
 };
 
-export const validateTime = (start, end) => {
-  if ((start && end) && !start.isBefore(end)) return [null, null];
+const strTimeToMoment = (time) => (time ? moment(time, 'HH:mm') : null);
+
+export const validateTime = (eventStart, eventEnd) => {
+  const start = strTimeToMoment(eventStart);
+  const end = strTimeToMoment(eventEnd);
+  if (start && end && !start.isBefore(end)) return ['', ''];
   return [start, end];
-}
+};

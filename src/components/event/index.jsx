@@ -85,12 +85,12 @@ const Event = () => {
 
   const onCategoryChange = (category) => setCategory(category);
   const onDateChange = (date) => setDate(date);
-  const onStartChange = (time) => {
-    const newTime = validateTime(time, eventEnd)[0];
+  const onStartChange = (e) => {
+    const newTime = validateTime(e.target.value, eventEnd)[0];
     setStart(newTime);
   };
-  const onEndChange = (time) => {
-    const newTime = validateTime(eventStart, time)[1];
+  const onEndChange = (e) => {
+    const newTime = validateTime(eventStart, e.target.value)[1];
     setEnd(newTime)
   };
   const onDurationChange = (length) => setDuration(length);
@@ -100,6 +100,13 @@ const Event = () => {
     dispatch({ type: 'NEW_DATE', selectedDate: eventDate });
     history.push('/');
   };
+
+  // const onStartChange = (e) => {
+  //   console.log(e.target.value)
+  // }
+  // const onEndChange = (e) => {
+  //   console.log(e.target.value);
+  // };
 
   const deleteEvent = () => {
     const { category_name: name, duration, id } = selectedEvent;

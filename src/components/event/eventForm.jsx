@@ -4,8 +4,8 @@ import {
   DatePicker,
   InputNumber,
   Select,
-  TimePicker,
 } from 'antd';
+import TextField from '@material-ui/core/TextField';
 
 import styles from './event.module.css';
 import 'antd/dist/antd.css';
@@ -30,8 +30,9 @@ const EventForm = ({
   const categoryOptions = Object.keys(categoryNameIdMap).map((catName) => ({
     value: catName,
   }));
-  const timeFormat = 'h:mm a';
   const hideDuration = eventStart && eventEnd;
+  const formatStart = eventStart ? eventStart.format('HH:mm') : '';
+  const formatEnd = eventEnd ? eventEnd.format('HH:mm') : '';
 
   return (
     <Fragment>
@@ -63,20 +64,20 @@ const EventForm = ({
       <div className={styles.startEndRow}>
         <div className={styles.timePick}>
           <span className={styles.label}>Start</span>
-          <TimePicker
-            format={timeFormat}
+          <TextField
             onChange={onStartChange}
-            style={{ width: '100%' }}
-            value={eventStart}
+            // style={{ width: '100%' }}
+            value={formatStart}
+            type="time"
           />
         </div>
         <div className={styles.timePick}>
           <span className={styles.label}>End</span>
-          <TimePicker
-            format={timeFormat}
+          <TextField
             onChange={onEndChange}
-            style={{ width: '100%' }}
-            value={eventEnd}
+            // style={{ width: '100%' }}
+            value={formatEnd}
+            type="time"
           />
         </div>
       </div>

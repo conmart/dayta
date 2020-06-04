@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* colors */
+  --main-bg-color: coral;
 }
 
 code {
@@ -31,6 +34,6 @@ code {
   border: 1px solid black;
   width: 80%;
   margin: 0 auto;
-  height: 75%;
+  height: 70%;
   overflow: auto;
 }
