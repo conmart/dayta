@@ -10,7 +10,7 @@ const ConfirmationModal = ({ cancel, confirm, text }) => {
       <div className={styles.modalContainer}>
         <div className={styles.modalText}>{text}</div>
         <div className={styles.modalButtons}>
-          <Button type='primary' danger onClick={confirm}>Confirm</Button>
+          <Button danger onClick={confirm}>Confirm</Button>
           <Button type='primary' onClick={cancel}>Cancel</Button>
         </div>
       </div>

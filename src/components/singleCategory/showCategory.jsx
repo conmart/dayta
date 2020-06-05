@@ -32,7 +32,8 @@ const ShowCategory = ({
     setShowModal(true);
   };
 
-  const modalText = 'Testing this whole modal thing out';
+  const modalText =
+    'Are you sure? This action will delete this category as well as all associated events.';
 
   return (
     <div className={styles.showContainer}>

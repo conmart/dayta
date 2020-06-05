@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Button } from 'antd';
-import { LeftOutlined, LoadingOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import { getLimitedEventsByCategory } from '../../services/firebase';
 import { formatDate, formattedSeconds } from '../../services/utils';
@@ -42,47 +42,48 @@ const EventList = ({ backToShow, category, goToEvent, uid }) => {
   }, [categoryName]);
 
   return (
-    <div className="pageContentContainer">
-      <table className={styles.eventListTable}>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Start</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          {events.map((event) => (
-            <tr
-              className={styles.eventRow}
-              onClick={() => goToEvent(event)}
-              key={event.id}
-            >
-              <td>{formatDate(event['start_date'], 'M/DD/YY')}</td>
-              <td>{formatDate(event['start_time'], 'h:mm a')}</td>
-              <td>{formattedSeconds(event['duration'])}</td>
+    <Fragment>
+      <div className="pageContentContainer">
+        <table className={styles.eventListTable}>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Start</th>
+              <th>Duration</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {loading && (
-        <div className="loadingContainer">
-          <LoadingOutlined />
-        </div>
-      )}
-      {moreEvents && !loading && (
-        <div className={styles.loadMore}>
-          <Button type="primary" onClick={loadEvents} size="large">
-            Load more events
-          </Button>
-        </div>
-      )}
-      <div className={styles.backToShow} onClick={backToShow}>
-        <div className={styles.backToShowIcon}>
-          <LeftOutlined />
-        </div>
+          </thead>
+          <tbody>
+            {events.map((event) => (
+              <tr
+                className={styles.eventRow}
+                onClick={() => goToEvent(event)}
+                key={event.id}
+              >
+                <td>{formatDate(event['start_date'], 'M/DD/YY')}</td>
+                <td>{formatDate(event['start_time'], 'h:mm a')}</td>
+                <td>{formattedSeconds(event['duration'])}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {loading && (
+          <div className="loadingContainer">
+            <LoadingOutlined />
+          </div>
+        )}
+        {moreEvents && !loading && (
+          <div className={styles.loadMore}>
+            <Button type="primary" onClick={loadEvents} size="large">
+              Load more events
+            </Button>
+          </div>
+        )}
       </div>
-    </div>
+      <div className={styles.backToShow} onClick={backToShow}>
+          <ArrowLeftOutlined />
+          <span className={styles.backText}>Back</span>
+      </div>
+    </Fragment>
   );
 };
 

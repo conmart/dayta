@@ -101,13 +101,6 @@ const Event = () => {
     history.push('/');
   };
 
-  // const onStartChange = (e) => {
-  //   console.log(e.target.value)
-  // }
-  // const onEndChange = (e) => {
-  //   console.log(e.target.value);
-  // };
-
   const deleteEvent = () => {
     const { category_name: name, duration, id } = selectedEvent;
     fs.deleteEvent(id)

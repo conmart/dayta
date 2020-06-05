@@ -7,8 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   
   /* colors */
-  --main-bg-color: coral;
   --color-dk-gray: #454545;
+  --color-black: #171717;
+  --color-danger: #ed494c;
+  --color-ant-blue: #539ee5;
 }
 
 code {
