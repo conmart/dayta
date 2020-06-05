@@ -20,7 +20,9 @@ const durationToSeconds = (duration, unit) => {
 
 const calcEventDuration = (start, end, duration, unit) => {
   if (start && end) {
-    return end.diff(start, 'seconds');
+    const newEnd = end.clone();
+    if (newEnd.isBefore(start)) newEnd.add(1, 'day');
+    return newEnd.diff(start, 'seconds');
   } else if (duration) {
     return durationToSeconds(duration, unit);
   }
@@ -156,11 +158,9 @@ export const compareEvents = (newEvent, oldEvent) => {
   return eventDiff;
 };
 
-const strTimeToMoment = (time) => (time ? moment(time, 'HH:mm') : null);
+export const strTimeToMoment = (time) => (time ? moment(time, 'HH:mm') : null);
 
-export const validateTime = (eventStart, eventEnd) => {
-  const start = strTimeToMoment(eventStart);
-  const end = strTimeToMoment(eventEnd);
-  if (start && end && !start.isBefore(end)) return ['', ''];
-  return [start, end];
-};
+export const isEndBeforeStart = (start, end) => {
+  if (start && end) return end.isBefore(start);
+  return false;
+}

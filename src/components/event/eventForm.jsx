@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { AutoComplete, InputNumber, Select } from 'antd';
 import TextField from '@material-ui/core/TextField';
 
+import { isEndBeforeStart } from './utils';
+
 import styles from './event.module.css';
 import 'antd/dist/antd.css';
 
@@ -26,6 +28,7 @@ const EventForm = ({
     value: catName,
   }));
   const hideDuration = eventStart && eventEnd;
+  const endBeforeStart = isEndBeforeStart(eventStart, eventEnd);
   const formatStart = eventStart ? eventStart.format('HH:mm') : '';
   const formatEnd = eventEnd ? eventEnd.format('HH:mm') : '';
 
@@ -74,6 +77,11 @@ const EventForm = ({
             type="time"
             value={formatEnd}
           />
+          {endBeforeStart && (
+            <span className={styles.warn}>
+              End is before start and will be seen as next day
+            </span>
+          )}
         </div>
       </div>
       <div className={styles.formRow}>

@@ -29,6 +29,7 @@
 .timePick {
   width: 45%;
   text-align: left;
+  position: relative;
 }
 
 .durationInputs {
@@ -62,4 +63,12 @@
 
 .materialInput {
   width: 100%;
+}
+
+.warn {
+  position: absolute;
+  color: var(--color-danger);
+  left: 0;
+  bottom: -40px;
+  font-size: 12px;
 }

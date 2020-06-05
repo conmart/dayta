@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import { useGlobalState } from '../../state';
 import * as fs from '../../services/firebase';
@@ -9,7 +10,7 @@ import {
   calcDefaultValues,
   compareEvents,
   handleCategoryUpdate,
-  validateTime,
+  strTimeToMoment,
 } from './utils';
 import EventForm from './eventForm';
 import FormFooter from './formFooter';
@@ -84,23 +85,15 @@ const Event = () => {
   ]);
 
   const onCategoryChange = (category) => setCategory(category);
-  const onDateChange = (e) => {
-    console.log(e)
-    console.log(e.target.value)
-  };
-  const onStartChange = (e) => {
-    const newTime = validateTime(e.target.value, eventEnd)[0];
-    setStart(newTime);
-  };
-  const onEndChange = (e) => {
-    const newTime = validateTime(eventStart, e.target.value)[1];
-    setEnd(newTime)
-  };
+  const onDateChange = (e) => setDate(e.target.value);
+  const onStartChange = (e) => setStart(strTimeToMoment(e.target.value));
+  const onEndChange = (e) => setEnd(strTimeToMoment(e.target.value));
   const onDurationChange = (length) => setDuration(length);
   const onUnitChange = (unit) => setDurationUnit(unit);
 
   const returnHome = () => {
-    dispatch({ type: 'NEW_DATE', selectedDate: eventDate });
+    const selectedDate = moment.unix(newEvent['start_date']);
+    dispatch({ type: 'NEW_DATE', selectedDate });
     history.push('/');
   };
 
