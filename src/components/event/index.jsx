@@ -84,7 +84,10 @@ const Event = () => {
   ]);
 
   const onCategoryChange = (category) => setCategory(category);
-  const onDateChange = (date) => setDate(date);
+  const onDateChange = (e) => {
+    console.log(e)
+    console.log(e.target.value)
+  };
   const onStartChange = (e) => {
     const newTime = validateTime(e.target.value, eventEnd)[0];
     setStart(newTime);

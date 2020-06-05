@@ -2,6 +2,8 @@ import moment from 'moment';
 import * as fs from '../../services/firebase';
 import { secondsToFriendly } from '../../services/utils';
 
+const datePickFormat = 'YYYY-MM-DD';
+
 const durationToSeconds = (duration, unit) => {
   // unit is stored in index.jsx as 1 = seconds, 2 = minutes, 3 = hours
   switch (unit) {
@@ -40,7 +42,9 @@ export const buildEvent = (
     uid: uid,
   };
   if (eventDate)
-    newEvent['start_date'] = eventDate.clone().startOf('day').unix();
+    newEvent['start_date'] = moment(eventDate, datePickFormat)
+      .startOf('day')
+      .unix();
   if (durationInSeconds) newEvent['duration'] = durationInSeconds;
   if (start) newEvent['start_time'] = start.clone().unix();
   return newEvent;
@@ -119,8 +123,8 @@ export const calcDefaultValues = (category, event, selectedDate) => {
   ] = extractValuesFromEvent(event);
   const defaultCategoryName = getCategoryName(oldEventName, category);
   const defaultEventDate = oldStartDate
-    ? moment.unix(oldStartDate)
-    : selectedDate;
+    ? moment.unix(oldStartDate).format(datePickFormat)
+    : selectedDate.format(datePickFormat);
   const defaultEventStart = oldStartTime ? moment.unix(oldStartTime) : '';
   const defaultEventEnd =
     oldDuration && oldStartTime

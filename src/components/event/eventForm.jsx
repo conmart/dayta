@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { AutoComplete, DatePicker, InputNumber, Select } from 'antd';
+import { AutoComplete, InputNumber, Select } from 'antd';
 import TextField from '@material-ui/core/TextField';
 
 import styles from './event.module.css';
@@ -49,10 +49,10 @@ const EventForm = ({
         <span className={styles.label}>
           Date <span className={styles.required}>*</span>
         </span>
-        <DatePicker
-          format="MMMM Do, YYYY"
+        <TextField
           onChange={onDateChange}
-          style={{ width: '100%' }}
+          className={styles.materialInput}
+          type="date"
           value={eventDate}
         />
       </div>
@@ -60,19 +60,19 @@ const EventForm = ({
         <div className={styles.timePick}>
           <span className={styles.label}>Start</span>
           <TextField
-            className={styles.timePickInput}
+            className={styles.materialInput}
             onChange={onStartChange}
-            value={formatStart}
             type="time"
+            value={formatStart}
           />
         </div>
         <div className={styles.timePick}>
           <span className={styles.label}>End</span>
           <TextField
-            className={styles.timePickInput}
+            className={styles.materialInput}
             onChange={onEndChange}
-            value={formatEnd}
             type="time"
+            value={formatEnd}
           />
         </div>
       </div>
