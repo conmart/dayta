@@ -34,7 +34,7 @@ const CalendarDay = ({
     <div className={dayStyles} onClick={goToDay}>
       <span className={numberStyles}>{dateObject.format('DD')}</span>
       {eventsFound && (
-        <div className={styles.foundEvents}>{eventsFound} Found</div>
+        <div className={styles.foundEvents}>{eventsFound} Events found</div>
       )}
     </div>
   );
