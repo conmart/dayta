@@ -25,3 +25,13 @@ export const formattedSeconds = (duration) => {
   const [number, unit] = secondsToFriendly(duration);
   return `${number} ${unit}`;
 };
+
+export const buildResourceList = (querySnapshot) => {
+  const resourceList = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    data['id'] = doc.id;
+    resourceList.push(data);
+  })
+  return resourceList;
+}

@@ -25,7 +25,23 @@
   flex: 1 0 14%;
   cursor: pointer;
   text-align: left;
-  padding: 1px 6px;
+  padding: 3px;
+}
+
+.dayNumber {
+  padding: 0 2px;
+  margin: 3px;
+}
+
+.eventsFound {
+  font-weight: bold;
+  color: var(--color-ant-blue);
+  border: 2px solid;
+  border-radius: 8px;
+}
+
+.foundEvents {
+  padding-top: 4px;
 }
 
 .outsideCurrentMonth {

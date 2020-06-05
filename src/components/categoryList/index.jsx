@@ -20,6 +20,7 @@ const CategoryList = () => {
   const [receivedData, setReceivedData] = useState([]);
 
   useEffect(() => {
+    // TODO: Clean this up
     getCategories(uid)
       .then((categories) => {
         if (!categories.empty) {

@@ -6,7 +6,13 @@ import styles from './calendar.module.css';
 
 const cx = classNames.bind(styles);
 
-const CalendarDay = ({ currentMonth, dateObject, rows, setNewDate }) => {
+const CalendarDay = ({
+  currentMonth,
+  dateObject,
+  events,
+  rows,
+  setNewDate,
+}) => {
   const history = useHistory();
 
   const goToDay = () => {
@@ -14,15 +20,22 @@ const CalendarDay = ({ currentMonth, dateObject, rows, setNewDate }) => {
     history.push('/');
   };
 
+  const eventsFound = events ? events.length : false;
+
   const dayStyles = cx('day', {
     tallDay: rows === 5,
     extraTallDay: rows === 4,
     outsideCurrentMonth: dateObject.month() !== currentMonth,
   });
+  const numberStyles = cx('dayNumber', { eventsFound });
+  // TODO: Improve info available on calendar day, and add media queries
 
   return (
     <div className={dayStyles} onClick={goToDay}>
-      {dateObject.format('DD')}
+      <span className={numberStyles}>{dateObject.format('DD')}</span>
+      {eventsFound && (
+        <div className={styles.foundEvents}>{eventsFound} Found</div>
+      )}
     </div>
   );
 };

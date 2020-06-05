@@ -3,7 +3,11 @@ import { Button } from 'antd';
 import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import { getLimitedEventsByCategory } from '../../services/firebase';
-import { formatDate, formattedSeconds } from '../../services/utils';
+import {
+  buildResourceList,
+  formatDate,
+  formattedSeconds,
+} from '../../services/utils';
 
 import styles from './category.module.css';
 import 'antd/dist/antd.css'; // Do I need this here?
@@ -22,12 +26,7 @@ const EventList = ({ backToShow, category, goToEvent, uid }) => {
     getLimitedEventsByCategory(categoryName, lastReceived, limit, uid).then(
       (receivedEvents) => {
         setLastReceived(receivedEvents.docs[receivedEvents.docs.length - 1]);
-        let eventData = [];
-        receivedEvents.forEach((doc) => {
-          const data = doc.data();
-          data['id'] = doc.id;
-          eventData.push(data);
-        });
+        let eventData = buildResourceList(receivedEvents)
         eventData = events.concat(eventData);
         setEvents(eventData);
         setLoading(false);
@@ -80,8 +79,8 @@ const EventList = ({ backToShow, category, goToEvent, uid }) => {
         )}
       </div>
       <div className={styles.backToShow} onClick={backToShow}>
-          <ArrowLeftOutlined />
-          <span className={styles.backText}>Back</span>
+        <ArrowLeftOutlined />
+        <span className={styles.backText}>Back</span>
       </div>
     </Fragment>
   );

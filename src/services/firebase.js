@@ -41,6 +41,13 @@ export const getEventsByDate = (date, uid) => {
   return query.orderBy('category_name').get();
 };
 
+export const getEventsByDateRange = (start, end, uid) => {
+  let query = db.collection('events').where('uid', '==', uid);
+  query = query.where('start_date', '>=', start);
+  query = query.where('start_date', '<=', end);
+  return query.get();
+};
+
 const eventsByCategoryHelper = (categoryName, uid) => {
   let query = db
     .collection('events')

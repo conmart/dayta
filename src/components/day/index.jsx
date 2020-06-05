@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
 import { getEventsByDate } from '../../services/firebase';
+import { buildResourceList } from '../../services/utils';
 import DayEvent from './dayEvent';
 
 import styles from './day.module.css';
@@ -21,12 +22,7 @@ const Day = () => {
   useEffect(() => {
     const unixDate = selectedDate.clone().startOf('day').unix();
     getEventsByDate(unixDate, uid).then((events) => {
-      const eventList = [];
-      events.forEach((doc) => {
-        const data = doc.data();
-        data['id'] = doc.id;
-        eventList.push(data);
-      });
+      const eventList = buildResourceList(events);
       setEvents(eventList);
       setLoading(false);
     })
