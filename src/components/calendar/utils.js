@@ -25,3 +25,18 @@ export const daysToDisplay = (selectedDate) => {
   }
   return days;
 };
+
+export const buildEventsByDay = (events) => {
+  const eventsByDay = {};
+  events.forEach((event) => {
+    const data = event.data();
+    const date = data['start_date'];
+    let existingEvents = eventsByDay[date];
+    if (existingEvents) {
+      eventsByDay[date] = existingEvents.concat([data]);
+    } else {
+      eventsByDay[date] = [data];
+    }
+  });
+  return eventsByDay;
+}

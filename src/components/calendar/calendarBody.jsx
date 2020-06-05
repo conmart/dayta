@@ -17,7 +17,7 @@ const CalendarBody = ({ events, selectedDate, setNewDate }) => {
       <CalendarDay
         currentMonth={currentMonth}
         dateObject={day}
-        events={eventsForThisDay}
+        events={eventsForThisDay ? eventsForThisDay : []}
         key={index}
         rows={numRows}
         setNewDate={setNewDate}

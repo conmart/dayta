@@ -28,6 +28,7 @@
   text-align: left;
   padding: 3px;
   background-color: white;
+  overflow: hidden;
 }
 
 .dayNumber {
@@ -35,22 +36,27 @@
   margin: 3px;
 }
 
-.eventsFound {
+.dayHasEvents {
   font-weight: bold;
   color: white;
   border: 2px solid var(--color-ant-blue);
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: var(--color-ant-blue);
 }
 
-.foundEvents {
+.eventList {
   position: absolute;
-  overflow: hidden;
-  padding-top: 8px;
+  white-space: nowrap;
+  padding-top: 1px;
 }
 
 .outsideCurrentMonth {
   background-color: #e0e0e0;
+}
+
+.outsideCurrentMonth .dayHasEvents {
+  border-color: #9c9c9c;
+  background-color: #9c9c9c;
 }
 
 .tallDay {

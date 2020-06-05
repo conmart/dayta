@@ -20,22 +20,29 @@ const CalendarDay = ({
     history.push('/');
   };
 
-  const eventsFound = events ? events.length : false;
-
   const dayStyles = cx('day', {
     tallDay: rows === 5,
     extraTallDay: rows === 4,
     outsideCurrentMonth: dateObject.month() !== currentMonth,
   });
-  const numberStyles = cx('dayNumber', { eventsFound });
-  // TODO: Improve info available on calendar day, and add media queries
+  const numberStyles = cx('dayNumber', { dayHasEvents: events.length });
+
+  const eventList = events
+    .sort((a, b) => {
+      if (a['category_name'] < b['category_name']) {
+        return -1;
+      }
+      if (a['category_name'] > b['category_name']) {
+        return 1;
+      }
+      return 0;
+    })
+    .map((event) => <div>{event['category_name']}</div>);
 
   return (
     <div className={dayStyles} onClick={goToDay}>
       <span className={numberStyles}>{dateObject.format('DD')}</span>
-      {eventsFound && (
-        <div className={styles.foundEvents}>{eventsFound} Events found</div>
-      )}
+      <div className={styles.eventList}>{eventList}</div>
     </div>
   );
 };
