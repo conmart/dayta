@@ -48,6 +48,12 @@ export const sortEvents = (events) => {
     }
   }
   eventsWithStart.sort((a, b) => a['start_time'] - b['start_time']);
-  eventsWithoutStart.sort((a, b) => a['category_name'] - b['category_name']);
+  eventsWithoutStart.sort((a, b) => {
+    const aName = a['category_name'].toUpperCase();
+    const bName = b['category_name'].toUpperCase();
+    if (aName < bName) return -1;
+    if (aName > bName) return 1;
+    return 0;
+  });
   return eventsWithStart.concat(eventsWithoutStart);
 };

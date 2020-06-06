@@ -23,7 +23,7 @@ export const getSingleCategory = (categoryId) => {
   return db.collection('categories').doc(categoryId).get();
 };
 
-export const deleteCategory = (categoryId) =>
+export const deleteCategory = async (categoryId) =>
   db.collection('categories').doc(categoryId).delete();
 
 // Event Calls

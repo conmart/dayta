@@ -75,7 +75,10 @@ const updateExistingCategory = (id, name, newCount, newDuration, uid) => {
       total_events: newCount,
       most_recent_event: latestEvent ? latestEvent : null,
     };
-    if (newDuration) updatedCategoryData['total_duration'] = newDuration;
+    if (typeof newDuration === 'number') {
+      updatedCategoryData['total_duration'] = newDuration;
+    }
+    console.log(updatedCategoryData, 'newCatData');
     fs.updateCategory(id, updatedCategoryData);
   });
 };
@@ -88,7 +91,9 @@ export const handleCategoryUpdate = (
 ) => {
   const { count, duration, id, name } = category;
   const newCount = count + countIncr;
+  console.log(durationChange, duration);
   const newDuration = durationChange ? duration + durationChange : false;
+  console.log(newDuration, 'newDur');
   updateExistingCategory(id, name, newCount, newDuration, uid);
 };
 
@@ -163,4 +168,4 @@ export const strTimeToMoment = (time) => (time ? moment(time, 'HH:mm') : null);
 export const isEndBeforeStart = (start, end) => {
   if (start && end) return end.isBefore(start);
   return false;
-}
+};

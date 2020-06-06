@@ -7,11 +7,14 @@ import {
 } from '@ant-design/icons';
 
 import {
+  deleteCategory,
   getCategories,
   updateCategory,
   updateEventsByCategory,
 } from '../../services/firebase';
 import { buildResourceList } from '../../services/utils';
+import { buildCategoryUpdate, findExistingCategory } from './utils';
+import ConfirmationModal from '../common/confirmationModal';
 
 import styles from './category.module.css';
 
@@ -20,6 +23,7 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
   const [editName, setEditName] = useState(false);
   const [newName, setNewName] = useState(categoryName);
   const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getCategories(uid).then((categories) => {
@@ -45,24 +49,43 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
     });
   };
 
+  const mergeCategories = () => {
+    const existingCategory = findExistingCategory(categories, newName);
+    const categoryUpdate = buildCategoryUpdate(existingCategory, category);
+    const eventUpdate = { category_name: newName };
+    updateCategory(existingCategory.id, categoryUpdate).then(() => {
+      updateEventsByCategory(categoryName, uid, eventUpdate).then(() => {
+        deleteCategory(id).then(() => {
+          backToCategories();
+        });
+      });
+    });
+  };
+
   const checkValidUpdate = () => {
     if (newName === categoryName || !newName) {
       cancelChange();
       return;
     }
-    const existingCategory = categories.filter(
-      (category) => category.name === newName
-    )[0];
+    const existingCategory = findExistingCategory(categories, newName);
     if (existingCategory) {
-      // merge categories not built yet
-      cancelChange();
-      return;
+      setShowModal(true);
+    } else {
+      updateCategoryAndEvents();
     }
-    updateCategoryAndEvents();
   };
+
+  const modalText = `You already have a category called ${newName}, would you like to merge these two categories? This cannot be undone.`;
 
   return (
     <div className="pageTitleContainer">
+      {showModal && (
+        <ConfirmationModal
+          cancel={() => setShowModal(false)}
+          confirm={mergeCategories}
+          text={modalText}
+        />
+      )}
       {editName ? (
         <div className={styles.editCategoryContainer}>
           <Input onChange={onNameChange} value={newName} />
