@@ -35,3 +35,19 @@ export const buildResourceList = (querySnapshot) => {
   })
   return resourceList;
 }
+
+export const sortEvents = (events) => {
+  if (!events.length) return events;
+  const eventsWithStart = [];
+  const eventsWithoutStart = [];
+  for (const event of events) {
+    if (event['start_time']) {
+      eventsWithStart.push(event);
+    } else {
+      eventsWithoutStart.push(event);
+    }
+  }
+  eventsWithStart.sort((a, b) => a['start_time'] - b['start_time']);
+  eventsWithoutStart.sort((a, b) => a['category_name'] - b['category_name']);
+  return eventsWithStart.concat(eventsWithoutStart);
+};

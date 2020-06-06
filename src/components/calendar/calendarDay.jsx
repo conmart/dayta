@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import { useHistory } from 'react-router-dom';
 
+import { sortEvents } from '../../services/utils';
+
 import styles from './calendar.module.css';
 
 const cx = classNames.bind(styles);
@@ -27,17 +29,9 @@ const CalendarDay = ({
   });
   const numberStyles = cx('dayNumber', { dayHasEvents: events.length });
 
-  const eventList = events
-    .sort((a, b) => {
-      if (a['category_name'] < b['category_name']) {
-        return -1;
-      }
-      if (a['category_name'] > b['category_name']) {
-        return 1;
-      }
-      return 0;
-    })
-    .map((event, index) => <div key={index}>{event['category_name']}</div>);
+  const eventList = sortEvents([...events]).map((event, index) => (
+    <div key={index}>{event['category_name']}</div>
+  ));
 
   return (
     <div className={dayStyles} onClick={goToDay}>

@@ -23,25 +23,23 @@ const CategoryList = () => {
     // TODO: Clean this up
     getCategories(uid)
       .then((categories) => {
-        if (!categories.empty) {
-          const categoryData = [];
-          const catMap = {};
-          categories.forEach((doc) => {
-            const data = doc.data();
-            data['id'] = doc.id;
-            catMap[data.name] = data;
-            const latestDate = formatDate(data['most_recent_event'], 'M/DD/YY');
-            categoryData.push({
-              key: doc.id,
-              name: data.name,
-              instances: data['total_events'],
-              latest: latestDate,
-            });
+        const categoryData = [];
+        const catMap = {};
+        categories.forEach((doc) => {
+          const data = doc.data();
+          data['id'] = doc.id;
+          catMap[data.name] = data;
+          const latestDate = formatDate(data['most_recent_event'], 'M/DD/YY');
+          categoryData.push({
+            key: doc.id,
+            name: data.name,
+            instances: data['total_events'],
+            latest: latestDate,
           });
-          setCategoryMap(catMap);
-          setReceivedData(categoryData);
-          setLoading(false);
-        }
+        });
+        setCategoryMap(catMap);
+        setReceivedData(categoryData);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   }, [uid]);

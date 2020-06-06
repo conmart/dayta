@@ -37,8 +37,7 @@ export const updateEvent = async (eventId, newData) => {
 
 export const getEventsByDate = (date, uid) => {
   let query = db.collection('events').where('start_date', '==', date);
-  query = query.where('uid', '==', uid);
-  return query.orderBy('category_name').get();
+  return query.where('uid', '==', uid).get();
 };
 
 export const getEventsByDateRange = (start, end, uid) => {
