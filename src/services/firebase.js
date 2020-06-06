@@ -91,13 +91,20 @@ export const deleteEvent = (eventId) =>
   db.collection('events').doc(eventId).delete();
 
 export const deleteAllEventsForCategory = (categoryName, uid) => {
-  // TODO: There will be issues when deleting more than 500 events this way
   const query = eventsByCategoryHelper(categoryName, uid);
   query.get().then((events) => {
-    const batch = db.batch();
+    const batchArr = [db.batch()];
+    let operationCounter = 0;
     events.forEach((doc) => {
-      batch.delete(doc.ref);
+      batchArr[batchArr.length - 1].delete(doc.ref);
+      operationCounter++;
+
+      if (operationCounter >= 450) {
+        operationCounter = 0;
+        batchArr.push(db.batch());
+      }
     });
-    return batch.commit();
+    batchArr.forEach(async (batch) => await batch.commit());
+    return;
   });
 };

@@ -37,7 +37,7 @@ const CalendarDay = ({
       }
       return 0;
     })
-    .map((event) => <div>{event['category_name']}</div>);
+    .map((event, index) => <div key={index}>{event['category_name']}</div>);
 
   return (
     <div className={dayStyles} onClick={goToDay}>
