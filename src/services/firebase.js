@@ -12,7 +12,7 @@ export const createNewCategory = (newCategory) => {
   db.collection('categories').add(newCategory);
 };
 
-export const updateCategory = (categoryId, newData) => {
+export const updateCategory = async (categoryId, newData) => {
   db.collection('categories').doc(categoryId).update(newData);
 };
 
@@ -107,4 +107,22 @@ export const deleteAllEventsForCategory = (categoryName, uid) => {
     batchArr.forEach(async (batch) => await batch.commit());
     return;
   });
+};
+export const updateEventsByCategory = async (categoryName, uid, newData) => {
+  const query = eventsByCategoryHelper(categoryName, uid);
+  query.get().then(events => {
+    const batchArr = [db.batch()];
+    let operationCounter = 0;
+    events.forEach((doc) => {
+      batchArr[batchArr.length - 1].update(doc.ref, newData);
+      operationCounter++;
+
+      if (operationCounter >= 450) {
+        operationCounter = 0;
+        batchArr.push(db.batch());
+      }
+    });
+    batchArr.forEach(async (batch) => await batch.commit());
+    return;
+  })
 };

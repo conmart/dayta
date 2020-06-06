@@ -10,6 +10,7 @@ import {
 } from '../../services/firebase';
 import { startAndEndOfYear } from './utils';
 
+import CategoryHeader from './categoryHeader';
 import EventList from './eventList';
 import ShowCategory from './showCategory';
 
@@ -53,6 +54,10 @@ const Category = () => {
       .catch((err) => console.log('err', err));
   };
 
+  const backToCategories = () => {
+    dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
+  };
+
   const goToEvent = (event) => {
     dispatch({ type: 'EVENT_SELECTED', selectedEvent: event });
     history.push('/event');
@@ -60,9 +65,11 @@ const Category = () => {
 
   return (
     <Fragment>
-      <div className="pageTitleContainer">
-        <div className="pageTitle">{categoryName}</div>
-      </div>
+      <CategoryHeader
+        backToCategories={backToCategories}
+        category={selectedCategory}
+        uid={uid}
+      />
       {loading && (
         <div className="loadingContainer">
           <LoadingOutlined />

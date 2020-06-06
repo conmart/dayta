@@ -76,3 +76,26 @@
 .loadMore {
   padding: 20px 0;
 }
+
+.editIcon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.editCategoryContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.updateIcon {
+  color: green;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.cancelIcon {
+  color: var(--color-danger);
+  cursor: pointer;
+  padding-left: 10px;
+}
