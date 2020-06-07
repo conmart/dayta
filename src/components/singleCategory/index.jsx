@@ -44,18 +44,18 @@ const Category = () => {
     );
   }, [loading, categoryName, uid]);
 
+  const backToCategories = () => {
+    dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
+  };
+
   const handleDelete = () => {
     const { id } = selectedCategory;
     deleteCategory(id)
       .then(() => {
         deleteAllEventsForCategory(categoryName, uid);
-        dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
+        backToCategories();
       })
       .catch((err) => console.log('err', err));
-  };
-
-  const backToCategories = () => {
-    dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
   };
 
   const goToEvent = (event) => {
