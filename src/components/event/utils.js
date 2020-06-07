@@ -78,7 +78,6 @@ const updateExistingCategory = (id, name, newCount, newDuration, uid) => {
     if (typeof newDuration === 'number') {
       updatedCategoryData['total_duration'] = newDuration;
     }
-    console.log(updatedCategoryData, 'newCatData');
     fs.updateCategory(id, updatedCategoryData);
   });
 };
@@ -91,9 +90,7 @@ export const handleCategoryUpdate = (
 ) => {
   const { count, duration, id, name } = category;
   const newCount = count + countIncr;
-  console.log(durationChange, duration);
   const newDuration = durationChange ? duration + durationChange : false;
-  console.log(newDuration, 'newDur');
   updateExistingCategory(id, name, newCount, newDuration, uid);
 };
 

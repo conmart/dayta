@@ -103,7 +103,6 @@ const Event = () => {
       .then(() => {
         const category = categoryNameIdMap[name];
         const durationChange = duration * -1;
-        console.log(durationChange, 'durchange')
         handleCategoryUpdate(-1, category, durationChange, uid);
         dispatch({ type: 'EVENT_SELECTED', selectedEvent: null });
         history.push('/');
