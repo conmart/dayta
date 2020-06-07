@@ -1,58 +1,65 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { LoadingOutlined } from '@ant-design/icons';
 
 import { useGlobalState } from '../../state';
 import {
   deleteCategory,
   deleteAllEventsForCategory,
   getEventsByCategoryAndDateRange,
+  getLimitedEventsByCategory,
 } from '../../services/firebase';
+import { buildResourceList } from '../../services/utils';
 import { startAndEndOfYear } from './utils';
 
 import CategoryHeader from './categoryHeader';
 import EventList from './eventList';
 import ShowCategory from './showCategory';
 
+const limit = 50;
+
 const Category = () => {
   const history = useHistory();
-  const [
-    {
-      selectedCategory,
-      selectedCategory: { name: categoryName },
-      uid,
-    },
-    dispatch,
-  ] = useGlobalState();
+  const [{ selectedCategory, uid }, dispatch] = useGlobalState();
   const [displayEventList, toggleEventList] = useState(false);
-  const [events, setEvents] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [metaEvents, setMetaEvents] = useState([]);
+  const [metaLoading, setMetaLoading] = useState(true);
+  const [listEvents, setListEvents] = useState([]);
+  const [listLoading, setListLoading] = useState(true);
+  const [lastReceived, setLastReceived] = useState(null);
 
-  useEffect(() => {
-    const [start, end] = startAndEndOfYear();
-    getEventsByCategoryAndDateRange(start, end, categoryName, uid).then(
-      (events) => {
-        const eventData = [];
-        events.forEach((doc) => {
-          const data = doc.data();
-          data['id'] = doc.id;
-          eventData.push(data);
-        });
-        setEvents(eventData);
-        setLoading(false);
+  const loadEvents = () => {
+    const { name } = selectedCategory
+    setListLoading(true);
+    getLimitedEventsByCategory(name, lastReceived, limit, uid).then(
+      (receivedEvents) => {
+        setLastReceived(receivedEvents.docs[receivedEvents.docs.length - 1]);
+        const eventData = listEvents.concat(buildResourceList(receivedEvents));
+        setListEvents(eventData);
+        setListLoading(false);
       }
     );
-  }, [loading, categoryName, uid]);
+  };
+
+  // TODO: Figure out this linter warning
+  useEffect(() => {
+    const { name } = selectedCategory;
+    const [start, end] = startAndEndOfYear();
+    getEventsByCategoryAndDateRange(start, end, name, uid).then((events) => {
+      setMetaEvents(buildResourceList(events));
+      setMetaLoading(false);
+    });
+    loadEvents();
+  }, [selectedCategory, uid]);
 
   const backToCategories = () => {
     dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
   };
 
   const handleDelete = () => {
-    const { id } = selectedCategory;
+    const { id, name } = selectedCategory;
     deleteCategory(id)
       .then(() => {
-        deleteAllEventsForCategory(categoryName, uid);
+        deleteAllEventsForCategory(name, uid);
         backToCategories();
       })
       .catch((err) => console.log('err', err));
@@ -63,6 +70,8 @@ const Category = () => {
     history.push('/event');
   };
 
+  const moreEvents = listEvents.length < selectedCategory['total_events'];
+
   return (
     <Fragment>
       <CategoryHeader
@@ -70,23 +79,20 @@ const Category = () => {
         category={selectedCategory}
         uid={uid}
       />
-      {loading && (
-        <div className="loadingContainer">
-          <LoadingOutlined />
-        </div>
-      )}
-      {!loading && displayEventList && (
+      {displayEventList ? (
         <EventList
           backToShow={() => toggleEventList(false)}
-          category={selectedCategory}
+          events={listEvents}
           goToEvent={goToEvent}
-          uid={uid}
+          loadEvents={loadEvents}
+          loading={listLoading}
+          moreEvents={moreEvents}
         />
-      )}
-      {!loading && !displayEventList && (
+      ) : (
         <ShowCategory
           handleDelete={handleDelete}
-          events={events}
+          events={metaEvents}
+          loading={metaLoading}
           selectedCategory={selectedCategory}
           showEventList={() => toggleEventList(true)}
         />

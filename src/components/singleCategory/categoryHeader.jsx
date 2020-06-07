@@ -27,8 +27,7 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
 
   useEffect(() => {
     getCategories(uid).then((categories) => {
-      const categoryList = buildResourceList(categories);
-      setCategories(categoryList);
+      setCategories(buildResourceList(categories));
     });
   }, [uid]);
 
