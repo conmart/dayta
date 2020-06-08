@@ -66,7 +66,8 @@
   display: flex;
 }
 
-.eventListTable td, .eventListTable th {
+.eventListTable td,
+.eventListTable th {
   width: 33%;
   padding: 10px 0;
 }
@@ -104,4 +105,10 @@
   color: var(--color-danger);
   cursor: pointer;
   padding-left: 10px;
+}
+
+.title {
+  max-width: 62%;
+  max-height: 72px;
+  overflow: hidden;
 }

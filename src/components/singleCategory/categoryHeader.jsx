@@ -5,6 +5,7 @@ import {
   CloseCircleFilled,
   EditOutlined,
 } from '@ant-design/icons';
+import classNames from 'classnames';
 
 import {
   deleteCategory,
@@ -76,6 +77,10 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
 
   const modalText = `You already have a category called ${newName}, would you like to merge these two categories? This cannot be undone.`;
 
+  const titleStyles = classNames('pageTitle', {
+    [styles.title]: true,
+  })
+
   return (
     <div className="pageTitleContainer">
       {showModal && (
@@ -97,7 +102,7 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
         </div>
       ) : (
         <Fragment>
-          <div className="pageTitle">{newName}</div>
+          <div className={titleStyles}>{newName}</div>
           <div className={styles.editIcon} onClick={() => setEditName(true)}>
             <EditOutlined />
           </div>
