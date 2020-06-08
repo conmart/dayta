@@ -90,3 +90,9 @@
 .optionsContainer div:first-child {
   width: 135px;
 }
+
+@media screen and (max-width: 420px) {
+  .titleContainer {
+    padding: 50px 0 10px;
+  }
+}
