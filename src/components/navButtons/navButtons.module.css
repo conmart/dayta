@@ -1,4 +1,4 @@
-.container {
+.newEvent {
   position: absolute;
   bottom: 10%;
   right: 5%;
@@ -13,4 +13,11 @@
   justify-content: center;
   align-items: center;
   color: white;
+}
+
+.backButton {
+  position: absolute;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 15px;
 }

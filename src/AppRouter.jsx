@@ -13,7 +13,7 @@ import CategoryList from './components/categoryList';
 import Day from './components/day';
 import Event from './components/event';
 import MenuContainer from './components/menu';
-import NewEventButton from './components/newEventButton';
+import NavButtons from './components/navButtons';
 
 const AppRouter = ({ user, signOut }) => {
   const [{ selectedCategory }, dispatch] = useGlobalState();
@@ -26,7 +26,7 @@ const AppRouter = ({ user, signOut }) => {
     <Router>
       <Fragment>
         <MenuContainer signOut={signOut} />
-        <NewEventButton />
+        <NavButtons />
       </Fragment>
       <Switch>
         <Route path="/calendar">

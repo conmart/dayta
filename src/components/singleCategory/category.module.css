@@ -1,17 +1,17 @@
-.backToShow {
-  font-size: 18px;
+.categoryDetails {
+  font-size: 20px;
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 80%;
   margin: 0 auto;
-  padding-top: 3px;
+  padding-top: 10px;
   color: var(--color-black);
 }
 
-.backText {
-  padding-left: 8px;
+.toggleText {
+  padding-left: 6px;
 }
 
 .showContainer {
@@ -39,6 +39,10 @@
 
 .delete {
   color: var(--color-danger);
+}
+
+.eventListContainer {
+  height: 63%;
 }
 
 .eventListIcon {

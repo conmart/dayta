@@ -20,7 +20,7 @@ const limit = 50;
 const Category = () => {
   const history = useHistory();
   const [{ selectedCategory, uid }, dispatch] = useGlobalState();
-  const [displayEventList, toggleEventList] = useState(false);
+  const [displayEventList, toggleEventList] = useState(true);
   const [metaEvents, setMetaEvents] = useState([]);
   const [metaLoading, setMetaLoading] = useState(true);
   const [listEvents, setListEvents] = useState([]);
@@ -81,7 +81,7 @@ const Category = () => {
       />
       {displayEventList ? (
         <EventList
-          backToShow={() => toggleEventList(false)}
+          categoryDetails={() => toggleEventList(false)}
           events={listEvents}
           goToEvent={goToEvent}
           loadEvents={loadEvents}
