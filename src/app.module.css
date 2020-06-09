@@ -5,4 +5,5 @@
   text-align: center;
   height: 100%;
   max-width: 865px;
+  background-color: var(--color-main-bg);
 }

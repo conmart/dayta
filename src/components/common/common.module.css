@@ -4,7 +4,7 @@
   width: 65%;
   min-width: 300px;
   max-width: 450px;
-  background-color: whitesmoke;
+  background-color: var(--color-white);
   border: 2px solid var(--color-dk-gray);
   border-radius: 3px;
   top: 17%;
@@ -19,9 +19,9 @@
   width: 100%;
   top: 0;
   left: 0;
-  background: lightblue;
+  background-color: var(--color-vry-dk-green);
   z-index: 1;
-  opacity: .5;
+  opacity: .4;
 }
 
 .modalText {

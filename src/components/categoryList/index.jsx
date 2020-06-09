@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import classNames from 'classnames'
 
 import { useGlobalState } from '../../state';
 import { getCategories } from '../../services/firebase';
@@ -65,12 +66,16 @@ const CategoryList = () => {
     );
   };
 
+  const contentContainerStyles = classNames('pageContentContainer', {
+    [styles.listContainer]: true,
+  })
+
   return (
     <Fragment>
       <div className="pageTitleContainer">
         <div className="pageTitle">Categories</div>
       </div>
-      <div className="pageContentContainer">
+      <div className={contentContainerStyles}>
         {loading ? (
           <div className="loadingContainer">
             <LoadingOutlined />

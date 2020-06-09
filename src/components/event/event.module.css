@@ -47,12 +47,12 @@
 }
 
 .saveIcon {
-  color: green;
+  color: var(--color-green);
   cursor: pointer;
 }
 
 .disableSave {
-  color: grey;
+  color: var(--color-inactive-gray);
   cursor: not-allowed;
 }
 

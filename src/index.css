@@ -11,9 +11,19 @@ body {
   --color-black: #171717;
   --color-danger: #ed494c;
   --color-ant-blue: #539ee5;
+  --color-white: #ffffff;
+  --color-inactive-gray: #9c9c9c;
+  --color-green: #51915a;
+
+  --color-main-bg: #FCFFFD;
+  /* --color-secondary-bg: #E4E2F3; */
+  --color-secondary-bg: #edeaff;
+  --color-indigo: #284B63;
+  --color-vry-dk-green: #272D2D;
 }
 
 #root {
+  color: var(--color-black);
   height: 100%;
 }
 
@@ -38,11 +48,12 @@ code {
 }
 
 .pageContentContainer {
-  border: 1px solid black;
+  border: 1px solid var(--color-black);
   width: 80%;
   margin: 0 auto;
   height: 70%;
   overflow: auto;
+  background-color: var(--color-secondary-bg);
 }
 
 .loadingContainer {

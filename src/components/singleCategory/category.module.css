@@ -46,7 +46,7 @@
 }
 
 .eventListIcon {
-  color: var(--color-ant-blue);
+  color: var(--color-indigo);
 }
 
 .mostRecent {
@@ -59,7 +59,8 @@
 }
 
 .eventListTable thead {
-  border-bottom: 1px solid #383838;
+  border-bottom: 1px solid var(--color-black);
+  background-color: var(--color-main-bg);
 }
 
 .eventListTable tr {
@@ -73,7 +74,8 @@
 }
 
 .eventRow {
-  background: #bdf4ff;
+  background: var(--color-indigo);
+  color: var(--color-white);
   border-radius: 3px;
   margin: 3px 1px 3px 2px;
   cursor: pointer;
@@ -96,7 +98,7 @@
 }
 
 .updateIcon {
-  color: green;
+  color: var(--color-green);
   cursor: pointer;
   padding-left: 10px;
 }

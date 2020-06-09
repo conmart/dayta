@@ -1,8 +1,9 @@
 .link {
   cursor: pointer;
-  color: #2a8ff7;
+  color: var(--color-indigo);
+  text-decoration: underline;
 }
 
-.link:hover {
-  text-decoration: underline;
+.listContainer {
+  background-color: var(--color-white);
 }

@@ -21,13 +21,13 @@
 .day {
   position: relative;
   height: 16.67%;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
+  border-left: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-black);
   flex: 1 0 14%;
   cursor: pointer;
   text-align: left;
   padding: 3px;
-  background-color: white;
+  background-color: var(--color-white);
   overflow: hidden;
 }
 
@@ -38,10 +38,10 @@
 
 .dayHasEvents {
   font-weight: bold;
-  color: white;
-  border: 2px solid var(--color-ant-blue);
+  color: var(--color-white);
+  border: 2px solid var(--color-indigo);
   border-radius: 10px;
-  background-color: var(--color-ant-blue);
+  background-color: var(--color-indigo);
 }
 
 .eventList {
@@ -55,8 +55,8 @@
 }
 
 .outsideCurrentMonth .dayHasEvents {
-  border-color: #9c9c9c;
-  background-color: #9c9c9c;
+  border-color: var(--color-inactive-gray);
+  background-color: var(--color-inactive-gray);
 }
 
 .tallDay {
@@ -68,7 +68,7 @@
 }
 
 .day:nth-child(7n) {
-  border-right: 1px solid black;
+  border-right: 1px solid var(--color-black);
 }
 
 .daysOfWeekHeader {
@@ -77,7 +77,7 @@
 }
 
 .dayHeader {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--color-black);
   flex: 1 0 14%;
 }
 

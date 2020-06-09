@@ -1,6 +1,6 @@
 .eventContainer {
-  background-color: #bdf4ff;
-  color: #212121;
+  background-color: var(--color-indigo);
+  color: var(--color-white);
   border-radius: 3px;
   display: flex;
   justify-content: space-between;

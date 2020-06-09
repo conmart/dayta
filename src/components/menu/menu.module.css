@@ -8,14 +8,15 @@
   position: absolute;
   right: 0;
   top: 0;
-  background-color: beige;
+  background-color: var(--color-vry-dk-green);
   width: 200px;
   height: 100%;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
+  border-left: 2px solid var(--color-black);
+  border-right: 2px solid var(--color-black);
   padding: 15px 5px;
   box-sizing: border-box;
   z-index: 2;
+  color: var(--color-white);
 }
 
 .iconContainer {
@@ -36,11 +37,11 @@
 .list li {
   padding: 5px 0;
   font-size: 20px;
-  color: black;
+  color: var(--color-white);
   cursor: pointer;
 }
 
 .list li a {
   text-decoration: none;
-  color: black;
+  color: var(--color-white);
 }
