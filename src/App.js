@@ -23,13 +23,23 @@ const createComponentWithAuth = withFirebaseAuth({
   firebaseAppAuth,
 });
 
-const App = ({ user, signInWithGoogle, signOut }) => (
+const App = ({
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithGoogle,
+  signOut,
+  user,
+}) => (
   <StateProvider initialState={initialState} reducer={reducer}>
     <div className={styles.mobileAppContainer}>
       {user ? (
         <AppRouter user={user} signOut={signOut} />
       ) : (
-        <Login signInWithGoogle={signInWithGoogle} />
+        <Login
+          createUserWithEmailAndPassword={createUserWithEmailAndPassword}
+          signInWithEmailAndPassword={signInWithEmailAndPassword}
+          signInWithGoogle={signInWithGoogle}
+        />
       )}
     </div>
   </StateProvider>
