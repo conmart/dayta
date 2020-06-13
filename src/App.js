@@ -23,13 +23,17 @@ const createComponentWithAuth = withFirebaseAuth({
   firebaseAppAuth,
 });
 
+const { sendPasswordResetEmail } = firebaseAppAuth;
+
 const App = ({
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithGoogle,
   signOut,
   user,
-}) => (
+}) => {
+    console.log(sendPasswordResetEmail);
+  return  (
   <StateProvider initialState={initialState} reducer={reducer}>
     <div className={styles.mobileAppContainer}>
       {user ? (
@@ -37,12 +41,13 @@ const App = ({
       ) : (
         <Login
           createUserWithEmailAndPassword={createUserWithEmailAndPassword}
+          sendPasswordResetEmail={sendPasswordResetEmail}
           signInWithEmailAndPassword={signInWithEmailAndPassword}
           signInWithGoogle={signInWithGoogle}
         />
       )}
     </div>
   </StateProvider>
-);
+)};
 
 export default createComponentWithAuth(App);
