@@ -15,7 +15,7 @@ import {
 } from '../../services/firebase';
 import { buildResourceList } from '../../services/utils';
 import { buildCategoryUpdate, findExistingCategory } from './utils';
-import ConfirmationModal from '../common/confirmationModal';
+import ConfirmationModal from '../confirmationModal/';
 
 import styles from './category.module.css';
 

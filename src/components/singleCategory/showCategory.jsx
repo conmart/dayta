@@ -9,7 +9,7 @@ import classNames from 'classnames/bind';
 
 import { formatDate } from '../../services/utils';
 import { buildDataSource, showColumns } from './utils';
-import ConfirmationModal from '../common/confirmationModal';
+import ConfirmationModal from '../confirmationModal';
 
 import styles from './category.module.css';
 import 'antd/dist/antd.css';

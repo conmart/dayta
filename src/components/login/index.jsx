@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 // import { Button } from 'antd';
-import { GoogleOutlined } from '@ant-design/icons';
+import {
+  GoogleOutlined,
+  MailOutlined,
+  PlusCircleOutlined,
+} from '@ant-design/icons';
 // import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
+import Button from '../button';
 import EmailLogin from './emailLogin';
 
 import styles from './login.module.css';
@@ -38,7 +43,7 @@ const Login = ({
 
   const toggleNewAccount = () => setNewAccount(!newAccount);
 
-  console.log(sendPasswordResetEmail)
+  console.log(sendPasswordResetEmail);
   // TODO: Build this out
   // const passwordReset = () => {
   //   if (email) {
@@ -54,33 +59,37 @@ const Login = ({
       <div className={styles.welcome}>
         Welcome to<div className={styles.title}>Dayta</div>
       </div>
-      <Button
-        color="primary"
-        onClick={signInWithGoogle}
-        startIcon={<GoogleOutlined />}
-      >
-        Sign in with Google
-      </Button>
-      {emailLogin ? (
-        <EmailLogin
-          email={email}
-          handleEmailLogin={handleEmailLogin}
-          newAccount={newAccount}
-          onEmailChange={onEmailChange}
-          onPasswordChange={onPasswordChange}
-          password={password}
-          toggleNewAccount={toggleNewAccount}
+      <div className={styles.loginButtons}>
+        <Button
+          icon={<GoogleOutlined />}
+          onClick={signInWithGoogle}
+          text="Sign in with Google"
         />
-      ) : (
-        <div>
-          <Button onClick={() => handleEmailSelect(false)}>
-            Sign in with Email
-          </Button>
-          <Button onClick={() => handleEmailSelect(true)}>
-            Create an Account
-          </Button>
-        </div>
-      )}
+        {emailLogin ? (
+          <EmailLogin
+            email={email}
+            handleEmailLogin={handleEmailLogin}
+            newAccount={newAccount}
+            onEmailChange={onEmailChange}
+            onPasswordChange={onPasswordChange}
+            password={password}
+            toggleNewAccount={toggleNewAccount}
+          />
+        ) : (
+          <Fragment>
+            <Button
+              icon={<MailOutlined />}
+              onClick={() => handleEmailSelect(false)}
+              text="Sign in with Email"
+            />
+            <Button
+              icon={<PlusCircleOutlined />}
+              onClick={() => handleEmailSelect(true)}
+              text="Create an Account"
+            />
+          </Fragment>
+        )}
+      </div>
     </div>
   );
 };

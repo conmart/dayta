@@ -1,0 +1,21 @@
+.main {
+  border-radius: 3px;
+  font-size: 22px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: none;
+  background-color: var(--color-indigo);
+  color: var(--color-white);
+  padding: 7px 15px;
+  margin: 10px 0;
+}
+
+.center {
+  justify-content: center;
+}
+
+.main span {
+  padding-right: 15px;
+}

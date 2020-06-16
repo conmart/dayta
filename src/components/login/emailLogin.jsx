@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
+import Button from '../button';
+
 import styles from './login.module.css';
 
 const EmailLogin = ({
@@ -14,34 +16,34 @@ const EmailLogin = ({
 }) => {
   const buttonText = newAccount ? 'Create Account' : 'Log In';
   const spanText = newAccount
-    ? 'Already have an account? Click here to log in'
-    : "Don't have an account yet? Click here to create one";
+    ? 'Already have an account? Log in here!'
+    : "Don't have an account yet? Create one here!";
   return (
-    <div>
-      <form className={styles.emailLoginForm}>
-        <div className={styles.inputs}>
-          <span className={styles.label}>Email</span>
-          <TextField onChange={onEmailChange} value={email} />
-          <span className={styles.label}>Password</span>
-          <TextField
-            onChange={onPasswordChange}
-            type="password"
-            value={password}
-          />
-        </div>
-        <button type="submit" onClick={handleEmailLogin}>
-          {buttonText}
-        </button>
-        <span className={styles.toggleNewAccount} onClick={toggleNewAccount}>
-          {spanText}
-        </span>
-        {/* {!newAccount && (
+    <form className={styles.emailLoginForm}>
+      <div className={styles.inputs}>
+        <span className={styles.label}>Email</span>
+        <TextField onChange={onEmailChange} value={email} />
+        <span className={styles.label}>Password</span>
+        <TextField
+          onChange={onPasswordChange}
+          type="password"
+          value={password}
+        />
+      </div>
+      <Button
+        center
+        onClick={handleEmailLogin}
+        text={buttonText}
+      />
+      <span className={styles.toggleNewAccount} onClick={toggleNewAccount}>
+        {spanText}
+      </span>
+      {/* {!newAccount && (
           <span onClick={passwordReset}>
             Forgot your password? Enter your email address and click here
           </span>
         )} */}
-      </form>
-    </div>
+    </form>
   );
 };
 
