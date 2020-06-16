@@ -1,21 +1,20 @@
-import React, { Fragment, useState } from 'react';
-// import { Button } from 'antd';
+import React, { useState } from 'react';
 import {
   GoogleOutlined,
   MailOutlined,
   PlusCircleOutlined,
 } from '@ant-design/icons';
-// import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
 
+import { firebaseApp } from '../../services/firebase';
 import Button from '../button';
 import EmailLogin from './emailLogin';
 
 import styles from './login.module.css';
 
+const auth = firebaseApp.auth();
+
 const Login = ({
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithGoogle,
 }) => {
@@ -33,7 +32,6 @@ const Login = ({
   };
 
   const handleEmailLogin = (e) => {
-    console.log(e);
     e.preventDefault();
     const handleLogin = newAccount
       ? createUserWithEmailAndPassword
@@ -43,53 +41,51 @@ const Login = ({
 
   const toggleNewAccount = () => setNewAccount(!newAccount);
 
-  console.log(sendPasswordResetEmail);
-  // TODO: Build this out
-  // const passwordReset = () => {
-  //   if (email) {
-  //     sendPasswordResetEmail(email).then((res) => {
-  //       console.log(res);
-  //       console.log('email sent')
-  //     })
-  //   }
-  // }
+  const passwordReset = () => {
+    if (email) {
+      auth.sendPasswordResetEmail(email).then((res) => {
+        console.log(res);
+        console.log('email sent');
+      });
+    }
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.welcome}>
         Welcome to<div className={styles.title}>Dayta</div>
       </div>
-      <div className={styles.loginButtons}>
-        <Button
-          icon={<GoogleOutlined />}
-          onClick={signInWithGoogle}
-          text="Sign in with Google"
+      {emailLogin ? (
+        <EmailLogin
+          email={email}
+          goBack={() => setEmailLogin(false)}
+          handleEmailLogin={handleEmailLogin}
+          newAccount={newAccount}
+          onEmailChange={onEmailChange}
+          onPasswordChange={onPasswordChange}
+          password={password}
+          passwordReset={passwordReset}
+          toggleNewAccount={toggleNewAccount}
         />
-        {emailLogin ? (
-          <EmailLogin
-            email={email}
-            handleEmailLogin={handleEmailLogin}
-            newAccount={newAccount}
-            onEmailChange={onEmailChange}
-            onPasswordChange={onPasswordChange}
-            password={password}
-            toggleNewAccount={toggleNewAccount}
+      ) : (
+        <div className={styles.loginButtons}>
+          <Button
+            icon={<GoogleOutlined />}
+            onClick={signInWithGoogle}
+            text="Sign in with Google"
           />
-        ) : (
-          <Fragment>
-            <Button
-              icon={<MailOutlined />}
-              onClick={() => handleEmailSelect(false)}
-              text="Sign in with Email"
-            />
-            <Button
-              icon={<PlusCircleOutlined />}
-              onClick={() => handleEmailSelect(true)}
-              text="Create an Account"
-            />
-          </Fragment>
-        )}
-      </div>
+          <Button
+            icon={<MailOutlined />}
+            onClick={() => handleEmailSelect(false)}
+            text="Sign in with Email"
+          />
+          <Button
+            icon={<PlusCircleOutlined />}
+            onClick={() => handleEmailSelect(true)}
+            text="Create an Account"
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import { CaretLeftOutlined } from '@ant-design/icons';
 
 import Button from '../button';
 
@@ -7,17 +8,23 @@ import styles from './login.module.css';
 
 const EmailLogin = ({
   email,
+  goBack,
   handleEmailLogin,
   newAccount,
   onEmailChange,
   onPasswordChange,
   password,
+  passwordReset,
   toggleNewAccount,
 }) => {
   const buttonText = newAccount ? 'Create Account' : 'Log In';
-  const spanText = newAccount
-    ? 'Already have an account? Log in here!'
-    : "Don't have an account yet? Create one here!";
+  const accountToggleText = newAccount
+    ? 'Already have an account? Log in instead!'
+    : "Don't have an account yet? Create one instead!";
+  const passwordResetText = (!newAccount && email)
+    ? 'Forgot your password? Send password reset to provided email'
+    : ''
+
   return (
     <form className={styles.emailLoginForm}>
       <div className={styles.inputs}>
@@ -29,20 +36,17 @@ const EmailLogin = ({
           type="password"
           value={password}
         />
+        <span className={styles.passwordReset} onClick={passwordReset}>
+          {passwordResetText}
+        </span>
       </div>
-      <Button
-        center
-        onClick={handleEmailLogin}
-        text={buttonText}
-      />
+      <Button center onClick={handleEmailLogin} text={buttonText} />
       <span className={styles.toggleNewAccount} onClick={toggleNewAccount}>
-        {spanText}
+        {accountToggleText}
       </span>
-      {/* {!newAccount && (
-          <span onClick={passwordReset}>
-            Forgot your password? Enter your email address and click here
-          </span>
-        )} */}
+      <div className={styles.goBack} onClick={goBack}>
+        <CaretLeftOutlined /> Back
+      </div>
     </form>
   );
 };
