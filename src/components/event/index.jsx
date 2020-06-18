@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import { useGlobalState } from '../../state';
-import * as fs from '../../services/firebase';
+import * as fb from '../../services/firebase';
 import {
   buildEvent,
   buildNewCategory,
@@ -44,7 +44,7 @@ const Event = () => {
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
-    fs.getCategories(uid).then((categories) => {
+    fb.getCategories(uid).then((categories) => {
       const catNameMap = {};
       categories.forEach((doc) => {
         const data = doc.data();
@@ -94,6 +94,7 @@ const Event = () => {
 
   const returnHome = () => {
     const selectedDate = moment.unix(newEvent['start_date']);
+    dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
     dispatch({ type: 'NEW_DATE', selectedDate });
     history.push('/');
   };
@@ -101,12 +102,12 @@ const Event = () => {
   const deleteEvent = () => {
     setProcessing(true);
     const { category_name: name, duration, id } = selectedEvent;
-    fs.deleteEvent(id)
+    fb.deleteEvent(id)
       .then(() => {
         const category = categoryNameIdMap[name];
         const durationChange = duration * -1;
         handleCategoryUpdate(-1, category, durationChange, uid);
-        dispatch({ type: 'EVENT_SELECTED', selectedEvent: null });
+        dispatch({ type: 'CLEAR_USER_SELECTIONS' });
         history.push('/');
       })
       .catch((err) => console.log('something went wrong', err));
@@ -119,16 +120,24 @@ const Event = () => {
       handleCategoryUpdate(1, existingCategory, newEventDuration, uid);
     } else {
       const newCategory = buildNewCategory(newEvent, uid);
-      fs.createNewCategory(newCategory);
+      fb.createNewCategory(newCategory);
     }
   };
 
   const addEvent = () => {
-    fs.createNewEvent(newEvent).then(() => {
+    fb.createNewEvent(newEvent).then(() => {
       newEventCategoryUpdate();
       returnHome();
     });
   };
+
+  const refreshSelectedEvent = (eventId) => {
+    fb.getEvent(eventId).then((event) => {
+      const updatedEvent = event.data();
+      updatedEvent['id'] = event.id;
+      dispatch({ type: 'EVENT_SELECTED', selectedEvent: updatedEvent })
+    });
+  }
 
   const updateEvent = () => {
     const {
@@ -136,7 +145,8 @@ const Event = () => {
       duration: oldDuration,
       category_name: oldCategoryName,
     } = selectedEvent;
-    fs.updateEvent(id, eventDiff).then(() => {
+    fb.updateEvent(id, eventDiff).then(() => {
+      refreshSelectedEvent(id);
       const category = categoryNameIdMap[oldCategoryName];
       const oldDurNum = oldDuration ? oldDuration : 0;
       const newDurNum = newEvent.duration ? newEvent.duration : 0;

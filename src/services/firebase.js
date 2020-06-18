@@ -35,6 +35,9 @@ export const updateEvent = async (eventId, newData) => {
   await db.collection('events').doc(eventId).update(newData);
 };
 
+export const getEvent = async (eventId) =>
+  db.collection('events').doc(eventId).get();
+
 export const getEventsByDate = (date, uid) => {
   let query = db.collection('events').where('start_date', '==', date);
   return query.where('uid', '==', uid).get();
