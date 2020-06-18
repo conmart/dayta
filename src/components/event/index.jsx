@@ -41,6 +41,7 @@ const Event = () => {
   const [categoryNameIdMap, setCategoryNameIdMap] = useState({});
   const [newEvent, setNewEvent] = useState({});
   const [eventDiff, setEventDiff] = useState({});
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     fs.getCategories(uid).then((categories) => {
@@ -98,6 +99,7 @@ const Event = () => {
   };
 
   const deleteEvent = () => {
+    setProcessing(true);
     const { category_name: name, duration, id } = selectedEvent;
     fs.deleteEvent(id)
       .then(() => {
@@ -151,6 +153,7 @@ const Event = () => {
   };
 
   const handleSave = () => {
+    setProcessing(true);
     if (selectedEvent) {
       updateEvent();
     } else {
@@ -188,6 +191,7 @@ const Event = () => {
           handleDelete={handleDelete}
           handleSave={handleSave}
           noChange={noChange}
+          processing={processing}
           validForm={validForm}
         />
       </div>
