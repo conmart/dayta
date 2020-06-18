@@ -23,27 +23,18 @@ const createComponentWithAuth = withFirebaseAuth({
   firebaseAppAuth,
 });
 
-const App = ({
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithGoogle,
-  signOut,
-  user,
-}) => {
-  return  (
-  <StateProvider initialState={initialState} reducer={reducer}>
-    <div className={styles.mobileAppContainer}>
-      {user ? (
-        <AppRouter user={user} signOut={signOut} />
-      ) : (
-        <Login
-          createUserWithEmailAndPassword={createUserWithEmailAndPassword}
-          signInWithEmailAndPassword={signInWithEmailAndPassword}
-          signInWithGoogle={signInWithGoogle}
-        />
-      )}
-    </div>
-  </StateProvider>
-)};
+const App = ({ signInWithGoogle, signOut, user }) => {
+  return (
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <div className={styles.mobileAppContainer}>
+        {user ? (
+          <AppRouter user={user} signOut={signOut} />
+        ) : (
+          <Login signInWithGoogle={signInWithGoogle} />
+        )}
+      </div>
+    </StateProvider>
+  );
+};
 
 export default createComponentWithAuth(App);
