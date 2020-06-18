@@ -77,7 +77,7 @@
   background: var(--color-indigo);
   color: var(--color-white);
   border-radius: 3px;
-  margin: 3px 1px 3px 2px;
+  margin: 3px;
   cursor: pointer;
 }
 
@@ -99,14 +99,17 @@
 
 .updateIcon {
   color: var(--color-green);
-  cursor: pointer;
-  padding-left: 10px;
+  padding-left: 14px;
 }
 
 .cancelIcon {
   color: var(--color-danger);
+}
+
+.editorButton {
+  border: none;
+  background-color: transparent;
   cursor: pointer;
-  padding-left: 10px;
 }
 
 .title {

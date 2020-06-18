@@ -37,5 +37,6 @@
 }
 
 .modalButtons button {
-  width: 85px;
+  width: 120px;
+  height: 42px;
 }

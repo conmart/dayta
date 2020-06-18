@@ -79,7 +79,15 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
 
   const titleStyles = classNames('pageTitle', {
     [styles.title]: true,
-  })
+  });
+  const updateStyles = classNames({
+    [styles.editorButton]: true,
+    [styles.updateIcon]: true,
+  });
+  const cancelStyles = classNames({
+    [styles.editorButton]: true,
+    [styles.cancelIcon]: true,
+  });
 
   return (
     <div className="pageTitleContainer">
@@ -91,15 +99,19 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
         />
       )}
       {editName ? (
-        <div className={styles.editCategoryContainer}>
+        <form className={styles.editCategoryContainer}>
           <Input onChange={onNameChange} value={newName} />
-          <div className={styles.updateIcon} onClick={checkValidUpdate}>
+          <button
+            className={updateStyles}
+            onClick={checkValidUpdate}
+            type="submit"
+          >
             <CheckCircleFilled />
-          </div>
-          <div className={styles.cancelIcon} onClick={cancelChange}>
+          </button>
+          <button className={cancelStyles} onClick={cancelChange}>
             <CloseCircleFilled />
-          </div>
-        </div>
+          </button>
+        </form>
       ) : (
         <Fragment>
           <div className={titleStyles}>{newName}</div>
