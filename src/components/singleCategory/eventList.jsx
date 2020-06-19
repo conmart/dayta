@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { Button } from 'antd';
 import { CaretLeftOutlined, LoadingOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 
+import Button from '../button';
 import { formatDate, formattedSeconds } from '../../services/utils';
 
 import styles from './category.module.css';
@@ -51,9 +51,12 @@ const EventList = ({
         )}
         {moreEvents && !loading && (
           <div className={styles.loadMore}>
-            <Button type="primary" onClick={loadEvents} size="large">
-              Load more events
-            </Button>
+            <Button
+              onClick={loadEvents}
+              outlined
+              small
+              text="Load more events"
+            />
           </div>
         )}
       </div>

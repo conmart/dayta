@@ -10,8 +10,8 @@ const ConfirmationModal = ({ cancel, confirm, text }) => {
       <div className={styles.modalContainer}>
         <div className={styles.modalText}>{text}</div>
         <div className={styles.modalButtons}>
-          <Button danger onClick={confirm} text="Confirm" />
-          <Button onClick={cancel} outlined text="Cancel" />
+          <Button danger onClick={confirm} small text="Confirm" />
+          <Button onClick={cancel} outlined small text="Cancel" />
         </div>
       </div>
     </Fragment>

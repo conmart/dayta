@@ -5,8 +5,8 @@ import styles from './button.module.css';
 
 const cx = classNames.bind(styles);
 
-const Button = ({ danger, icon, onClick, outlined, text }) => {
-  const buttonStyles = cx('main', { danger, outlined })
+const Button = ({ danger, icon, onClick, outlined, small, text }) => {
+  const buttonStyles = cx('main', { danger, outlined, small })
   return (
     <button className={buttonStyles} onClick={onClick} type="submit">
       {icon}
