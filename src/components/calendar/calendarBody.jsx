@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { daysToDisplay } from './utils';
 import CalendarDay from './calendarDay';
@@ -10,8 +11,10 @@ const CalendarBody = ({ events, selectedDate, setNewDate }) => {
   const daysOfMonth = daysToDisplay(selectedDate);
   const numRows = daysOfMonth.length / 7;
   const currentMonth = selectedDate.month();
+  const today = moment().startOf('day');
 
   const days = daysOfMonth.map((day, index) => {
+    const isToday = day.isSame(today);
     const eventsForThisDay = events[day.unix()];
     return (
       <CalendarDay
@@ -21,6 +24,7 @@ const CalendarBody = ({ events, selectedDate, setNewDate }) => {
         key={index}
         rows={numRows}
         setNewDate={setNewDate}
+        today={isToday}
       />
     );
   });

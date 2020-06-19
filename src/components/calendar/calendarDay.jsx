@@ -14,6 +14,7 @@ const CalendarDay = ({
   events,
   rows,
   setNewDate,
+  today
 }) => {
   const history = useHistory();
 
@@ -27,7 +28,7 @@ const CalendarDay = ({
     extraTallDay: rows === 4,
     outsideCurrentMonth: dateObject.month() !== currentMonth,
   });
-  const numberStyles = cx('dayNumber', { dayHasEvents: events.length });
+  const numberStyles = cx('dayNumber', { dayHasEvents: events.length, today });
 
   const eventList = sortEvents([...events]).map((event, index) => (
     <div key={index}>{event['category_name']}</div>
