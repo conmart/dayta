@@ -181,7 +181,7 @@ const Event = () => {
       <div className="pageTitleContainer">
         <div className="pageTitle">{title}</div>
       </div>
-      <div className={styles.formContainer}>
+      <form className={styles.formContainer}>
         <EventForm
           categoryName={categoryName}
           categoryNameIdMap={categoryNameIdMap}
@@ -204,7 +204,7 @@ const Event = () => {
           processing={processing}
           validForm={validForm}
         />
-      </div>
+      </form>
     </Fragment>
   );
 };

@@ -49,6 +49,8 @@
 .saveIcon {
   color: var(--color-green);
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
 .disableSave {

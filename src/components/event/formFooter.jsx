@@ -32,9 +32,9 @@ const FormFooter = ({
               <DeleteFilled />
             </div>
           )}
-          <div className={saveStyles} onClick={handleClick}>
+          <button className={saveStyles} onClick={handleClick} type="submit">
             <CheckCircleFilled />
-          </div>
+          </button>
         </Fragment>
       )}
     </div>
