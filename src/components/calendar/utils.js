@@ -26,6 +26,23 @@ export const daysToDisplay = (selectedDate) => {
   return days;
 };
 
+// TODO: try to combine eventDateRange and buildEventsByDay
+export const eventDateRange = (selectedDate) => {
+  const start = selectedDate
+    .clone()
+    .subtract(1, 'month')
+    .startOf('month')
+    .startOf('week')
+    .unix();
+  const end = selectedDate
+    .clone()
+    .add(1, 'month')
+    .endOf('month')
+    .endOf('week')
+    .unix();
+  return [start, end];
+};
+
 export const buildEventsByDay = (events) => {
   const eventsByDay = {};
   events.forEach((event) => {
@@ -39,4 +56,4 @@ export const buildEventsByDay = (events) => {
     }
   });
   return eventsByDay;
-}
+};

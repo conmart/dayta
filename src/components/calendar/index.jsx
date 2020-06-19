@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 import { useGlobalState } from '../../state';
 import { getEventsByDateRange } from '../../services/firebase';
-import { buildEventsByDay } from './utils';
+import { buildEventsByDay, eventDateRange } from './utils';
 
 import CalendarHeader from './calendarHeader';
 import CalendarBody from './calendarBody';
@@ -12,11 +12,9 @@ const Calendar = () => {
   const [eventsByDate, setEventsByDate] = useState({});
 
   useEffect(() => {
-    const start = selectedDate.clone().startOf('month').startOf('week').unix();
-    const end = selectedDate.clone().endOf('month').endOf('week').unix();
+    const [start, end] = eventDateRange(selectedDate);
     getEventsByDateRange(start, end, uid).then((events) => {
-      const eventsByDay = buildEventsByDay(events);
-      setEventsByDate(eventsByDay);
+      setEventsByDate(buildEventsByDay(events));
     });
   }, [selectedDate, uid]);
 
