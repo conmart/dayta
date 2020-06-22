@@ -1,6 +1,6 @@
 ## Welcome to Dayta
 
-Dayta is a simple app to log and track events that happen in your day to day life. The primary use cases that were inspiration for this app were keeping track of when I had last changed out my contacts, and how many times I had gone to the gym in the last month/year.
+Dayta is a simple, mobile first app to log and track events that happen in your day to day life. For example, I use Dayta to keep track of which of my plants I have watered on which days, when I last replaced my toothbrush, and how good I’ve been about flossing recently to name a few.
 
 [Go to the live app](https://dayta-768d8.web.app/)
 
