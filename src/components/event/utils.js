@@ -1,5 +1,5 @@
 import moment from 'moment';
-import * as fs from '../../services/firebase';
+import * as fb from '../../services/firebase';
 import { secondsToFriendly } from '../../services/utils';
 
 const datePickFormat = 'YYYY-MM-DD';
@@ -61,24 +61,24 @@ export const buildNewCategory = (newEvent, uid) => {
   return {
     name: categoryName,
     uid,
-    total_duration: duration ? duration : 0,
+    total_duration: duration || 0,
     total_events: 1,
     most_recent_event: startDate,
   };
 };
 
 const updateExistingCategory = (id, name, newCount, newDuration, uid) => {
-  fs.getMostRecentEventForCategory(name, uid).then((collection) => {
+  fb.getMostRecentEventForCategory(name, uid).then((collection) => {
     let latestEvent;
     collection.forEach((doc) => (latestEvent = doc.data()['start_date']));
     const updatedCategoryData = {
       total_events: newCount,
-      most_recent_event: latestEvent ? latestEvent : null,
+      most_recent_event: latestEvent || null,
     };
     if (typeof newDuration === 'number') {
       updatedCategoryData['total_duration'] = newDuration;
     }
-    fs.updateCategory(id, updatedCategoryData);
+    fb.updateCategory(id, updatedCategoryData);
   });
 };
 
@@ -109,7 +109,7 @@ const getCategoryName = (oldEventName, category) => {
   return null;
 };
 
-export const eventDurationUnits = (duration) => {
+const eventDurationUnits = (duration) => {
   if (!duration) return [null, null];
   // unit is stored in index.jsx as 1 = seconds, 2 = minutes, 3 = hours
   const unitMap = { s: 1, m: 2, h: 3 };
@@ -134,9 +134,8 @@ export const calcDefaultValues = (category, event, selectedDate) => {
     oldDuration && oldStartTime
       ? moment.unix(oldStartTime).add(oldDuration, 'seconds')
       : '';
-  const [durNum, durUnit] = eventDurationUnits(oldDuration);
-  const defaultDuration = durNum ? durNum : null;
-  const defaultDurationUnit = durUnit ? durUnit : 2;
+  const [defaultDuration, durUnit] = eventDurationUnits(oldDuration);
+  const defaultDurationUnit = durUnit || 2;
   return [
     defaultCategoryName,
     defaultEventDate,
@@ -152,7 +151,7 @@ export const compareEvents = (newEvent, oldEvent) => {
   const eventDiff = {};
   for (const field of eventFields) {
     if (newEvent[field] !== oldEvent[field]) {
-      eventDiff[field] = newEvent[field] ? newEvent[field] : null;
+      eventDiff[field] = newEvent[field] || null;
     } else {
       delete eventDiff[field];
     }

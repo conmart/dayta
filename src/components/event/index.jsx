@@ -148,8 +148,8 @@ const Event = () => {
     fb.updateEvent(id, eventDiff).then(() => {
       refreshSelectedEvent(id);
       const category = categoryNameIdMap[oldCategoryName];
-      const oldDurNum = oldDuration ? oldDuration : 0;
-      const newDurNum = newEvent.duration ? newEvent.duration : 0;
+      const oldDurNum = oldDuration || 0;
+      const newDurNum = newEvent.duration || 0;
       if (eventDiff['category_name']) {
         newEventCategoryUpdate(newEvent);
         const durationChange = oldDurNum * -1;
