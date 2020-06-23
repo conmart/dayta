@@ -26,7 +26,7 @@ const Day = () => {
       setEvents(sortEvents(eventList));
       setLoading(false);
     })
-  }, [loading, selectedDate, uid])
+  }, [selectedDate, uid])
 
   const updateSelectedDate = (nextDay) => {
     const updatedDate = selectedDate.clone();

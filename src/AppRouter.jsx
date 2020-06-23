@@ -16,36 +16,40 @@ import MenuContainer from './components/menu';
 import NavButtons from './components/navButtons';
 
 const AppRouter = ({ user, signOut }) => {
-  const [{ selectedCategory }, dispatch] = useGlobalState();
+  const [{ selectedCategory, uid }, dispatch] = useGlobalState();
 
   useEffect(() => {
     dispatch({ type: 'SET_USER', uid: user.uid })
   }, [user, dispatch])  
 
   return (
-    <Router>
-      <Fragment>
-        <MenuContainer signOut={signOut} />
-        <NavButtons />
-      </Fragment>
-      <Switch>
-        <Route path="/calendar">
-          <Calendar />
-        </Route>
-        <Route path="/categories">
-          <CategoryList />
-        </Route>
-        <Route path="/category">
-          {selectedCategory ? <Category /> : <Redirect to="/categories" />}
-        </Route>
-        <Route path="/event">
-          <Event />
-        </Route>
-        <Route path="/">
-          <Day />
-        </Route>
-      </Switch>
-    </Router>
+    <Fragment>
+      {uid && (
+        <Router>
+          <Fragment>
+            <MenuContainer signOut={signOut} />
+            <NavButtons />
+          </Fragment>
+          <Switch>
+            <Route path="/calendar">
+              <Calendar />
+            </Route>
+            <Route path="/categories">
+              <CategoryList />
+            </Route>
+            <Route path="/category">
+              {selectedCategory ? <Category /> : <Redirect to="/categories" />}
+            </Route>
+            <Route path="/event">
+              <Event />
+            </Route>
+            <Route path="/">
+              <Day />
+            </Route>
+          </Switch>
+        </Router>
+      )}
+    </Fragment>
   );
 };
 
