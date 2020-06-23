@@ -11,9 +11,8 @@ const EventList = ({
   categoryDetails,
   events,
   goToEvent,
-  loadEvents,
   loading,
-  moreEvents,
+  loadMoreEvents,
 }) => {
   const containerStyles = classNames('pageContentContainer', {
     [styles.eventListContainer]: true,
@@ -44,20 +43,23 @@ const EventList = ({
             ))}
           </tbody>
         </table>
-        {loading && (
+        {loading ? (
           <div className="loadingContainer">
             <LoadingOutlined />
           </div>
-        )}
-        {moreEvents && !loading && (
-          <div className={styles.loadMore}>
-            <Button
-              onClick={loadEvents}
-              outlined
-              small
-              text="Load more events"
-            />
-          </div>
+        ) : (
+          <Fragment>
+            {loadMoreEvents && (
+              <div className={styles.loadMore}>
+                <Button
+                  onClick={loadMoreEvents}
+                  outlined
+                  small
+                  text="Load more events"
+                />
+              </div>
+            )}
+          </Fragment>
         )}
       </div>
       <div className={styles.categoryDetails} onClick={categoryDetails}>

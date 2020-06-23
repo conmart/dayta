@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
@@ -25,22 +25,24 @@ const Category = () => {
   const [metaLoading, setMetaLoading] = useState(true);
   const [listEvents, setListEvents] = useState([]);
   const [listLoading, setListLoading] = useState(true);
-  const [lastReceived, setLastReceived] = useState(null);
+  const [lastFoundEvent, setlastFoundEvent] = useState(null);
 
-  const loadEvents = () => {
-    const { name } = selectedCategory
-    setListLoading(true);
-    getLimitedEventsByCategory(name, lastReceived, limit, uid).then(
-      (receivedEvents) => {
-        setLastReceived(receivedEvents.docs[receivedEvents.docs.length - 1]);
-        const eventData = listEvents.concat(buildResourceList(receivedEvents));
-        setListEvents(eventData);
-        setListLoading(false);
-      }
-    );
-  };
+  const loadEvents = useCallback(
+    (lastEvent) => {
+      setListLoading(true);
+      const { name } = selectedCategory;
+      getLimitedEventsByCategory(name, lastEvent, limit, uid).then(
+        (foundEvents) => {
+          setlastFoundEvent(foundEvents.docs[foundEvents.docs.length - 1]);
+          const eventData = buildResourceList(foundEvents);
+          setListEvents((oldListEvents) => oldListEvents.concat(eventData));
+          setListLoading(false);
+        }
+      );
+    },
+    [selectedCategory, uid]
+  );
 
-  // TODO: Figure out this linter warning
   useEffect(() => {
     const { name } = selectedCategory;
     const [start, end] = startAndEndOfYear();
@@ -48,8 +50,8 @@ const Category = () => {
       setMetaEvents(buildResourceList(events));
       setMetaLoading(false);
     });
-    loadEvents();
-  }, [selectedCategory, uid]);
+    loadEvents(null);
+  }, [selectedCategory, uid, loadEvents]);
 
   const backToCategories = () => {
     dispatch({ type: 'CATEGORY_SELECTED', selectedCategory: null });
@@ -70,7 +72,10 @@ const Category = () => {
     history.push('/event');
   };
 
-  const moreEvents = listEvents.length < selectedCategory['total_events'];
+  const loadMoreEvents =
+    listEvents.length < selectedCategory['total_events']
+      ? () => loadEvents(lastFoundEvent)
+      : null;
 
   return (
     <Fragment>
@@ -84,9 +89,8 @@ const Category = () => {
           categoryDetails={() => toggleEventList(false)}
           events={listEvents}
           goToEvent={goToEvent}
-          loadEvents={loadEvents}
           loading={listLoading}
-          moreEvents={moreEvents}
+          loadMoreEvents={loadMoreEvents}
         />
       ) : (
         <ShowCategory
