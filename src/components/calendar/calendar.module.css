@@ -37,9 +37,9 @@
 }
 
 .dayNumber.today {
-  border: 2px solid var(--color-green);
+  border: 2px solid var(--color-dk-magenta);
   border-radius: 10px;
-  color: var(--color-green);
+  color: var(--color-dk-magenta);
   font-weight: bold;
 }
 
@@ -52,8 +52,8 @@
 }
 
 .dayNumber.dayHasEvents.today {
-  border-color: var(--color-green);
-  background-color: var(--color-green);
+  border-color: var(--color-dk-magenta);
+  background-color: var(--color-dk-magenta);
   color: var(--color-white);
 }
 

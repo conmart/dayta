@@ -7,15 +7,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* colors */
-  --color-ant-blue: #539ee5;
   --color-black: #171717;
   --color-danger: #ed494c;
   --color-gray: #e0e0e0;
-  --color-dk-gray: #454545;
   --color-inactive-gray: #9c9c9c;
   --color-green: #51915a;
   --color-vry-dk-green: #272d2d;
   --color-indigo: #284b63;
+  --color-dk-magenta: #a30083;
   --color-white: #ffffff;
 
   --color-main-bg: #fcfffd;
