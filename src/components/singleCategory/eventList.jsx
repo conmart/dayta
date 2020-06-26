@@ -17,11 +17,14 @@ const EventList = ({
   const containerStyles = classNames('pageContentContainer', {
     [styles.eventListContainer]: true,
   });
+  const tableStyles = classNames('resourceTable', {
+    [styles.eventListTable]: true,
+  })
 
   return (
     <Fragment>
       <div className={containerStyles}>
-        <table className={styles.eventListTable}>
+        <table className={tableStyles}>
           <thead>
             <tr>
               <th>Date</th>
@@ -33,8 +36,8 @@ const EventList = ({
             {events.map((event) => (
               <tr
                 className={styles.eventRow}
-                onClick={() => goToEvent(event)}
                 key={event.id}
+                onClick={() => goToEvent(event)}
               >
                 <td>{formatDate(event['start_date'], 'M/DD/YY')}</td>
                 <td>{formatDate(event['start_time'], 'h:mm a')}</td>

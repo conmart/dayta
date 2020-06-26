@@ -19,6 +19,13 @@ body {
 
   --color-main-bg: #fcfffd;
   --color-secondary-bg: #edeaff;
+
+  /* potential category colors */
+  --pac-blue: #46b1c9;
+  --gray-blue: #aaadc4;
+  --orange: #eb4e1e;
+  --salmon: #ee6c4d;
+  --lt-brown: #A78682;
 }
 
 #root {
@@ -58,4 +65,26 @@ code {
 .loadingContainer {
   font-size: 32px;
   padding-top: 10px;
+}
+
+.resourceTable {
+  width: 100%;
+  font-size: 16px;
+}
+
+.resourceTable thead {
+  border-bottom: 1px solid var(--color-black);
+}
+
+.resourceTable td, .resourceTable th {
+  width: 33%;
+  padding: 10px 0;
+}
+
+.resourceTable tr {
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  margin: 3px;
+  cursor: pointer;
 }

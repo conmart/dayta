@@ -53,32 +53,13 @@
   padding: 10px 0 35px;
 }
 
-.eventListTable {
-  width: 100%;
-  font-size: 16px;
-}
-
 .eventListTable thead {
-  border-bottom: 1px solid var(--color-black);
   background-color: var(--color-main-bg);
-}
-
-.eventListTable tr {
-  display: flex;
-}
-
-.eventListTable td,
-.eventListTable th {
-  width: 33%;
-  padding: 10px 0;
 }
 
 .eventRow {
   background: var(--color-indigo);
   color: var(--color-white);
-  border-radius: 3px;
-  margin: 3px;
-  cursor: pointer;
 }
 
 .loadMore {
