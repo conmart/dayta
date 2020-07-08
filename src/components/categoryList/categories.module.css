@@ -1,18 +1,13 @@
-.link {
-  cursor: pointer;
-  color: var(--color-indigo);
-  text-decoration: underline;
-}
-
 .listContainer {
-  background-color: var(--color-white);
+  background-color: var(--color-gray);
 }
 
 .table thead {
-  background-color: var(--color-main-bg);
+  background-color: var(--color-indigo);
+  color: var(--color-white);
 }
 
 .row {
-  background: #41AFC8;
-  color: var(--color-white);
+  background: var(--color-white);
+  color: var(--color-indigo);
 }
