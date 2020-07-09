@@ -15,15 +15,20 @@
 }
 
 .showContainer {
-  border: 1px solid var(--color-black);
   width: 80%;
   margin: 0 auto;
-  min-height: 300px;
+  /* height of header component */
+  height: calc(100% - 115px);
+}
+
+.categoryOverview {
+  border: 1px solid var(--color-black);
+  max-height: 75%;
+  overflow: auto;
 }
 
 .showIconsContainer {
-  padding-top: 25px;
-  position: absolute;
+  padding: 25px 0;
   display: flex;
   justify-content: space-between;
   width: 115px;

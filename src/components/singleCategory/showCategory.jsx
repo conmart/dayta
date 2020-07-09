@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Divider, Table } from 'antd';
 import {
   DeleteOutlined,
@@ -41,38 +41,40 @@ const ShowCategory = ({
     'Are you sure? This action will delete this category as well as all associated events.';
 
   return (
-    <div>
-      {loading ? (
-        <div className="loadingContainer">
-          <LoadingOutlined />
-        </div>
-      ) : (
-        <div className={styles.showContainer}>
-          {showModal && (
-            <ConfirmationModal
-              cancel={() => setShowModal(false)}
-              confirm={handleDelete}
-              text={modalText}
+    <div className={styles.showContainer}>
+      <div className={styles.categoryOverview}>
+        {loading ? (
+          <div className="loadingContainer">
+            <LoadingOutlined />
+          </div>
+        ) : (
+          <Fragment>
+            <Table
+              dataSource={dataSource}
+              columns={showColumns}
+              pagination={false}
             />
-          )}
-          <Table
-            dataSource={dataSource}
-            columns={showColumns}
-            pagination={false}
-          />
-          <div className={styles.mostRecent}>
-            <Divider>Most Recent Event</Divider>
-            {formattedMostRecent}
-          </div>
-          <div className={styles.showIconsContainer}>
-            <div className={deleteStyles} onClick={confirmDelete}>
-              <DeleteOutlined />
+            <div className={styles.mostRecent}>
+              <Divider>Most Recent Event</Divider>
+              {formattedMostRecent}
             </div>
-            <div className={eventListStyles} onClick={showEventList}>
-              <UnorderedListOutlined />
-            </div>
-          </div>
+          </Fragment>
+        )}
+      </div>
+      <div className={styles.showIconsContainer}>
+        <div className={deleteStyles} onClick={confirmDelete}>
+          <DeleteOutlined />
         </div>
+        <div className={eventListStyles} onClick={showEventList}>
+          <UnorderedListOutlined />
+        </div>
+      </div>
+      {showModal && (
+        <ConfirmationModal
+          cancel={() => setShowModal(false)}
+          confirm={handleDelete}
+          text={modalText}
+        />
       )}
     </div>
   );
