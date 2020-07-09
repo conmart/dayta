@@ -1,5 +1,6 @@
 .listContainer {
   background-color: var(--color-gray);
+  overflow: hidden;
 }
 
 .table thead {

@@ -24,45 +24,43 @@ const EventList = ({
   return (
     <Fragment>
       <div className={containerStyles}>
-        <table className={tableStyles}>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Start</th>
-              <th>Duration</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => (
-              <tr
-                className={styles.eventRow}
-                key={event.id}
-                onClick={() => goToEvent(event)}
-              >
-                <td>{formatDate(event['start_date'], 'M/DD/YY')}</td>
-                <td>{formatDate(event['start_time'], 'h:mm a')}</td>
-                <td>{formattedSeconds(event['duration'])}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
         {loading ? (
           <div className="loadingContainer">
             <LoadingOutlined />
           </div>
         ) : (
-          <Fragment>
-            {loadMoreEvents && (
-              <div className={styles.loadMore}>
-                <Button
-                  onClick={loadMoreEvents}
-                  outlined
-                  small
-                  text="Load more events"
-                />
-              </div>
-            )}
-          </Fragment>
+          <table className={tableStyles}>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Start</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map((event) => (
+                <tr
+                  className={styles.eventRow}
+                  key={event.id}
+                  onClick={() => goToEvent(event)}
+                >
+                  <td>{formatDate(event['start_date'], 'M/DD/YY')}</td>
+                  <td>{formatDate(event['start_time'], 'h:mm a')}</td>
+                  <td>{formattedSeconds(event['duration'])}</td>
+                </tr>
+              ))}
+              {loadMoreEvents && (
+                <div className={styles.loadMore}>
+                  <Button
+                    onClick={loadMoreEvents}
+                    outlined
+                    small
+                    text="Load more events"
+                  />
+                </div>
+              )}
+            </tbody>
+          </table>
         )}
       </div>
       <div className={styles.categoryDetails} onClick={categoryDetails}>
