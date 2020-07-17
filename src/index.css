@@ -67,6 +67,7 @@ code {
   padding-top: 10px;
 }
 
+/* Table Stylings */
 .resourceTable {
   width: 100%;
   height: 100%;
@@ -100,4 +101,42 @@ code {
   height: calc(100% - 46px);
   overflow: auto;
   padding-bottom: 60px;
+}
+
+/* Firebase UI Styling */
+.firebaseui-idp-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  width: 200px;
+}
+
+.firebaseui-idp-icon {
+  height: 40px;
+  width: 40px;
+  margin-right: 15px;
+}
+
+.firebaseui-idp-text-long {
+  display: none;
+}
+
+.firebaseui-idp-button {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 15px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  border-radius: 3px;
+  color: var(--color-black);
+}
+
+h1.firebaseui-title {
+  color: var(--color-white);
 }

@@ -4,7 +4,9 @@ import 'firebase/auth';
 
 import { firebaseConfig } from './firebaseConfig';
 
-export const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const firebaseAppAuth = firebaseApp.auth();
+
 const db = firebase.firestore();
 
 // Category Calls
