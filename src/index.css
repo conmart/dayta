@@ -21,7 +21,7 @@ body {
   --color-secondary-bg: #edeaff;
 
   /* potential category colors */
-  --pac-blue: #46b1c9;
+  --color-lt-blue: #65b3fc;
   --gray-blue: #aaadc4;
   --orange: #eb4e1e;
   --salmon: #ee6c4d;
@@ -135,8 +135,43 @@ code {
   border: none;
   border-radius: 3px;
   color: var(--color-black);
+  cursor: pointer;
 }
 
 h1.firebaseui-title {
   color: var(--color-white);
+}
+
+.firebaseui-form-actions .mdl-button {
+  color: var(--color-black);
+  width: 70px;
+}
+
+.firebaseui-form-actions{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.firebaseui-label {
+  font-size: 16px;
+  padding-right: 10px;
+}
+
+.firebaseui-input {
+  font-size: 16px;
+  color: var(--color-black);
+}
+
+.firebaseui-link {
+  color: var(--color-lt-blue);
+  text-decoration: underline;
+}
+
+.firebaseui-form-links {
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+
+.firebaseui-text-input-error {
+  margin: 10px 0 15px;
 }
