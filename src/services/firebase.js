@@ -1,4 +1,5 @@
 import * as firebase from 'firebase/app';
+import * as firebaseui from 'firebaseui';
 import 'firebase/firestore';
 import 'firebase/auth';
 
@@ -6,6 +7,19 @@ import { firebaseConfig } from './firebaseConfig';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const firebaseAppAuth = firebaseApp.auth();
+
+export const uiConfig = {
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: false,
+    },
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+  ],
+};
+
+export const loginUi = new firebaseui.auth.AuthUI(firebaseAppAuth);
 
 const db = firebase.firestore();
 
