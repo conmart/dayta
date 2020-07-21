@@ -20,14 +20,19 @@ const AppRouter = ({ user, signOut }) => {
 
   useEffect(() => {
     dispatch({ type: 'SET_USER', uid: user.uid })
-  }, [user, dispatch])  
+  }, [user, dispatch])
+
+  const trackedSignOut = () => {
+    dispatch({ type: 'SET_LOGOUT', loggedOut: true })
+    signOut();
+  }
 
   return (
     <Fragment>
       {uid && (
         <Router>
           <Fragment>
-            <MenuContainer signOut={signOut} />
+            <MenuContainer signOut={trackedSignOut} />
             <NavButtons />
           </Fragment>
           <Switch>

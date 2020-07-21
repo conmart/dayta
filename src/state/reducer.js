@@ -29,6 +29,11 @@ export const reducer = (state, action) => {
         selectedDate: moment(),
         selectedEvent: null,
       };
+    case 'SET_LOGOUT':
+      return {
+        ...state,
+        loggedOut: action.loggedOut,
+      }
     default:
       return state;
   }
