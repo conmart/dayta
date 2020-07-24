@@ -8,14 +8,16 @@
 
 .container {
   width: 96%;
-  height: 78%;
+  /* 78px for the header and 95px for space at the bottom */
+  height: calc(100% - 173px);
   margin: 0 auto;
 }
 
 .daysContainer {
   display: flex;
   flex-wrap: wrap;
-  height: 90%;
+  /* 25px for height of days of week labels */
+  height: calc(100% - 25px);
 }
 
 .day {
@@ -107,5 +109,10 @@
 @media screen and (max-width: 420px) {
   .titleContainer {
     padding: 50px 0 10px;
+  }
+
+  .container {
+    /* 108px for the header and 50px for space at the bottom */
+    height: calc(100% - 158px);
   }
 }

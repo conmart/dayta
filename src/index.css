@@ -57,7 +57,8 @@ code {
   border: 1px solid var(--color-black);
   width: 80%;
   margin: 0 auto;
-  height: 70%;
+  /* 115px for the header and 95px for space at the bottom */
+  height: calc(100% - 210px);
   overflow: auto;
   background-color: var(--color-secondary-bg);
 }
