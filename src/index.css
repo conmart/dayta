@@ -96,12 +96,16 @@ code {
   cursor: pointer;
 }
 
+.resourceTable tbody tr:last-child {
+  margin-bottom: 20px;
+
+}
+
 .resourceTable tbody {
   display: block;
-  /* 46px is the min-height of thead */
-  height: calc(100% - 46px);
+  /* 45px is the height of thead */
+  height: calc(100% - 45px);
   overflow: auto;
-  padding-bottom: 60px;
 }
 
 /* Firebase UI Styling */
@@ -176,4 +180,11 @@ h1.firebaseui-title {
 
 .firebaseui-text-input-error {
   margin: 10px 0 15px;
+}
+
+@media screen and (max-width: 400px) {
+  .resourceTable tbody {
+    /* 70px is the height of thead */
+    height: calc(100% - 70px);
+  }
 }
