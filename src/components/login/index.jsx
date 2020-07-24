@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { useGlobalState } from '../../state';
 import { loginUi, uiConfig } from '../../services/firebase';
