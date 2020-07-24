@@ -145,6 +145,7 @@ h1.firebaseui-title {
 .firebaseui-form-actions .mdl-button {
   color: var(--color-black);
   width: 70px;
+  font-size: 16px;
 }
 
 .firebaseui-form-actions{
