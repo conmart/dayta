@@ -10,11 +10,11 @@ export const firebaseAppAuth = firebaseApp.auth();
 
 export const uiConfig = {
   signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       requireDisplayName: false,
     },
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
   ],
 };

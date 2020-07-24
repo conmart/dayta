@@ -15,13 +15,13 @@ const createComponentWithAuth = withFirebaseAuth({ firebaseAppAuth });
 const App = ({ signOut, user }) => {
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <div className={styles.container}>
-        {user ? (
+      {user ? (
+        <div className={styles.container}>
           <AppRouter user={user} signOut={signOut} />
-        ) : (
-          <Login />
-        )}
-      </div>
+        </div>
+      ) : (
+        <Login />
+      )}
     </StateProvider>
   );
 };

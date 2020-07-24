@@ -1,40 +1,35 @@
 import React, { Fragment } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useGlobalState } from '../../state';
 import { loginUi, uiConfig } from '../../services/firebase';
-
-import Button from '../button'
 
 import styles from './login.module.css';
 
 loginUi.start('#firebaseui-auth-container', uiConfig);
 
 const Login = () => {
-  const history = useHistory();
-  const [{ loggedOut }, dispatch] = useGlobalState();
-
-  const logInAgain = () => {
-    dispatch({ type: 'SET_LOGOUT', loggedOut: false });
-    console.log('clicked');
-    history.push('/');
-  }
+  const { loggedOut } = useGlobalState()[0];
 
   return (
     <div className={styles.container}>
       {loggedOut ? (
-        <Fragment>
-          <div> successfully logged out </div>
-          <Button onClick={logInAgain} text="Log In" />
-        </Fragment>
+        <div className={styles.loggedOut}>
+          You have successfully logged out. Please refresh the page to log in
+          again.
+        </div>
       ) : (
-        <Fragment>
+        <div className={styles.signIn}>
           <div className={styles.welcome}>
             Welcome to<div className={styles.title}>Dayta</div>
-            <p>Please choose a sign in method:</p>
           </div>
-          <div id="firebaseui-auth-container" className={styles.uiContainer} />
-        </Fragment>
+          <div>
+            <p>Please choose a sign in method:</p>
+            <div
+              id="firebaseui-auth-container"
+              className={styles.uiContainer}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
