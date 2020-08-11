@@ -20,7 +20,7 @@ const MenuContainer = ({ signOut }) => {
   const menuList = [
     { url: '/', label: 'Today' },
     { url: '/calendar', label: 'Calendar' },
-    { url: '/categories', label: 'Categories' },
+    { url: '/categories', label: 'Event Categories' },
     { url: '/event', label: 'New Event' },
   ];
 

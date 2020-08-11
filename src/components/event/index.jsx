@@ -176,11 +176,17 @@ const Event = () => {
   const noChange = !Object.keys(eventDiff).length;
   const validForm = newEvent['category_name'] && newEvent['start_date'];
 
+  console.log(newEvent, 'newEvent')
   return (
     <Fragment>
       <div className="pageTitleContainer">
         <div className="pageTitle">{title}</div>
       </div>
+      {!selectedEvent && (
+        <span className={styles.label}>
+          What event would you like to record?
+        </span>
+      )}
       <form className={styles.formContainer}>
         <EventForm
           categoryName={categoryName}

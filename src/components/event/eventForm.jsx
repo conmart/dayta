@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
-import { AutoComplete, InputNumber, Select } from 'antd';
+// import { AutoComplete, InputNumber, Select } from 'antd';
 import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { isEndBeforeStart } from './utils';
 
 import styles from './event.module.css';
 import 'antd/dist/antd.css';
 
-const { Option } = Select;
+// const { Option } = Select;
 
 const EventForm = ({
   categoryName,
@@ -24,9 +25,7 @@ const EventForm = ({
   onStartChange,
   onUnitChange,
 }) => {
-  const categoryOptions = Object.keys(categoryNameIdMap).map((catName) => ({
-    value: catName,
-  }));
+  const categoryOptions = Object.keys(categoryNameIdMap);
   const hideDuration = eventStart && eventEnd;
   const endBeforeStart = isEndBeforeStart(eventStart, eventEnd);
   const formatStart = eventStart ? eventStart.format('HH:mm') : '';
@@ -35,17 +34,23 @@ const EventForm = ({
   return (
     <Fragment>
       <div className={styles.formRow}>
-        <span className={styles.label}>
-          Category <span className={styles.required}>*</span>
-        </span>
-        <AutoComplete
-          filterOption={(inputValue, option) =>
-            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-          }
-          onChange={onCategoryChange}
+        <Autocomplete
+          freeSolo
+          onChange={(_event, newValue) => onCategoryChange(newValue)}
           options={categoryOptions}
           style={{ width: '100%' }}
           value={categoryName}
+          renderInput={(params) => {
+            return (
+              <TextField
+                {...params}
+                onChange={(e) => onCategoryChange(e.target.value)}
+                label="Event Name"
+                variant="outlined"
+                required
+              />
+            );
+          }}
         />
       </div>
       <div className={styles.formRow}>
@@ -93,7 +98,7 @@ const EventForm = ({
             </div>
           ) : (
             <Fragment>
-              <InputNumber
+              {/* <InputNumber
                 min={0}
                 onChange={onDurationChange}
                 style={{ width: '50%' }}
@@ -107,7 +112,7 @@ const EventForm = ({
                 <Option value={1}>{'second(s)'}</Option>
                 <Option value={2}>{'minute(s)'}</Option>
                 <Option value={3}>{'hour(s)'}</Option>
-              </Select>
+              </Select> */}
             </Fragment>
           )}
         </div>
