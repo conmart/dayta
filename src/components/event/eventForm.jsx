@@ -1,14 +1,11 @@
 import React, { Fragment } from 'react';
-// import { AutoComplete, InputNumber, Select } from 'antd';
-import TextField from '@material-ui/core/TextField';
+import { TextField, InputLabel, Select, FormControl } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { isEndBeforeStart } from './utils';
 
 import styles from './event.module.css';
 import 'antd/dist/antd.css';
-
-// const { Option } = Select;
 
 const EventForm = ({
   categoryName,
@@ -54,33 +51,40 @@ const EventForm = ({
         />
       </div>
       <div className={styles.formRow}>
-        <span className={styles.label}>
-          Date <span className={styles.required}>*</span>
-        </span>
         <TextField
           onChange={onDateChange}
           className={styles.materialInput}
+          label="Date of Event"
+          variant="outlined"
           type="date"
           value={eventDate}
         />
       </div>
       <div className={styles.startEndRow}>
         <div className={styles.timePick}>
-          <span className={styles.label}>Start</span>
           <TextField
             className={styles.materialInput}
             onChange={onStartChange}
+            label="Start of Event"
+            variant="outlined"
             type="time"
             value={formatStart}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </div>
         <div className={styles.timePick}>
-          <span className={styles.label}>End</span>
           <TextField
             className={styles.materialInput}
             onChange={onEndChange}
+            label="End of Event"
+            variant="outlined"
             type="time"
             value={formatEnd}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
           {endBeforeStart && (
             <span className={styles.warn}>
@@ -91,31 +95,43 @@ const EventForm = ({
       </div>
       <div className={styles.formRow}>
         <span className={styles.label}>Duration</span>
-        <div className={styles.durationInputs}>
           {hideDuration ? (
             <div>
               Duration is automatically calculated from start and end times.
             </div>
           ) : (
             <Fragment>
-              {/* <InputNumber
-                min={0}
+              <TextField
+                label="Durantion Length"
+                type="number"
                 onChange={onDurationChange}
-                style={{ width: '50%' }}
                 value={duration}
-              />
-              <Select
-                onChange={onUnitChange}
                 style={{ width: '50%' }}
-                value={durationUnit}
-              >
-                <Option value={1}>{'second(s)'}</Option>
-                <Option value={2}>{'minute(s)'}</Option>
-                <Option value={3}>{'hour(s)'}</Option>
-              </Select> */}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{ inputProps: { min: 0 } }}
+                variant="outlined"
+              />
+              <FormControl variant="outlined" style={{ width: '50%' }}>
+                <InputLabel htmlFor="durationUnitLabel">Unit</InputLabel>
+                <Select
+                  native
+                  onChange={onUnitChange}
+                  value={durationUnit}
+                  label="unit"
+                  inputProps={{
+                    name: 'unit',
+                    id: 'durationUnitLabel',
+                  }}
+                >
+                  <option value={1}>second(s)</option>
+                  <option value={2}>minute(s)</option>
+                  <option value={3}>hour(s)</option>
+                </Select>
+              </FormControl>
             </Fragment>
           )}
-        </div>
       </div>
     </Fragment>
   );

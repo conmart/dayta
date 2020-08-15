@@ -89,7 +89,7 @@ const Event = () => {
   const onDateChange = (e) => setDate(e.target.value);
   const onStartChange = (e) => setStart(strTimeToMoment(e.target.value));
   const onEndChange = (e) => setEnd(strTimeToMoment(e.target.value));
-  const onDurationChange = (length) => setDuration(length);
+  const onDurationChange = (e) => setDuration(e.target.value);
   const onUnitChange = (unit) => setDurationUnit(unit);
 
   const returnHome = () => {
@@ -182,12 +182,12 @@ const Event = () => {
       <div className="pageTitleContainer">
         <div className="pageTitle">{title}</div>
       </div>
-      {!selectedEvent && (
-        <span className={styles.label}>
-          What event would you like to record?
-        </span>
-      )}
       <form className={styles.formContainer}>
+        {!selectedEvent && (
+          <span className={styles.label}>
+            What event would you like to record?
+          </span>
+        )}
         <EventForm
           categoryName={categoryName}
           categoryNameIdMap={categoryNameIdMap}
