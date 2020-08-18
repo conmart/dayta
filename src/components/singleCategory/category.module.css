@@ -1,13 +1,11 @@
 .categoryDetails {
   font-size: 20px;
-  cursor: pointer;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  width: 80%;
-  margin: 0 auto;
-  padding-top: 10px;
+  padding: 10px 10px 0 0;
   color: var(--color-black);
+  position: relative;
+  left: 10%;
 }
 
 .toggleText {
@@ -38,7 +36,6 @@
   display: flex;
   flex-direction: column;
   font-size: 36px;
-  cursor: pointer;
   padding: 5px;
 }
 
@@ -75,7 +72,6 @@
 
 .editIcon {
   font-size: 24px;
-  cursor: pointer;
   padding-left: 8px;
 }
 
@@ -92,12 +88,6 @@
 
 .cancelIcon {
   color: var(--color-danger);
-}
-
-.editorButton {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
 }
 
 .title {

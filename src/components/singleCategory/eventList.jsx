@@ -63,10 +63,10 @@ const EventList = ({
           </table>
         )}
       </div>
-      <div className={styles.categoryDetails} onClick={categoryDetails}>
-        <CaretLeftOutlined />
+      <button className={styles.categoryDetails} onClick={categoryDetails}>
+        <CaretLeftOutlined aria-hidden="true" focusable="false" />
         <span className={styles.toggleText}>Category Overview</span>
-      </div>
+      </button>
     </Fragment>
   );
 };

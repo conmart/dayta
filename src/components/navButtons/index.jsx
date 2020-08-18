@@ -23,13 +23,15 @@ const NavButtons = () => {
 
   return (
     <Fragment>
-      <div className={styles.backButton} onClick={goBack}>
-        <ArrowLeftOutlined />
-      </div>
+      <button className={styles.back} onClick={goBack}>
+        <ArrowLeftOutlined aria-hidden="true" focusable="false" />
+        <span className="sr-only">Back</span>
+      </button>
       {!onEventPage && (
-        <div className={styles.newEvent} onClick={goToEventPage}>
-          <PlusOutlined />
-        </div>
+        <button className={styles.newEvent} onClick={goToEventPage}>
+          <PlusOutlined aria-hidden="true" focusable="false" />
+          <span className="sr-only">Create New Event</span>
+        </button>
       )}
     </Fragment>
   );

@@ -193,6 +193,12 @@ h1.firebaseui-title {
   width: 1px; 
 }
 
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 400px) {
   .resourceTable tbody {
     /* 70px is the height of thead */

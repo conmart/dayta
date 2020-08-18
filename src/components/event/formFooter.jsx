@@ -27,14 +27,16 @@ const FormFooter = ({
         <LoadingOutlined />
       ) : (
         <Fragment>
-          {handleDelete && (
-            <div className={styles.deleteIcon} onClick={handleDelete}>
-              <DeleteFilled />
-            </div>
-          )}
           <button className={saveStyles} onClick={handleClick} type="submit">
-            <CheckCircleFilled />
+            <CheckCircleFilled aria-hidden="true" focusable="false" />
+            <span className="sr-only">Save Event</span>
           </button>
+          {handleDelete && (
+            <button className={styles.deleteIcon} onClick={handleDelete}>
+              <DeleteFilled aria-hidden="true" focusable="false" />
+              <span className="sr-only">Delete Event</span>
+            </button>
+          )}
         </Fragment>
       )}
     </div>

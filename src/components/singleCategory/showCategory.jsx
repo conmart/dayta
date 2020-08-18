@@ -62,12 +62,14 @@ const ShowCategory = ({
         )}
       </div>
       <div className={styles.showIconsContainer}>
-        <div className={deleteStyles} onClick={confirmDelete}>
-          <DeleteOutlined />
-        </div>
-        <div className={eventListStyles} onClick={showEventList}>
-          <UnorderedListOutlined />
-        </div>
+        <button className={deleteStyles} onClick={confirmDelete}>
+          <DeleteOutlined aria-hidden="true" focusable="false" />
+          <span className="sr-only">Delete Entire Category</span>
+        </button>
+        <button className={eventListStyles} onClick={showEventList}>
+          <UnorderedListOutlined aria-hidden="true" focusable="false" />
+          <span className="sr-only">View All Category Events</span>
+        </button>
       </div>
       {showModal && (
         <ConfirmationModal

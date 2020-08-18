@@ -39,12 +39,13 @@ const MenuContainer = ({ signOut }) => {
             onClick={() => setMenuOpen(false)}
           />
           <div className={styles.container}>
-            <div
+            <button
               className={styles.iconContainer}
               onClick={() => setMenuOpen(false)}
             >
-              <CloseOutlined />
-            </div>
+              <CloseOutlined aria-hidden="true" focusable="false" />
+              <span className="sr-only">Close Menu</span>
+            </button>
             <ul className={styles.list}>
               {menuLinks}
               <li onClick={signOut}>Sign Out</li>
@@ -52,9 +53,13 @@ const MenuContainer = ({ signOut }) => {
           </div>
         </Fragment>
       ) : (
-        <div className={styles.iconContainer} onClick={() => setMenuOpen(true)}>
-          <MenuOutlined />
-        </div>
+        <button
+          className={styles.iconContainer}
+          onClick={() => setMenuOpen(true)}
+        >
+          <MenuOutlined aria-hidden="true" focusable="false" />
+          <span className="sr-only">Open Menu</span>
+        </button>
       )}
     </Fragment>
   );

@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react';
-// import { Input } from 'antd';
 import { TextField } from '@material-ui/core';
 import {
   CheckCircleFilled,
@@ -81,14 +80,6 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
   const titleStyles = classNames('pageTitle', {
     [styles.title]: true,
   });
-  const updateStyles = classNames({
-    [styles.editorButton]: true,
-    [styles.updateIcon]: true,
-  });
-  const cancelStyles = classNames({
-    [styles.editorButton]: true,
-    [styles.cancelIcon]: true,
-  });
 
   return (
     <div className="pageTitleContainer">
@@ -102,21 +93,21 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
       {editName ? (
         <form className={styles.editCategoryContainer}>
           <TextField
-            label="Edit Category Name"
+            label="Category Name"
             onChange={onNameChange}
             size="small"
             variant="outlined"
             value={newName}
           />
           <button
-            className={updateStyles}
+            className={styles.updateIcon}
             onClick={checkValidUpdate}
             type="submit"
           >
             <CheckCircleFilled aria-hidden="true" focusable="false" />
             <span className="sr-only">Save</span>
           </button>
-          <button className={cancelStyles} onClick={cancelChange}>
+          <button className={styles.cancelIcon} onClick={cancelChange}>
             <CloseCircleFilled aria-hidden="true" focusable="false" />
             <span className="sr-only">Cancel</span>
           </button>
@@ -124,9 +115,10 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
       ) : (
         <Fragment>
           <div className={titleStyles}>{newName}</div>
-          <div className={styles.editIcon} onClick={() => setEditName(true)}>
-            <EditOutlined />
-          </div>
+          <button className={styles.editIcon} onClick={() => setEditName(true)}>
+            <EditOutlined aria-hidden="true" focusable="false" />
+            <span className="sr-only">Edit Category Name</span>
+          </button>
         </Fragment>
       )}
     </div>
