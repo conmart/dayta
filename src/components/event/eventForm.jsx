@@ -36,17 +36,14 @@ const EventForm = ({
           options={categoryOptions}
           style={{ width: '100%' }}
           value={categoryName}
-          renderInput={(params) => {
-            return (
-              <TextField
-                {...params}
-                onChange={(e) => onCategoryChange(e.target.value)}
-                label="Event Name"
-                variant="outlined"
-                required
-              />
-            );
-          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Event Name"
+              variant="outlined"
+              required
+            />
+          )}
         />
       </div>
       <div className={styles.formRow}>
