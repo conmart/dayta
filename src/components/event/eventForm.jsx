@@ -5,7 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { isEndBeforeStart } from './utils';
 
 import styles from './event.module.css';
-import 'antd/dist/antd.css';
 
 const EventForm = ({
   categoryName,
@@ -95,43 +94,43 @@ const EventForm = ({
       </div>
       <div className={styles.formRow}>
         <span className={styles.label}>Duration</span>
-          {hideDuration ? (
-            <div>
-              Duration is automatically calculated from start and end times.
-            </div>
-          ) : (
-            <Fragment>
-              <TextField
-                label="Durantion Length"
-                type="number"
-                onChange={onDurationChange}
-                value={duration}
-                style={{ width: '50%' }}
-                InputLabelProps={{
-                  shrink: true,
+        {hideDuration ? (
+          <div>
+            Duration is automatically calculated from start and end times.
+          </div>
+        ) : (
+          <Fragment>
+            <TextField
+              label="Durantion Length"
+              type="number"
+              onChange={onDurationChange}
+              value={duration}
+              style={{ width: '50%' }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{ inputProps: { min: 0 } }}
+              variant="outlined"
+            />
+            <FormControl variant="outlined" style={{ width: '50%' }}>
+              <InputLabel htmlFor="durationUnitLabel">Unit</InputLabel>
+              <Select
+                native
+                onChange={onUnitChange}
+                value={durationUnit}
+                label="unit"
+                inputProps={{
+                  name: 'unit',
+                  id: 'durationUnitLabel',
                 }}
-                InputProps={{ inputProps: { min: 0 } }}
-                variant="outlined"
-              />
-              <FormControl variant="outlined" style={{ width: '50%' }}>
-                <InputLabel htmlFor="durationUnitLabel">Unit</InputLabel>
-                <Select
-                  native
-                  onChange={onUnitChange}
-                  value={durationUnit}
-                  label="unit"
-                  inputProps={{
-                    name: 'unit',
-                    id: 'durationUnitLabel',
-                  }}
-                >
-                  <option value={1}>second(s)</option>
-                  <option value={2}>minute(s)</option>
-                  <option value={3}>hour(s)</option>
-                </Select>
-              </FormControl>
-            </Fragment>
-          )}
+              >
+                <option value={1}>second(s)</option>
+                <option value={2}>minute(s)</option>
+                <option value={3}>hour(s)</option>
+              </Select>
+            </FormControl>
+          </Fragment>
+        )}
       </div>
     </Fragment>
   );

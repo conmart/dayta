@@ -87,7 +87,7 @@
 
 .updateIcon {
   color: var(--color-green);
-  padding-left: 14px;
+  margin-left: 12px;
 }
 
 .cancelIcon {

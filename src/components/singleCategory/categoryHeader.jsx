@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Input } from 'antd';
+// import { Input } from 'antd';
+import { TextField } from '@material-ui/core';
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -100,16 +101,24 @@ const CategoryHeader = ({ backToCategories, category, uid }) => {
       )}
       {editName ? (
         <form className={styles.editCategoryContainer}>
-          <Input onChange={onNameChange} value={newName} />
+          <TextField
+            label="Edit Category Name"
+            onChange={onNameChange}
+            size="small"
+            variant="outlined"
+            value={newName}
+          />
           <button
             className={updateStyles}
             onClick={checkValidUpdate}
             type="submit"
           >
-            <CheckCircleFilled />
+            <CheckCircleFilled aria-hidden="true" focusable="false" />
+            <span className="sr-only">Save</span>
           </button>
           <button className={cancelStyles} onClick={cancelChange}>
-            <CloseCircleFilled />
+            <CloseCircleFilled aria-hidden="true" focusable="false" />
+            <span className="sr-only">Cancel</span>
           </button>
         </form>
       ) : (
